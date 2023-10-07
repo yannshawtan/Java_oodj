@@ -10,17 +10,20 @@ package oodjassignment;
  */
 public class OODJassignment {
 
-    /**
-     * @param args the command line arguments
-     * 
-     */
     public static void main(String[] args) {
-<<<<<<< HEAD
-
-=======
->>>>>>> 789312fef2b977f7f9d47284496cc6bd94c93854
-        System.out.println("Hellow world");
-
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger("MyApplicationLogger").log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        Login_Page LP = new Login_Page();
+        LP.pack();
+        LP.setLocationRelativeTo(null);
     }
     
 }
