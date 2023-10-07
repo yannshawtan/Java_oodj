@@ -4,10 +4,17 @@
  */
 package oodjassignment;
 
+import java.io.*;
+
 /**
  *
  * @author myste
  */
 public class Crud {
-    
+    File f1, f;
+    FileReader fr;
+    FileWriter fw;
+    BufferedWriter bw;
+    BufferedReader br;
+    int count;
 }
