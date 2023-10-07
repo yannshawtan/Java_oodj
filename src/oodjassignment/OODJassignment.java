@@ -11,6 +11,7 @@ package oodjassignment;
 public class OODJassignment {
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -24,6 +25,10 @@ public class OODJassignment {
         Login_Page LP = new Login_Page();
         LP.pack();
         LP.setLocationRelativeTo(null);
+=======
+        
+>>>>>>> 0e1ac21043095c2dfdf05c05281d3d45abceb357
     }
-    
 }
+    
+
