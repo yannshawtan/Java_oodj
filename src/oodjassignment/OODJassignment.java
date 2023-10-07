@@ -15,13 +15,8 @@ public class OODJassignment {
      * 
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
-        
-=======
         System.out.println("Hellow world");
 
-
->>>>>>> e2b2ba6d298b9e89a553f8b991763df95c2200ef
     }
     
 }
