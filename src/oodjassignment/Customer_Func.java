@@ -4,38 +4,30 @@
  */
 package oodjassignment;
 
-
-import javax.swing.DefaultListModel;
-
-
 /**
  *
  * @author myste
  */
 public class Customer_Func extends Main_Database{
     
-    String [][]rawData;
     
-    public Customer_Func(String type) {
+    public Customer_Func() {
         super("Vendor");
     }
 
-    public String[][] VendorList(int Id,String name){
+    public String[][] populateVendorListForAllNames() {
+        String[][] rawData;
         rawData = super.ReadData();
-        String [][]finalData = new String [100][];
         count = super.getCount();
+        String[][] finalData = new String[100][];
         int value = 0;
-        for (int i = 0; i<count; i++){
-            if (rawData[i][0].equals(Id) && rawData[i][1].equals(name)){
-                finalData[value] = rawData[i];
-                value++;
-            }
+        
+        for (int i = 0; i < count; i++) {
+        finalData[value] = rawData[i];
+        value++;
         }
+        
         super.setCount(value);
         return finalData;
-    }
-    
-    private void loadVendorIDs(DefaultListModel<String> model) {
-        
     }
 }
