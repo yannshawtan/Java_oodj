@@ -6,7 +6,15 @@ package oodjassignment;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JFrame;
 
 /**
  *
@@ -26,15 +34,38 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     
     private void populateVendorListInAWT() {
     Customer_Func customerFunc = new Customer_Func();
-    String[][] finalData = customerFunc.populateVendorListForAllNames();
+    List<User> users = customerFunc.populateVendorListForAllUsers();
 
     Vendorlist.removeAll();
 
-    for (String[] row : finalData) {
-        if (row != null && row.length > 1) {
-            Vendorlist.add(row[1]); // Add the second element (index 1) from each row
-        }
+    for (User user : users) {
+        Vendorlist.add(user.getName());
     }
+
+    Vendorlist.addItemListener(new ItemListener() {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                String selectedName = (String) Vendorlist.getSelectedItem();
+                for (User user : users) {
+                    if (user.getName().equals(selectedName)) {
+                        String selectedId = user.getId();
+                        Customer_Home_Page cop = new Customer_Home_Page();
+                        cop.setVisible(true);
+                        cop.pack();
+                        cop.setLocationRelativeTo(null);
+                        cop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        this.dispose();
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void dispose() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+    });
 }
     
     
