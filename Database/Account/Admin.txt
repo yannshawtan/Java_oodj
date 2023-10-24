@@ -1,1 +1,2 @@
 A1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|
+A2|Dalton|Dalton@gmail.com|Dalton|24/10/2023 12:56:55|

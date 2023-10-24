@@ -11,16 +11,12 @@ public class Account_Database extends Main_Database{
         super(role);
     }
     
-    public String GetCurrentDate(String pst){
-        return "TBC";
-        
-    }
-    
     public void AddData(String usr, String mail, String pswd, String pst){
         try {
+            String id = GetNextId(pst);
+//            String id = "Test";
             super.writeFile();
             // Need to create a function to find the latest id and date
-            String id = GetNextId(pst);
             String dateCreate = GetCurrentDate(pst);
             String balance = "0.0";
             // Name, Email, Password, Position

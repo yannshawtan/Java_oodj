@@ -1,6 +1,8 @@
 package oodjassignment;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 
@@ -149,7 +151,8 @@ public class Main_Database {
     
     public String GetNextId(String pst){
         Data = ReadData();
-        String lastID = Data[Data.length - 1][0].substring(1);
+        count = getCount() - 1;
+        String lastID = Data[count][0].substring(1);
         int lastIdNum = Integer.parseInt(lastID);
         int newIDNum = lastIdNum + 1;
         String prefix = "";
@@ -184,4 +187,13 @@ public class Main_Database {
         String newId = prefix + newIDNum;
         return newId;
     }
+    
+    public String GetCurrentDate(String pst){
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String formattedDate = dateFormat.format(currentDate);
+        return formattedDate;
+        
+    }
+    
 }
