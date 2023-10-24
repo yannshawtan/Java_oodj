@@ -172,15 +172,6 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void GoVendorHomePage() {
-        Vendor_Home_Page vhp = new Vendor_Home_Page(owner);
-        vhp.setVisible(true);
-        vhp.pack();
-        vhp.setLocationRelativeTo(null);
-        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    }
-    
     public void GoRegisterPage(){
 //        Register_Page rp = new Register_Page();
 //        rp.setVisible(true);
@@ -219,7 +210,7 @@ public class Login_Page extends javax.swing.JFrame {
                     }
                     case "Vendor" -> {
                         owner = db.getData();
-                        GoVendorHomePage();
+                        //GoVendorHomePage();
                     }
                     case "Runner" -> {
                         owner = db.getData();
