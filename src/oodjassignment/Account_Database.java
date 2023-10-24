@@ -11,10 +11,6 @@ public class Account_Database extends Main_Database{
         super(role);
     }
     
-    public String GetNextId(String pst){
-        return "TBC";
-    }
-    
     public String GetCurrentDate(String pst){
         return "TBC";
         

@@ -11,6 +11,7 @@ public class Main_Database {
     BufferedWriter bw;
     BufferedReader br;
     int count;
+    String [][]Data;
     
     public Main_Database(String type){
         // UPGRADE THIS SYSTEM, TO SUIT CURRENT PROJECT
@@ -144,5 +145,43 @@ public class Main_Database {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "There is an error with the file!");
         }
+    }
+    
+    public String GetNextId(String pst){
+        Data = ReadData();
+        String lastID = Data[Data.length - 1][0].substring(1);
+        int lastIdNum = Integer.parseInt(lastID);
+        int newIDNum = lastIdNum + 1;
+        String prefix = "";
+        switch (pst) {
+            case "Admin" -> {
+                prefix = "A";
+            }
+            case "Customer" -> {
+                prefix = "C";
+            }
+            case "Vendor" -> {
+                prefix = "V";
+            }
+            case "Runner" -> {
+                prefix = "R";
+            }
+            case "Delivery" -> {
+                prefix = "D";
+            }
+            case "Menu" -> {
+                prefix = "M";
+            }
+            case "Order" -> {
+                prefix = "O";
+            }
+            case "Transaction" -> {
+                prefix = "T";
+            }
+            default -> {
+            }
+        }
+        String newId = prefix + newIDNum;
+        return newId;
     }
 }
