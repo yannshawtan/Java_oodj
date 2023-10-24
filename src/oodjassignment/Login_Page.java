@@ -196,10 +196,10 @@ public class Login_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_TFuserActionPerformed
 
     private void BloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BloginActionPerformed
-        String Name = TFuser.getText();
+        String Email = TFuser.getText();
         String Password = PFpassword.getText();
-        if (Name.equals("")){
-            JOptionPane.showMessageDialog(null, "Please fill out your name!");
+        if (Email.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill out your email!");
         }
         else if(Password.equals("")){
             JOptionPane.showMessageDialog(null, "Please fill out your password!");
@@ -207,7 +207,7 @@ public class Login_Page extends javax.swing.JFrame {
         else{
             String Position = Role.getSelectedItem().toString();
             Account_Database db = new Account_Database(Position);
-            if (db.LoginValidation(Name, Password,Position)){
+            if (db.LoginValidation(Email, Password,Position)){
                 switch (Position) {
                     case "Customer" -> {
                         owner = db.getData();
