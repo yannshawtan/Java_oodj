@@ -26,7 +26,16 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoRegister(){
-        Register_Page rp = new Register_Page();
+        Register_Page rp = new Register_Page(owner);
+        rp.setVisible(true);
+        rp.pack();
+        rp.setLocationRelativeTo(null);
+        rp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
+    public void GoForgetPassword(){
+        Forget_Password_Page rp = new Forget_Password_Page(owner);
         rp.setVisible(true);
         rp.pack();
         rp.setLocationRelativeTo(null);
@@ -42,6 +51,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         ToRegister = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         User_Name = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,10 +68,21 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         User_Name.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         User_Name.setText("User");
 
+        jButton1.setText("Forget Password");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 126, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(119, 119, 119))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -69,12 +90,11 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                         .addComponent(User_Name))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(150, 150, 150)
-                        .addComponent(ToRegister)))
+                        .addComponent(ToRegister))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 126, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(119, 119, 119))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,7 +105,9 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                 .addComponent(User_Name)
                 .addGap(18, 18, 18)
                 .addComponent(ToRegister)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         pack();
@@ -94,6 +116,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     private void ToRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToRegisterActionPerformed
         GoRegister();
     }//GEN-LAST:event_ToRegisterActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        GoForgetPassword();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,6 +159,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ToRegister;
     private javax.swing.JLabel User_Name;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

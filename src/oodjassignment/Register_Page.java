@@ -11,7 +11,7 @@ public class Register_Page extends javax.swing.JFrame {
         initComponents();
     }
     
-    public Register_Page(String User) {
+    public Register_Page(User owner) {
         initComponents();
         this.owner = owner;
     }
@@ -195,7 +195,7 @@ public class Register_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void Return(){
-        Admin_Home_Page hp = new Admin_Home_Page();
+        Admin_Home_Page hp = new Admin_Home_Page(owner);
         hp.setVisible(true);
         hp.pack();
         hp.setLocationRelativeTo(null);
@@ -231,12 +231,12 @@ public class Register_Page extends javax.swing.JFrame {
         else{
             String Position = Role.getSelectedItem().toString();
             Account_Database db = new Account_Database(Position);
-            if (db.RegisterValidation(Name, Email, Position)){
+            if (db.RegisterValidation(Name, Email)){
                 JOptionPane.showMessageDialog(null, "The email given is already been use!");
             }
             else{
                 db.AddData(Name,Email,Password,Position);
-                Return();
+                JOptionPane.showMessageDialog(null, "Successfully register account!");
             }
         }
     }//GEN-LAST:event_jBConfirmActionPerformed
@@ -275,7 +275,7 @@ public class Register_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_RoleActionPerformed
 
     private void jBReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBReturnActionPerformed
-        // TODO add your handling code here:
+        Return();
     }//GEN-LAST:event_jBReturnActionPerformed
 
     public static void main(String args[]) {
