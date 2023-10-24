@@ -13,7 +13,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     /**
      * Creates new form User_Order_Page
      */
-    public Cus_Order_Page() {
+    public Cus_Order_Page(String selectedId) {
         initComponents();
     }
 
@@ -72,8 +72,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run(String id) {
+                
+                new Cus_Order_Page(id).setVisible(true);
+            }
+
+            @Override
             public void run() {
-                new Cus_Order_Page().setVisible(true);
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
     }
