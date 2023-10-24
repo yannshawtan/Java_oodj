@@ -47,27 +47,28 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String selectedName = (String) Vendorlist.getSelectedItem();
+                String selectedId = null;
                 for (User user : users) {
                     if (user.getName().equals(selectedName)) {
-                        String selectedId = user.getId();
-                        Customer_Home_Page cop = new Customer_Home_Page();
-                        cop.setVisible(true);
-                        cop.pack();
-                        cop.setLocationRelativeTo(null);
-                        cop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        this.dispose();
-                        break;
+                        selectedId = user.getId();
+                        break; 
                     }
+                }
+                if (selectedId != null) {
+                    gocusorderpage(selectedId);
                 }
             }
         }
-
-        private void dispose() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        }
     });
 }
-    
+    public void gocusorderpage(String selectedId){
+        Cus_Order_Page cop = new Cus_Order_Page(selectedId);
+            cop.setVisible(true);
+            cop.pack();
+            cop.setLocationRelativeTo(null);
+            cop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.dispose();
+    }
     
     
     
