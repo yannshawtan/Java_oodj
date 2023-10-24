@@ -33,7 +33,7 @@ public class Login_Page extends javax.swing.JFrame {
         jLabel1.setText("LOGIN PAGE");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Name:");
+        jLabel2.setText("Email:");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Password:");
@@ -206,7 +206,7 @@ public class Login_Page extends javax.swing.JFrame {
         }
         else{
             String Position = Role.getSelectedItem().toString();
-            Login_Database db = new Login_Database(Position);
+            Account_Database db = new Account_Database(Position);
             if (db.LoginValidation(Name, Password,Position)){
                 switch (Position) {
                     case "Customer" -> {
