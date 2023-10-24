@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 
 public class Register_Page extends javax.swing.JFrame {
 
-    
     User owner = new User();
     
     public Register_Page() {
@@ -214,36 +213,31 @@ public class Register_Page extends javax.swing.JFrame {
         String Email = jTextEmail.getText();
         String Password = jTextPassword.getText();
         String ConPassword = jTextConPassword.getText();
-        try{
-            if (Name.equals("")){
-                JOptionPane.showMessageDialog(null, "Please fill in your name!");
-            }
-            else if (Email.equals("") || !Email.contains("@")){
-                JOptionPane.showMessageDialog(null, "Please insert a valid email!");
-            }
-            else if (Password.equals("")){
-                JOptionPane.showMessageDialog(null, "Please fill in the password!");
-            }
-            else if (ConPassword.equals("")){
-                JOptionPane.showMessageDialog(null, "Please confirm your password!");
-            }
-            else if (!Password.equals(ConPassword)){
-                JOptionPane.showMessageDialog(null, "Your password doesn't match!");
+        if (Name.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill in your name!");
+        }
+        else if (Email.equals("") || !Email.contains("@")){
+            JOptionPane.showMessageDialog(null, "Please insert a valid email!");
+        }
+        else if (Password.equals("")){
+            JOptionPane.showMessageDialog(null, "Please fill in the password!");
+        }
+        else if (ConPassword.equals("")){
+            JOptionPane.showMessageDialog(null, "Please confirm your password!");
+        }
+        else if (!Password.equals(ConPassword)){
+            JOptionPane.showMessageDialog(null, "Your password doesn't match!");
+        }
+        else{
+            String Position = Role.getSelectedItem().toString();
+            Account_Database db = new Account_Database(Position);
+            if (db.RegisterValidation(Name, Email, Position)){
+                JOptionPane.showMessageDialog(null, "The email given is already been use!");
             }
             else{
-                String Position = Role.getSelectedItem().toString();
-                Account_Database db = new Account_Database(Position);
-                if (db.RegisterValidation(Name, Email, Position)){
-                    JOptionPane.showMessageDialog(null, "The name or email given is already been use!");
-                }
-                else{
-                    db.AddData(Name, Email, Password,Position);
-                    Return();
-                }
+                db.AddData(Name,Email,Password,Position);
+                Return();
             }
-        }
-        catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(null, "Please enter a valid phone number!");
         }
     }//GEN-LAST:event_jBConfirmActionPerformed
 
