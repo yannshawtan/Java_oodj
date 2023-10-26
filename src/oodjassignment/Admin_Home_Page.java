@@ -35,14 +35,22 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoForgetPassword(){
-        Forget_Password_Page rp = new Forget_Password_Page(owner);
-        rp.setVisible(true);
-        rp.pack();
-        rp.setLocationRelativeTo(null);
-        rp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Forget_Password_Page fp = new Forget_Password_Page(owner);
+        fp.setVisible(true);
+        fp.pack();
+        fp.setLocationRelativeTo(null);
+        fp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
 
+    public void GoSearchUser(){
+        Search_User su = new Search_User(owner);
+        su.setVisible(true);
+        su.pack();
+        su.setLocationRelativeTo(null);
+        su.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -51,7 +59,8 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         ToRegister = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         User_Name = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        ToForgetPassword = new javax.swing.JButton();
+        ToSearchUser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,10 +77,17 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         User_Name.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         User_Name.setText("User");
 
-        jButton1.setText("Forget Password");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        ToForgetPassword.setText("Forget Password");
+        ToForgetPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ToForgetPasswordActionPerformed(evt);
+            }
+        });
+
+        ToSearchUser.setText("Search User");
+        ToSearchUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ToSearchUserActionPerformed(evt);
             }
         });
 
@@ -93,7 +109,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                         .addComponent(ToRegister))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
-                        .addComponent(jButton1)))
+                        .addComponent(ToForgetPassword))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(153, 153, 153)
+                        .addComponent(ToSearchUser)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,8 +125,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ToRegister)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(128, Short.MAX_VALUE))
+                .addComponent(ToForgetPassword)
+                .addGap(18, 18, 18)
+                .addComponent(ToSearchUser)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
@@ -117,9 +138,13 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         GoRegister();
     }//GEN-LAST:event_ToRegisterActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ToForgetPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToForgetPasswordActionPerformed
         GoForgetPassword();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ToForgetPasswordActionPerformed
+
+    private void ToSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToSearchUserActionPerformed
+        GoSearchUser();
+    }//GEN-LAST:event_ToSearchUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,9 +182,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ToForgetPassword;
     private javax.swing.JButton ToRegister;
+    private javax.swing.JButton ToSearchUser;
     private javax.swing.JLabel User_Name;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
