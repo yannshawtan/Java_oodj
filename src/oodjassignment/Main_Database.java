@@ -188,7 +188,7 @@ public class Main_Database {
         return newId;
     }
     
-    public String GetCurrentDate(String pst){
+    public String GetCurrentDateandTime(String pst){
         Date currentDate = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String formattedDate = dateFormat.format(currentDate);

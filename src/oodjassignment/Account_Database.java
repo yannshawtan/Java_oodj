@@ -18,7 +18,7 @@ public class Account_Database extends Main_Database{
 //            String id = "Test";
             super.writeFile();
             // Need to create a function to find the latest id and date
-            String dateCreate = GetCurrentDate(pst);
+            String dateCreate = GetCurrentDateandTime(pst);
             String balance = "0.0";
             // Name, Email, Password, Position
             switch (pst) {
