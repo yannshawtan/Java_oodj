@@ -59,6 +59,11 @@ public class Main_Database {
                 CreateFolder();
                 this.f = new File("Database\\Others\\Transaction.txt");
             }
+            case "Notification" -> {
+                this.f1 = new File("Database\\Others");
+                CreateFolder();
+                this.f = new File("Database\\Others\\Notification.txt");
+            }
             default -> {
             }
         }

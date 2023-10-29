@@ -29,7 +29,6 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     public Customer_Menu_Page() {
         initComponents();
         populateVendorListInAWT();
-        
     }
     
     private void populateVendorListInAWT() {

@@ -155,12 +155,12 @@ public class Login_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void GoCustomerHomePage(){
-//        Customer_Home_Page chp = new Customer_Home_Page(owner);
-//        chp.setVisible(true);
-//        chp.pack();
-//        chp.setLocationRelativeTo(null);
-//        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.dispose();
+       Customer_Home_Page chp = new Customer_Home_Page(owner);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
     
     public void GoAdminHomePage(){
@@ -202,7 +202,7 @@ public class Login_Page extends javax.swing.JFrame {
                 switch (Position) {
                     case "Customer" -> {
                         owner = db.getData();
-                        //GoCustomerHomePage();
+                        GoCustomerHomePage();
                     }
                     case "Admin" -> {
                         owner = db.getData();
