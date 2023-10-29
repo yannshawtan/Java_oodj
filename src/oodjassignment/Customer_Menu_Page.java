@@ -29,7 +29,6 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     public Customer_Menu_Page() {
         initComponents();
         populateVendorListInAWT();
-        
     }
     
     private void populateVendorListInAWT() {
@@ -83,7 +82,6 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
 
         Vlabel = new javax.swing.JLabel();
         Vendorlist = new java.awt.List();
-        Vselect = new javax.swing.JButton();
         back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,8 +89,6 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
         Vlabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Vlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Vlabel.setText("Vendors");
-
-        Vselect.setText("Select");
 
         back.setText("back");
 
@@ -107,29 +103,22 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
                         .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(154, 154, 154)
-                        .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(back)
-                            .addComponent(Vselect))))
-                .addContainerGap(83, Short.MAX_VALUE))
+                        .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(back)))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(59, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Vselect)
-                        .addGap(35, 35, 35)
-                        .addComponent(back)
-                        .addGap(139, 139, 139))))
+                .addGap(23, 23, 23)
+                .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
+                .addComponent(back)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -174,7 +163,6 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.List Vendorlist;
     private javax.swing.JLabel Vlabel;
-    private javax.swing.JButton Vselect;
     private javax.swing.JButton back;
     // End of variables declaration//GEN-END:variables
 

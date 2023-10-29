@@ -1,0 +1,2 @@
+001|V2|Burger|Drink|12.99|
+002|V2|Pizza|food|12.99|
