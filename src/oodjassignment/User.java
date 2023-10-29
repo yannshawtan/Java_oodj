@@ -1,7 +1,7 @@
 package oodjassignment;
 
 public class User {
-    private String Name, Password, Prefix, Id, Balance, Created_Dt, Rating;
+    private String Name, Password, Email, Prefix, Id, Balance, Created_Dt, Rating;
     
     public void setName(String Name){
         this.Name = Name;
@@ -9,6 +9,14 @@ public class User {
     
     public String getName(){
         return Name;
+    }
+    
+    public void setEmail(String Email){
+        this.Email = Email;
+    }
+    
+    public String getEmail(){
+        return Email;
     }
     
     public void setPassword(String Password){

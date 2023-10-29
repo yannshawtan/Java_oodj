@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 
 public class Account_Database extends Main_Database{
     String [][]Data;
+    String [][]rawData;
     User owner = new User();
     
     public Account_Database(String role) {
@@ -17,7 +18,7 @@ public class Account_Database extends Main_Database{
 //            String id = "Test";
             super.writeFile();
             // Need to create a function to find the latest id and date
-            String dateCreate = GetCurrentDate(pst);
+            String dateCreate = GetCurrentDateandTime(pst);
             String balance = "0.0";
             // Name, Email, Password, Position
             switch (pst) {
@@ -48,44 +49,48 @@ public class Account_Database extends Main_Database{
         }
     }
     
-    public boolean LoginValidation(String name, String pswd, String pst){
+    public boolean LoginValidation(String email, String pswd, String pst){
         Data = super.ReadData();
         count = super.getCount();
         for (int i = 0; i<count; i++){
-            if (Data[i][1].equals(name) && Data[i][2].equals(pswd)){
+            if (Data[i][2].equals(email) && Data[i][3].equals(pswd)){
                 switch (pst) {
                     case "Admin" -> {
                         owner.setId(Data[i][0]);
                         owner.setName(Data[i][1]);
-                        owner.setPassword(Data[i][2]);
+                        owner.setEmail(Data[i][2]);
+                        owner.setPassword(Data[i][3]);
                         owner.setPrefix("A");
-                        owner.setCreated_Dt(Data[i][3]);
+                        owner.setCreated_Dt(Data[i][4]);
                     }
                     case "Customer" -> {
                         owner.setId(Data[i][0]);
                         owner.setName(Data[i][1]);
-                        owner.setPassword(Data[i][2]);
+                        owner.setEmail(Data[i][2]);
+                        owner.setPassword(Data[i][3]);
                         owner.setPrefix("C");
-                        owner.setCreated_Dt(Data[i][3]);
-                        owner.setBalance(Data[i][4]);
+                        owner.setCreated_Dt(Data[i][4]);
+                        owner.setBalance(Data[i][5]);
                     }
                     case "Vendor" -> {
                         owner.setId(Data[i][0]);
                         owner.setName(Data[i][1]);
-                        owner.setPassword(Data[i][2]);
+                        owner.setEmail(Data[i][2]);
+                        owner.setPassword(Data[i][3]);
                         owner.setPrefix("V");
-                        owner.setCreated_Dt(Data[i][3]);
-                        owner.setBalance(Data[i][4]);
-                        owner.setRating(Data[i][5]);
+                        owner.setCreated_Dt(Data[i][4]);
+                        owner.setBalance(Data[i][5]);
+                        owner.setRating(Data[i][6]);
                     }
                     case "Runner" -> {
                         owner.setId(Data[i][0]);
                         owner.setName(Data[i][1]);
-                        owner.setPassword(Data[i][2]);
+                        owner.setEmail(Data[i][2]);
+                        owner.setPassword(Data[i][3]);
                         owner.setPrefix("R");
-                        owner.setCreated_Dt(Data[i][3]);
-                        owner.setBalance(Data[i][4]);
-                        owner.setRating(Data[i][5]);
+                        owner.setCreated_Dt(Data[i][4]);
+                        owner.setBalance(Data[i][5]);
+                        owner.setRating(Data[i][6]);
                     }
                     default -> {
                     }
@@ -98,7 +103,7 @@ public class Account_Database extends Main_Database{
         return false;
     }
     
-    public boolean RegisterValidation(String name, String email, String pst){
+    public boolean RegisterValidation(String name, String email){
         Data = super.ReadData();
         count = super.getCount();
         for (int i=0; i<count;i++){
@@ -111,6 +116,41 @@ public class Account_Database extends Main_Database{
     
     public User getData(){
         return owner;
+    }
+    
+    public boolean AccountValidation(String email){
+        Data = super.ReadData();
+        count = super.getCount();
+        for (int i=0; i<count;i++){
+            if (Data[i][2].equals(email)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void changePassword(String email, String password){
+        try {
+            rawData = super.ReadData();
+            count = super.getCount();
+            for (int i = 0; i<count; i++){
+                if (rawData[i][2].equals(email)){
+                    rawData[i][3] = password;
+                }
+            }
+            super.newWriteFile();
+            for (int i=0; i<count;i++){
+                String line= "";
+                for (int j = 0; j<rawData[i].length;j++){
+                    line += rawData[i][j] + "|";
+                }
+                line += "\n";
+                bw.write(line);
+            }
+            super.WriteClose();
+        } catch (IOException ex) {
+            System.out.println("Error");
+        }
     }
     
 }
