@@ -158,7 +158,8 @@ public class Search_User extends javax.swing.JFrame {
                 new Search_User().setVisible(true);
             }
         });
-    jTableUser    // Variables declaration - do not modify//GEN-BEGIN:variables
+    }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Role;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
