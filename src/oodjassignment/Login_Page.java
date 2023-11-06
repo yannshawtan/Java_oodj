@@ -172,15 +172,6 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void GoRegisterPage(){
-//        Register_Page rp = new Register_Page();
-//        rp.setVisible(true);
-//        rp.pack();
-//        rp.setLocationRelativeTo(null);
-//        rp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.dispose();
-    }
-    
     
     private void TFuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFuserActionPerformed
         // TODO add your handling code here:
