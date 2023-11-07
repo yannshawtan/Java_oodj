@@ -35,6 +35,9 @@ public class Search_User extends javax.swing.JFrame {
     }
     
     public void ListOfUser(String role, String name){
+        jTableUser.getColumnModel().getColumn(0).setPreferredWidth(15);
+        jTableUser.getColumnModel().getColumn(3).setPreferredWidth(30);
+        jTableUser.getColumnModel().getColumn(5).setPreferredWidth(30);
         DefaultTableModel model = (DefaultTableModel)jTableUser.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableUser.setRowSorter(sorter);
