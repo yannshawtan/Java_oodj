@@ -26,9 +26,19 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     /**
      * Creates new form Customer_Menu_Page
      */
+    User owner = new User();
     public Customer_Menu_Page() {
         initComponents();
+        
+        
+    }
+    
+    public Customer_Menu_Page(User owner) {
+        initComponents();
+        this.owner = owner;
         populateVendorListInAWT();
+        User.setText(owner.getName());
+        setVisible(true);
     }
     
     private void populateVendorListInAWT() {
@@ -54,14 +64,14 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
                     }
                 }
                 if (selectedId != null) {
-                    gocusorderpage(selectedId);
+                    gocusorderpage(selectedId, owner);
                 }
             }
         }
     });
 }
-    public void gocusorderpage(String selectedId){
-        Cus_Order_Page cop = new Cus_Order_Page(selectedId);
+    public void gocusorderpage(String selectedId, User owner){
+        Cus_Order_Page cop = new Cus_Order_Page(selectedId, owner);
             cop.setVisible(true);
             cop.pack();
             cop.setLocationRelativeTo(null);
@@ -83,6 +93,7 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
         Vlabel = new javax.swing.JLabel();
         Vendorlist = new java.awt.List();
         back = new javax.swing.JButton();
+        User = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +102,13 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
         Vlabel.setText("Vendors");
 
         back.setText("back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
+
+        User.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -99,21 +117,26 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(226, 226, 226)
-                        .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(154, 154, 154)
                         .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(back)))
                 .addContainerGap(184, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Vlabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(Vendorlist, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
@@ -123,6 +146,17 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        
+       Customer_Home_Page chp = new Customer_Home_Page(owner);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,6 +195,7 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel User;
     private java.awt.List Vendorlist;
     private javax.swing.JLabel Vlabel;
     private javax.swing.JButton back;

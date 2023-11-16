@@ -4,6 +4,8 @@
  */
 package oodjassignment;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author myste
@@ -18,12 +20,14 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     public Customer_Home_Page() {
         initComponents();
         User_Name.setText("Error");
+        setVisible(true);
     }
     
     public Customer_Home_Page(User owner) {
         initComponents();
         this.owner = owner;
         User_Name.setText(owner.getName());
+        setVisible(true);
     }
 
     /**
@@ -37,7 +41,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Order_button = new javax.swing.JButton();
         User_Name = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
@@ -52,10 +56,10 @@ public class Customer_Home_Page extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Order food");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Order_button.setText("Order food");
+        Order_button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                Order_buttonActionPerformed(evt);
             }
         });
 
@@ -83,7 +87,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(Order_button, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(230, 230, 230)))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -94,7 +98,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Order_button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(56, Short.MAX_VALUE))
@@ -116,10 +120,19 @@ public class Customer_Home_Page extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void Order_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Order_buttonActionPerformed
+        GoCustomerHomePage();
+    }//GEN-LAST:event_Order_buttonActionPerformed
 
+    public void GoCustomerHomePage(){
+        Customer_Menu_Page cmp = new Customer_Menu_Page(owner);
+        System.out.println(owner);
+        cmp.setVisible(true);
+        cmp.pack();
+        cmp.setLocationRelativeTo(null);
+        cmp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -164,9 +177,9 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Order_button;
     private javax.swing.JLabel User_Name;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
