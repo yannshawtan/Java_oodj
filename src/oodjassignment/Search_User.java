@@ -1,5 +1,6 @@
 package oodjassignment;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -42,55 +43,55 @@ public class Search_User extends javax.swing.JFrame {
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableUser.setRowSorter(sorter);
         Account_Database db = new Account_Database(role);
-        String[][] data = db.ReadData();
+        ArrayList<ArrayList<String>> data = db.ReadData();
         model.setRowCount(0);
         int counts = db.getCount();
         switch (role) {
             case "Admin" -> {
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data[i][1].toLowerCase();
+                    String lowercaseData = data.get(i).get(1).toLowerCase();
                     String lowercaseName = name.toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], "Null", data[i][4], "Null"});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), "Null", data.get(i).get(4), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], "Null", data[i][4], "Null"});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), "Null", data.get(i).get(4), "Null"});
                     }    
                 }
             }
             case "Customer" -> {
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data[i][1].toLowerCase();
+                    String lowercaseData = data.get(i).get(1).toLowerCase();
                     String lowercaseName = name.toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], "Null"});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], "Null"});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4), "Null"});
                     }    
                 }
             }
             case "Vendor" -> {
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data[i][1].toLowerCase();
+                    String lowercaseData = data.get(i).get(1).toLowerCase();
                     String lowercaseName = name.toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], data[i][6]});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], data[i][6]});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
                     }    
                 }
             }
             case "Runner" -> {
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data[i][1].toLowerCase();
+                    String lowercaseData = data.get(i).get(1).toLowerCase();
                     String lowercaseName = name.toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], data[i][6]});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data[i][0], data[i][1], data[i][2], data[i][5], data[i][4], data[i][6]});
+                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
                     }    
                 }
             }
