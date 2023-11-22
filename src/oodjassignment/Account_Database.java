@@ -155,4 +155,33 @@ public class Account_Database extends Main_Database{
         }
     }
     
+    public boolean checkBalance(int amount, String email, String pst){
+        // minus the amount being key in to compare if it's enough or not
+        return true;
+    }
+    
+    public void wIthdraw(int amount, String email, String pst){
+        String newBalance = "10.00";
+        try {
+            rawData = super.ReadData();
+            count = super.getCount();
+            for (int i = 0; i<count; i++){
+                if (rawData.get(i).get(2).equals(email)){
+                    rawData.get(i).set(6, newBalance);
+                }
+            }
+            super.newWriteFile();
+            for (int i=0; i<count;i++){
+                String line= "";
+                for (int j = 0; j < rawData.get(i).size(); j++) {
+                    line += rawData.get(i).get(j) + "|";
+                }
+                line += "\n";
+                bw.write(line);
+            }
+            super.WriteClose();
+        } catch (IOException ex) {
+            System.out.println("Error");
+        }
+    }
 }

@@ -25,7 +25,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonLogOut" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="48" max="32767" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
@@ -42,8 +42,8 @@
                           <Component id="ToRegister" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                           <Component id="ToForgetPassword" min="-2" max="-2" attributes="0"/>
                           <Component id="ToSearchUser" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                          <Component id="jButtonWIthdraw" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                          <Component id="jButtonTopUp" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -61,7 +61,7 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonLogOut" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -73,9 +73,9 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="ToSearchUser" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonWIthdraw" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonTopUp" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="26" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -122,17 +122,17 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ToSearchUserActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonWIthdraw">
       <Properties>
         <Property name="text" type="java.lang.String" value="Withdraw"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="jButtonTopUp">
       <Properties>
         <Property name="text" type="java.lang.String" value="Top Up"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="jButtonLogOut">
       <Properties>
         <Property name="text" type="java.lang.String" value="Log Out"/>
       </Properties>
