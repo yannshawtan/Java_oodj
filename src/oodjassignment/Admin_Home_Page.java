@@ -61,6 +61,9 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         User_Name = new javax.swing.JLabel();
         ToForgetPassword = new javax.swing.JButton();
         ToSearchUser = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,12 +94,20 @@ public class Admin_Home_Page extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Withdraw");
+
+        jButton2.setText("Top Up");
+
+        jButton3.setText("Log Out");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 126, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(119, 119, 119))
             .addGroup(layout.createSequentialGroup()
@@ -105,21 +116,25 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                         .addGap(178, 178, 178)
                         .addComponent(User_Name))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(ToRegister))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
-                        .addComponent(ToForgetPassword))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(ToSearchUser)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ToRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ToForgetPassword)
+                            .addComponent(ToSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(User_Name)
                 .addGap(18, 18, 18)
@@ -128,7 +143,11 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                 .addComponent(ToForgetPassword)
                 .addGap(18, 18, 18)
                 .addComponent(ToSearchUser)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -186,6 +205,9 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     private javax.swing.JButton ToRegister;
     private javax.swing.JButton ToSearchUser;
     private javax.swing.JLabel User_Name;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
