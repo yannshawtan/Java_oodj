@@ -2,6 +2,8 @@ package oodjassignment;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -13,7 +15,7 @@ public class Main_Database {
     BufferedWriter bw;
     BufferedReader br;
     int count;
-    String [][]Data;
+    ArrayList<ArrayList<String>>Data;
     
     public Main_Database(String type){
         // UPGRADE THIS SYSTEM, TO SUIT CURRENT PROJECT
@@ -117,15 +119,17 @@ public class Main_Database {
         return count;
     }
     
-    public String[][] ReadData(){
-        String [][]Data = new String [100][];
+    public ArrayList<ArrayList<String>> ReadData(){
+        ArrayList<ArrayList<String>>Data = new ArrayList<ArrayList<String>>();
+        ArrayList<String> value;
         String line;
         int count = 0;
         readFile();
         try {
             while((line = br.readLine()) != null){
-                String [] value = line.split("\\|");
-                Data[count] = value;
+                String[] temp = line.split("\\|");
+                value = new ArrayList<>(Arrays.asList(temp));
+                Data.add(value);
                 count++;
             }
             setCount(count);
@@ -157,7 +161,7 @@ public class Main_Database {
     public String GetNextId(String pst){
         Data = ReadData();
         count = getCount() - 1;
-        String lastID = Data[count][0].substring(1);
+        String lastID = Data.get(count).get(0).substring(1);
         int lastIdNum = Integer.parseInt(lastID);
         int newIDNum = lastIdNum + 1;
         String prefix = "";
