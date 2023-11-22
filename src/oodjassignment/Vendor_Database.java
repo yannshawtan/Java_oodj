@@ -11,23 +11,23 @@ import java.util.List;
  *
  * @author myste
  */
-public class Customer_Func extends Main_Database{
-    
-    
-    public Customer_Func() {
+public class Vendor_Database extends Main_Database{
+    ArrayList<ArrayList<String>>rawData;
+    public Vendor_Database() {
+        
         super("Vendor");
     }
 
     public List<User> populateVendorListForAllUsers() {
-        String[][] rawData = super.ReadData();
+        rawData = super.ReadData();
         int counts = super.getCount();
         List<User> finalData = new ArrayList<>();
 
         for (int i = 0; i < counts; i++) {
-            String[] userData = rawData[i];
+            ArrayList<String> userData = rawData.get(i);
             User user = new User();
-            user.setId(userData[0]);
-            user.setName(userData[1]);
+            user.setId(userData.get(0));
+            user.setName(userData.get(1));
             finalData.add(user);
         }
 

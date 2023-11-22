@@ -6,6 +6,9 @@ package oodjassignment;
 
 import java.awt.Component;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
@@ -22,11 +25,18 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     /**
      * Creates new form User_Order_Page
      */
+    User owner = new User();
     public String selectedId;
-    public Cus_Order_Page(String selectedId) {
-        super("Order");
-        this.selectedId = selectedId;
+    public Cus_Order_Page() {
         initComponents();
+    }
+    public Cus_Order_Page(String selectedId, User owner) {
+        super("Order");
+        
+        this.selectedId = selectedId;
+        this.owner = owner;
+        initComponents();
+        
         populateTable();
     }
     
@@ -69,7 +79,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
     
     private DefaultTableModel populateTable() {
-        Cus_Menu_Func menuFunc = new Cus_Menu_Func("Menu");
+        Menu_Database Menu_Database = new Menu_Database("Menu");
         jTable1.getColumnModel().getColumn(1).setCellEditor(new CellEditor());
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer(){
             
@@ -81,7 +91,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             
         });
 
-        String[][] data = menuFunc.getMenuItemsForCustomer(selectedId); 
+        List<List<String>> data = Menu_Database.getMenuItemsForCustomer(selectedId); 
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         jTable1.setRowHeight(30);
@@ -95,8 +105,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
     });
 
-        for (String[] row : data) {
-            model.addRow(row); 
+        for (List<String> row : data) {
+            model.addRow(new Vector<>(row)); 
         }
         return model;
     }
@@ -116,7 +126,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Total_Price = new java.awt.Label();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        Confirm = new javax.swing.JButton();
         Total_display = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,10 +168,10 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Confirm");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Confirm.setText("Confirm");
+        Confirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ConfirmActionPerformed(evt);
             }
         });
 
@@ -182,14 +192,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(Confirm)
                         .addGap(84, 84, 84))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128))
+                .addGap(153, 153, 153))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,19 +207,19 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2))
-                        .addGap(31, 31, 31))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(78, 78, 78))))
+                        .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(Confirm))
+                .addGap(31, 31, 31))
         );
 
         Total_Price.getAccessibleContext().setAccessibleName("Total_Label");
@@ -218,12 +228,18 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        Customer_Menu_Page cmp = new Customer_Menu_Page(owner);
+        System.out.println(owner);
+        cmp.setVisible(true);
+        cmp.pack();
+        cmp.setLocationRelativeTo(null);
+        cmp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ConfirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,16 +268,13 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-         Cus_Menu_Func menuFunc = new Cus_Menu_Func("Menu");
-    String[][] data = menuFunc.getMenuItemsForCustomer("1"); // replace with a known vendor ID
-    System.out.println(Arrays.deepToString(data));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Confirm;
     private java.awt.Label Total_Price;
     private java.awt.Label Total_display;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
