@@ -31,6 +31,15 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         cDate.setEnabled(false);
     }
     
+    public void GoToMenu(User owner) {
+        Manage_Menu MM = new Manage_Menu(owner);
+        MM.setVisible(true);
+        MM.pack();
+        MM.setLocationRelativeTo(null);
+        MM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -324,12 +333,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
-        Manage_Menu MM = new Manage_Menu(owner);
-        MM.setVisible(true);
-        MM.pack();
-        MM.setLocationRelativeTo(null);
-        MM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        GoToMenu(owner);
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**

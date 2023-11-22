@@ -172,6 +172,15 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void GoVendorHomePage() {
+        Vendor_Home_Page vhp = new Vendor_Home_Page(owner);
+        vhp.setVisible(true);
+        vhp.pack();
+        vhp.setLocationRelativeTo(null);
+        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     
     private void TFuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFuserActionPerformed
         // TODO add your handling code here:
@@ -201,7 +210,7 @@ public class Login_Page extends javax.swing.JFrame {
                     }
                     case "Vendor" -> {
                         owner = db.getData();
-                        //GoVendorHomePage();
+                        GoVendorHomePage();
                     }
                     case "Runner" -> {
                         owner = db.getData();
