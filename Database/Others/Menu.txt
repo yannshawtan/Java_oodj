@@ -1,2 +1,3 @@
-001|V2|Burger|Drink|12.99|
-002|V2|Pizza|food|12.99|
+F1|V2|Burger|12.99|Food|
+F2|V2|Pizza|12.99|Beverages|
+F3|V1|Pizza|12.99|Dessert|

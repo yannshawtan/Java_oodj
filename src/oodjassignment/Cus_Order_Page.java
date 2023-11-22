@@ -77,7 +77,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
     
     private DefaultTableModel populateTable() {
-        Cus_Menu_Func menuFunc = new Cus_Menu_Func("Menu");
+        Menu_Database menuFunc = new Menu_Database("Menu");
         jTable1.getColumnModel().getColumn(1).setCellEditor(new CellEditor());
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer(){
             
@@ -266,7 +266,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-         Cus_Menu_Func menuFunc = new Cus_Menu_Func("Menu");
+         Menu_Database menuFunc = new Menu_Database("Menu");
     String[][] data = menuFunc.getMenuItemsForCustomer("1"); // replace with a known vendor ID
     System.out.println(Arrays.deepToString(data));
     }

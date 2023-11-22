@@ -15,10 +15,10 @@ import javax.swing.JTable;
  *
  * @author myste
  */
-public class Cus_Menu_Func extends Main_Database{
+public class Menu_Database extends Main_Database{
     private String [][]rawData;
     
-    public Cus_Menu_Func(String type) {
+    public Menu_Database(String type) {
         super("Menu");
     }
     
@@ -36,8 +36,8 @@ public class Cus_Menu_Func extends Main_Database{
                 String name = rawData[i][2];
                 System.out.println(name);
                 int quantity = 0;
-                String type = rawData[i][3];
-                double price = Double.parseDouble(rawData[i][4]);
+                String type = rawData[i][4];
+                double price = Double.parseDouble(rawData[i][3]);
                 
                 menuItems[menuItemCount][0] = name;
                 menuItems[menuItemCount][1] = String.valueOf(quantity);

@@ -42,7 +42,7 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     }
     
     private void populateVendorListInAWT() {
-    Customer_Func customerFunc = new Customer_Func();
+    Vendor_Database customerFunc = new Vendor_Database();
     List<User> users = customerFunc.populateVendorListForAllUsers();
 
     Vendorlist.removeAll();

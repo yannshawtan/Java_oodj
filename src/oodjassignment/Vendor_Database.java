@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author myste
  */
-public class Customer_Func extends Main_Database{
+public class Vendor_Database extends Main_Database{
     
     
-    public Customer_Func() {
+    public Vendor_Database() {
         super("Vendor");
     }
 
