@@ -42,8 +42,8 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     }
     
     private void populateVendorListInAWT() {
-    Vendor_Database customerFunc = new Vendor_Database();
-    List<User> users = customerFunc.populateVendorListForAllUsers();
+    Vendor_Database Vendor_Database = new Vendor_Database();
+    List<User> users = Vendor_Database.populateVendorListForAllUsers();
 
     Vendorlist.removeAll();
 

@@ -6,6 +6,8 @@ package oodjassignment;
 
 import java.awt.Component;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -77,7 +79,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
     
     private DefaultTableModel populateTable() {
-        Menu_Database menuFunc = new Menu_Database("Menu");
+        Menu_Database Menu_Database = new Menu_Database("Menu");
         jTable1.getColumnModel().getColumn(1).setCellEditor(new CellEditor());
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer(){
             
@@ -89,7 +91,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             
         });
 
-        String[][] data = menuFunc.getMenuItemsForCustomer(selectedId); 
+        List<List<String>> data = Menu_Database.getMenuItemsForCustomer(selectedId); 
 
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         jTable1.setRowHeight(30);
@@ -103,8 +105,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
     });
 
-        for (String[] row : data) {
-            model.addRow(row); 
+        for (List<String> row : data) {
+            model.addRow(new Vector<>(row)); 
         }
         return model;
     }
@@ -266,9 +268,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-         Menu_Database menuFunc = new Menu_Database("Menu");
-    String[][] data = menuFunc.getMenuItemsForCustomer("1"); // replace with a known vendor ID
-    System.out.println(Arrays.deepToString(data));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
