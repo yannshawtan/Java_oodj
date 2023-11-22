@@ -1,11 +1,12 @@
 package oodjassignment;
 
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Account_Database extends Main_Database{
-    String [][]Data;
-    String [][]rawData;
+    ArrayList<ArrayList<String>>Data;
+    ArrayList<ArrayList<String>>rawData;
     User owner = new User();
     
     public Account_Database(String role) {
@@ -53,44 +54,45 @@ public class Account_Database extends Main_Database{
         Data = super.ReadData();
         count = super.getCount();
         for (int i = 0; i<count; i++){
-            if (Data[i][2].equals(email) && Data[i][3].equals(pswd)){
+            Data.get(0).get(1);
+            if (Data.get(i).get(2).equals(email) && Data.get(i).get(3).equals(pswd)){
                 switch (pst) {
                     case "Admin" -> {
-                        owner.setId(Data[i][0]);
-                        owner.setName(Data[i][1]);
-                        owner.setEmail(Data[i][2]);
-                        owner.setPassword(Data[i][3]);
+                        owner.setId(Data.get(i).get(0));
+                        owner.setName(Data.get(i).get(1));
+                        owner.setEmail(Data.get(i).get(2));
+                        owner.setPassword(Data.get(i).get(3));
                         owner.setPrefix("A");
-                        owner.setCreated_Dt(Data[i][4]);
+                        owner.setCreated_Dt(Data.get(i).get(4));
                     }
                     case "Customer" -> {
-                        owner.setId(Data[i][0]);
-                        owner.setName(Data[i][1]);
-                        owner.setEmail(Data[i][2]);
-                        owner.setPassword(Data[i][3]);
+                        owner.setId(Data.get(i).get(0));
+                        owner.setName(Data.get(i).get(1));
+                        owner.setEmail(Data.get(i).get(2));
+                        owner.setPassword(Data.get(i).get(3));
                         owner.setPrefix("C");
-                        owner.setCreated_Dt(Data[i][4]);
-                        owner.setBalance(Data[i][5]);
+                        owner.setCreated_Dt(Data.get(i).get(4));
+                        owner.setBalance(Data.get(i).get(5));
                     }
                     case "Vendor" -> {
-                        owner.setId(Data[i][0]);
-                        owner.setName(Data[i][1]);
-                        owner.setEmail(Data[i][2]);
-                        owner.setPassword(Data[i][3]);
+                        owner.setId(Data.get(i).get(0));
+                        owner.setName(Data.get(i).get(1));
+                        owner.setEmail(Data.get(i).get(2));
+                        owner.setPassword(Data.get(i).get(3));
                         owner.setPrefix("V");
-                        owner.setCreated_Dt(Data[i][4]);
-                        owner.setBalance(Data[i][5]);
-                        owner.setRating(Data[i][6]);
+                        owner.setCreated_Dt(Data.get(i).get(4));
+                        owner.setBalance(Data.get(i).get(5));
+                        owner.setRating(Data.get(i).get(6));
                     }
                     case "Runner" -> {
-                        owner.setId(Data[i][0]);
-                        owner.setName(Data[i][1]);
-                        owner.setEmail(Data[i][2]);
-                        owner.setPassword(Data[i][3]);
+                        owner.setId(Data.get(i).get(0));
+                        owner.setName(Data.get(i).get(1));
+                        owner.setEmail(Data.get(i).get(2));
+                        owner.setPassword(Data.get(i).get(3));
                         owner.setPrefix("R");
-                        owner.setCreated_Dt(Data[i][4]);
-                        owner.setBalance(Data[i][5]);
-                        owner.setRating(Data[i][6]);
+                        owner.setCreated_Dt(Data.get(i).get(4));
+                        owner.setBalance(Data.get(i).get(5));
+                        owner.setRating(Data.get(i).get(6));
                     }
                     default -> {
                     }
@@ -107,7 +109,7 @@ public class Account_Database extends Main_Database{
         Data = super.ReadData();
         count = super.getCount();
         for (int i=0; i<count;i++){
-            if ((Data[i][1].equals(name) || Data[i][2].equals(email))){
+            if (Data.get(i).get(1).equals(name) || Data.get(i).get(2).equals(email)){
                 return true;
             }
         }
@@ -122,7 +124,7 @@ public class Account_Database extends Main_Database{
         Data = super.ReadData();
         count = super.getCount();
         for (int i=0; i<count;i++){
-            if (Data[i][2].equals(email)){
+            if (Data.get(i).get(2).equals(email)){
                 return false;
             }
         }
@@ -134,15 +136,15 @@ public class Account_Database extends Main_Database{
             rawData = super.ReadData();
             count = super.getCount();
             for (int i = 0; i<count; i++){
-                if (rawData[i][2].equals(email)){
-                    rawData[i][3] = password;
+                if (rawData.get(i).get(2).equals(email)){
+                    rawData.get(i).set(2, password);
                 }
             }
             super.newWriteFile();
             for (int i=0; i<count;i++){
                 String line= "";
-                for (int j = 0; j<rawData[i].length;j++){
-                    line += rawData[i][j] + "|";
+                for (int j = 0; j < rawData.get(i).size(); j++) {
+                    line += rawData.get(i).get(j) + "|";
                 }
                 line += "\n";
                 bw.write(line);
