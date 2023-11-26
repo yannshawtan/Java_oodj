@@ -11,6 +11,12 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         return formatDate(currentDate);
     }
     
+    public String getCurrentTime() {
+//        LocalDate currentDate = LocalDate.now();
+//        return formatDate(currentDate);
+        return null;
+    }
+    
     
     User owner = new User();
     
