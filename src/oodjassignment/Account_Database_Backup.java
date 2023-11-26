@@ -3,36 +3,17 @@ package oodjassignment;
 import java.io.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import oodjassignment.Roles.*;
-import oodjassignment.Roles.Identifier.Role;
 
-public class Account_Database {
-    
+public class Account_Database_Backup extends Main_Database{
+    ArrayList<ArrayList<String>>Data;
+    ArrayList<ArrayList<String>>rawData;
     User owner = new User();
     
-    public <T> Account_Database(Role role) {
-        Main_Database<T> MD = new Main_Database<>(role);
+    public Account_Database_Backup(String role) {
+        super(role);
     }
     
-    public void addUser(String name, String email, String pswd, String pst){
-        switch (pst) {
-            case "Admin" -> {
-                Admin a = new Admin(name, pswd, email);
-            }
-            case "Customer" -> {
-                //C1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|10.50|
-                Customer c = new Customer(name, pswd, email, 0.0);
-            }
-            case "Vendor" -> {
-                Vendor c = new Vendor(name, pswd, email, 0.0);
-            }
-            case "Runner" -> {
-                Runner c = new Runner(name, pswd, email, 0.0);
-            }
-        }
-    }
-    
-    public void addUser(String usr, String mail, String pswd, String pst){
+    public void AddData(String usr, String mail, String pswd, String pst){
         try {
             String id = GetNextId(pst);
 //            String id = "Test";
