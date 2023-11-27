@@ -238,7 +238,7 @@ public class Register_Page extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "The email given is already been use!");
             }
             else{
-                db.addUser(Name,Email,Password,role);
+                db.addUser(Name,Email,Password, role);
                 JOptionPane.showMessageDialog(null, "Successfully register account!");
             }
         }

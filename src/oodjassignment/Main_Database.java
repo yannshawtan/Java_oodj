@@ -138,12 +138,12 @@ public class Main_Database<T> {
                 data.add(object);
                 count++;
             }catch(EOFException Ex){
-                setCount(count);
                 break;
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Main_Database.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        setCount(count);
         ReadClose();
         return data;
     }
