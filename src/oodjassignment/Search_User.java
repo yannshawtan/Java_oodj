@@ -4,25 +4,49 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import oodjassignment.Roles.Admin;
+import oodjassignment.Roles.*;
 import oodjassignment.Roles.Customer;
 import oodjassignment.Roles.Identifier;
-import oodjassignment.Roles.Runner;
-import oodjassignment.Roles.Vendor;
 
-/**
- *
- * @author user
- */
 public class Search_User extends javax.swing.JFrame {
 
     Admin currentUser;
+    int counts;
     
     public Search_User() {
         initComponents();
         String Position = Role.getSelectedItem().toString();
         ListOfUser(Position, "");
     }
+    
+//    public Search_User() {
+//        ArrayList<Admin> data;
+//        Identifier.Role role = Identifier.Role.Admin;
+////        Main_Database<Admin> db = new Main_Database<>(role);
+//        Account_Database db = new Account_Database(role);
+//        int counts;
+//        data = db.ReadData();
+//        counts = db.getCount();
+//        int count = db.getCount();
+//        
+//        System.out.println(counts + " item in the list");
+//        System.out.println(count + " item in the list");
+//        System.out.println(db.getCount() + " item in the list");
+//        for (int i = 0; i<data.size();i++){
+//            System.out.println(data.get(i));
+//        }
+//        //
+////        ArrayList<Admin> data;
+////        Identifier.Role role = Identifier.Role.Admin;
+////        Main_Database<Admin> MD = new Main_Database<>(role);
+////        int count;
+////        data = MD.ReadData();
+////        count = MD.getCount();
+////        System.out.println(count + " item in the list");
+////        for (int i = 0; i<data.size();i++){
+////            System.out.println(data.get(i));
+////        }
+//    }
     
     public Search_User(Admin currentUser) {
         initComponents();
@@ -49,55 +73,61 @@ public class Search_User extends javax.swing.JFrame {
         jTableUser.setRowSorter(sorter);
         model.setRowCount(0);
         Identifier.Role role = Identifier.Role.valueOf(Position);
-        Account_Database db = new Account_Database(role);
-        int counts = db.getCount();
         String lowercaseName = name.toLowerCase();
         switch (role) {
             case Admin -> {
+                Main_Database<Admin> db = new Main_Database<>(role);
                 ArrayList<Admin> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
                     String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }    
                 }
             }
             case Customer -> {
+                Main_Database<Customer> db = new Main_Database(role);
                 ArrayList<Customer> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
                     String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " "+ data.get(i).getCreated_Time(), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }    
                 }
             }
             case Vendor -> {
+                Account_Database db = new Account_Database(role);
                 ArrayList<Vendor> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
                     String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }    
                 }
             }
             case Runner -> {
+                Account_Database db = new Account_Database(role);
                 ArrayList<Runner> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
                     String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }    
                 }
             }

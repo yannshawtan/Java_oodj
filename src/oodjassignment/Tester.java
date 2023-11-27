@@ -17,12 +17,18 @@ import oodjassignment.Roles.Identifier;
 public class Tester {
     
     public static void main(String[] args){
-        ArrayList<Admin> data;
+//        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
+//        ArrayList<Runner> data;
+        ArrayList<Vendor> data;
         int count;
-        Identifier.Role role = Identifier.Role.Admin;
+//        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
-        Main_Database<Admin> MD = new Main_Database<>(role);
+//        Identifier.Role role = Identifier.Role.Runner;
+        Identifier.Role role = Identifier.Role.Vendor;
+//        Main_Database<Admin> MD = new Main_Database<>(role);
+//        Main_Database<Runner> MD = new Main_Database<>(role);
+        Main_Database<Vendor> MD = new Main_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
@@ -35,7 +41,7 @@ public class Tester {
         
         // Add data
         
-        
+        /*
 //        MD.addData(role, c1);
         MD.addData(role, a1);
 //        MD.addData(Admin, a2);

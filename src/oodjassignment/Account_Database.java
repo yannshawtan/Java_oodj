@@ -31,23 +31,19 @@ public class Account_Database<T> extends Main_Database{
         switch (role) {
             case Admin -> {
                 Admin a = new Admin(name, pswd, email);
-//                MD.addData(role, (T) a);
                 addData(role, (T) a);
             }
             case Customer -> {
                 Customer c = new Customer(name, pswd, email);
-//                MD.addData(role, (T) c);
                 addData(role, (T) c);
             }
             case Vendor -> {
                 Vendor v = new Vendor(name, pswd, email);
-//                MD.addData(role, (T) v);
                 addData(role, (T) v);
             }
             case Runner -> {
                 Runner r = new Runner(name, pswd, email);
                 addData(role, (T) r);
-                MD.addData(role, (T) r);
             }
         }
     }
@@ -55,7 +51,6 @@ public class Account_Database<T> extends Main_Database{
     public boolean LoginValidation(String email, String pswd, Role role){
 //        MD = databaseType(role);
         data = ReadData();
-        //count = MD.getCount();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
