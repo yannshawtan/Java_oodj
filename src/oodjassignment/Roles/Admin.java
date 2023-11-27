@@ -16,7 +16,6 @@ import oodjassignment.Date_Provider;
 public class Admin extends Identifier implements Serializable, Date_Provider{
     
     private String Name, Password, Email, Created_Dt, Created_Time;
-    private boolean State;
     
     public Admin(String Name, String Password, String Email){
         super("A"); 

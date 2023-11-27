@@ -5,6 +5,7 @@
 package oodjassignment;
 
 import javax.swing.JFrame;
+import oodjassignment.Roles.Admin;
 
 /**
  *
@@ -12,21 +13,30 @@ import javax.swing.JFrame;
  */
 public class Admin_Home_Page extends javax.swing.JFrame {
 
-    User owner = new User();
+    Admin currentUser;
     
     public Admin_Home_Page() {
         initComponents();
         User_Name.setText("Error");
     }
     
-    public Admin_Home_Page(User owner) {
+    public Admin_Home_Page(Admin currentUser) {
         initComponents();
-        this.owner = owner;
-        User_Name.setText(owner.getName());
+        this.currentUser = currentUser;
+        User_Name.setText(currentUser.getName());
+    }
+    
+    public void GoLoginPage(){
+        Login_Page lp = new Login_Page();
+        lp.setVisible(true);
+        lp.pack();
+        lp.setLocationRelativeTo(null);
+        lp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
     
     public void GoRegister(){
-        Register_Page rp = new Register_Page(owner);
+        Register_Page rp = new Register_Page(currentUser);
         rp.setVisible(true);
         rp.pack();
         rp.setLocationRelativeTo(null);
@@ -35,7 +45,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoForgetPassword(){
-        Forget_Password_Page fp = new Forget_Password_Page(owner);
+        Forget_Password_Page fp = new Forget_Password_Page(currentUser);
         fp.setVisible(true);
         fp.pack();
         fp.setLocationRelativeTo(null);
@@ -44,7 +54,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
 
     public void GoSearchUser(){
-        Search_User su = new Search_User(owner);
+        Search_User su = new Search_User(currentUser);
         su.setVisible(true);
         su.pack();
         su.setLocationRelativeTo(null);
@@ -53,7 +63,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoWithdraw(){
-        Withdraw w = new Withdraw(owner);
+        Withdraw w = new Withdraw(currentUser);
         w.setVisible(true);
         w.pack();
         w.setLocationRelativeTo(null);
@@ -108,6 +118,11 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         jButtonTopUp.setText("Top Up");
 
         jButtonLogOut.setText("Log Out");
+        jButtonLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogOutActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,6 +188,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     private void ToSearchUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ToSearchUserActionPerformed
         GoSearchUser();
     }//GEN-LAST:event_ToSearchUserActionPerformed
+
+    private void jButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogOutActionPerformed
+        GoLoginPage();
+    }//GEN-LAST:event_jButtonLogOutActionPerformed
 
     /**
      * @param args the command line arguments

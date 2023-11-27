@@ -1,6 +1,6 @@
 package oodjassignment;
 
-public class Order{
+public class Order_But_Useless{
     private String Id, Prefix, Customer_ID, Menu_ID, Food, Quantity, Created_Dt,Status, Total_Amount,
             Rating_For_Vendor, Feedback_For_Vendor, Rating_For_Runner, Feedback_For_Runner;
     

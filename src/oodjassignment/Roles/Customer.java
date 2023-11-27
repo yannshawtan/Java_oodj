@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package oodjassignment.Roles;
 
 import java.io.Serializable;
@@ -74,6 +70,10 @@ public class Customer extends Identifier implements Serializable, Date_Provider{
         return Balance;
     }
     
+    public String getStringBalance(){
+        return String.valueOf(Balance);
+    }
+    
     public String getCreated_Date(){
         return Created_Dt;
     }
@@ -83,7 +83,7 @@ public class Customer extends Identifier implements Serializable, Date_Provider{
     }
     
     public String toString(){
-        return getNumber() + ". This is " + getName() + ", from "+ getCreated_Time();
+        return getNumber() + "," + getId() + ". This is " + getName() + ", from "+ getCreated_Time();
     }
     
 }

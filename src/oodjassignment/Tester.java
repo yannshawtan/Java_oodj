@@ -10,31 +10,37 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oodjassignment.Roles.*;
-import static oodjassignment.Roles.Identifier.Role.Admin;
+import oodjassignment.Roles.Customer;
+import oodjassignment.Roles.Identifier;
+
 
 public class Tester {
     
     public static void main(String[] args){
         ArrayList<Admin> data;
-        ArrayList<Customer> newData;
+//        ArrayList<Customer> data;
         int count;
         Identifier.Role role = Identifier.Role.Admin;
+//        Identifier.Role role = Identifier.Role.Customer;
         Main_Database<Admin> MD = new Main_Database<>(role);
-        Account_Database<Admin> AD = new Account_Database<>(role);
+//        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
         Admin a1 = new Admin("Zorus", "Zorus", "Zorus@gmail.com");
-        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
-        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
-        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
+//        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
+//        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
+//        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
+//        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
         //*/
         
         // Add data
-        /*
-        MD.addData(Admin, a1);
-        MD.addData(Admin, a2);
-        MD.addData(Admin, a3);
-        MD.addData(Admin, a4);
+        
+        
+//        MD.addData(role, c1);
+        MD.addData(role, a1);
+//        MD.addData(Admin, a2);
+//        MD.addData(Admin, a3);
+//        MD.addData(Admin, a4);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
@@ -44,7 +50,7 @@ public class Tester {
         //*/
         
         // This will read the data as well as how u how many items
-        /*
+        
         data = MD.ReadData();
         count = MD.getCount();
         System.out.println(count + " item in the list");
@@ -54,7 +60,7 @@ public class Tester {
         //*/
         
         // change a specific data
-        
+        /*
         data = MD.ReadData();
         count = MD.getCount();
         System.out.println(count + " is the size of the list");
