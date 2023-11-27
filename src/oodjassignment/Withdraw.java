@@ -5,6 +5,7 @@
 package oodjassignment;
 
 import javax.swing.JFrame;
+import oodjassignment.Roles.Admin;
 
 /**
  *
@@ -12,19 +13,19 @@ import javax.swing.JFrame;
  */
 public class Withdraw extends javax.swing.JFrame {
 
-    User owner = new User();
+    Admin currentUser;
     
     public Withdraw() {
         initComponents();
     }
 
-    public Withdraw(User owner) {
+    public Withdraw(Admin currentUser) {
         initComponents();
-        this.owner = owner;
+        this.currentUser = currentUser;
     }
     
     public void Return(){
-        Admin_Home_Page hp = new Admin_Home_Page(owner);
+        Admin_Home_Page hp = new Admin_Home_Page(currentUser);
         hp.setVisible(true);
         hp.pack();
         hp.setLocationRelativeTo(null);

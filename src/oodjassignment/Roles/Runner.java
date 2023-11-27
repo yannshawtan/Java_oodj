@@ -75,6 +75,10 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         return Balance;
     }
     
+    public String getStringBalance(){
+        return String.valueOf(Balance);
+    }
+    
     public String getCreated_Date(){
         return Created_Dt;
     }
@@ -88,11 +92,11 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         this.stringRating = decimalFormat.format(temp);
     }
     
-    public String getRating(){
+    public String getStringRating(){
         return stringRating;
     }
     
-    public double getDoubleRating(){
+    public double getRating(){
         Rating = Double.parseDouble(stringRating);
         return Rating;
     }

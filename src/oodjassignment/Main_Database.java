@@ -9,6 +9,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Customer;
+import oodjassignment.Roles.Order;
 import oodjassignment.Roles.Identifier.Role;
 
 
@@ -79,17 +81,7 @@ public class Main_Database<T> {
         }
         
     }
-    /*
-    public ObjectOutputStream AppendFile(){
-        if (f.exists()){
-            return writeFile();
-        }
-        else{
-            return newWriteFile();
-        }
-        
-    }
-    */
+
     public void CreateFolder(){
         if(!f1.exists()){
             f1.mkdirs();
@@ -209,6 +201,7 @@ public class Main_Database<T> {
                     for (Object c : data) {
                         if (c instanceof Customer) {
                             num++;
+                            ((Customer) c).setNumber(num);
                             oos.writeObject(c);
                         }
                     }
@@ -216,48 +209,62 @@ public class Main_Database<T> {
                 case Runner -> {
                     for (Object r : data) {
                         if (r instanceof Runner) {
+                            num++;
+                            ((Runner) r).setNumber(num);
                             oos.writeObject(r);
                         }
                     }
                 }
                 case Vendor -> {
                     for (Object v : data) {
-                        if (v instanceof Customer) {
+                        if (v instanceof Vendor) {
+                            num++;
+                            ((Vendor) v).setNumber(num);
                             oos.writeObject(v);
                         }
                     }
                 }
                 case Delivery -> {
                     for (Object d : data) {
-                        if (d instanceof Customer) {
+                        if (d instanceof Delivery) {
+                            num++;
+                            ((Delivery) d).setNumber(num);
                             oos.writeObject(d);
                         }
                     }
                 }
                 case Menu -> {
                     for (Object m : data) {
-                        if (m instanceof Customer) {
+                        if (m instanceof Menu) {
+                            num++;
+                            ((Menu) m).setNumber(num);
                             oos.writeObject(m);
                         }
                     }
                 }
                 case Order -> {
                     for (Object o : data) {
-                        if (o instanceof Customer) {
+                        if (o instanceof Order) {
+                            num++;
+                            ((Order) o).setNumber(num);
                             oos.writeObject(o);
                         }
                     }
                 }
                 case Transaction -> {
                     for (Object t : data) {
-                        if (t instanceof Customer) {
+                        if (t instanceof Transaction) {
+                            num++;
+                            ((Transaction) t).setNumber(num);
                             oos.writeObject(t);
                         }
                     }
                 }
                 case Notification -> {
                     for (Object n : data) {
-                        if (n instanceof Customer) {
+                        if (n instanceof Notification) {
+                            num++;
+                            ((Notification) n).setNumber(num);
                             oos.writeObject(n);
                         }
                     }

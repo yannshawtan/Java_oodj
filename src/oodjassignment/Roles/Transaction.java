@@ -4,10 +4,16 @@
  */
 package oodjassignment.Roles;
 
+import java.io.Serializable;
+
 /**
  *
  * @author user
  */
-public class Transaction {
+public class Transaction extends Identifier implements Serializable{
+    
+    public Transaction() {
+        super("T");
+    }
     
 }

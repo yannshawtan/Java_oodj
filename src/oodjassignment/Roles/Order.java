@@ -4,10 +4,15 @@
  */
 package oodjassignment.Roles;
 
+import java.io.Serializable;
+
 /**
  *
  * @author user
  */
-public class Order {
+public class Order extends Identifier implements Serializable{
     
+    public Order(){
+        super("O"); 
+    }
 }

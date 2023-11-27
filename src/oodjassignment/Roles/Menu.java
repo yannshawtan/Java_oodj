@@ -4,10 +4,15 @@
  */
 package oodjassignment.Roles;
 
+import java.io.Serializable;
+
 /**
  *
  * @author user
  */
-public class Menu {
+public class Menu extends Identifier implements Serializable{
     
+    public Menu(){
+        super("M");
+    }
 }

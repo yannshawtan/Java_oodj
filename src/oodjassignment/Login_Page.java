@@ -2,10 +2,13 @@ package oodjassignment;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier.Role;
 
 public class Login_Page extends javax.swing.JFrame {
     
-    User owner = new User();
+    //User owner = new User();
+    private Object currentUser;
     public Login_Page() {
         initComponents();
         setVisible(true);
@@ -154,17 +157,17 @@ public class Login_Page extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    public void GoCustomerHomePage(){
-       Customer_Home_Page chp = new Customer_Home_Page(owner);
-        chp.setVisible(true);
-        chp.pack();
-        chp.setLocationRelativeTo(null);
-        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    }
+//    public void GoCustomerHomePage(){
+//       Customer_Home_Page chp = new Customer_Home_Page(currentUser);
+//        chp.setVisible(true);
+//        chp.pack();
+//        chp.setLocationRelativeTo(null);
+//        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.dispose();
+//    }
     
     public void GoAdminHomePage(){
-        Admin_Home_Page ahp = new Admin_Home_Page(owner);
+        Admin_Home_Page ahp = new Admin_Home_Page((Admin) currentUser);
         ahp.setVisible(true);
         ahp.pack();
         ahp.setLocationRelativeTo(null);
@@ -172,14 +175,14 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void GoVendorHomePage() {
-        Vendor_Home_Page vhp = new Vendor_Home_Page(owner);
-        vhp.setVisible(true);
-        vhp.pack();
-        vhp.setLocationRelativeTo(null);
-        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    }
+//    public void GoVendorHomePage() {
+//        Vendor_Home_Page vhp = new Vendor_Home_Page(currentUser);
+//        vhp.setVisible(true);
+//        vhp.pack();
+//        vhp.setLocationRelativeTo(null);
+//        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        this.dispose();
+//    }
     
     
     private void TFuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFuserActionPerformed
@@ -197,28 +200,33 @@ public class Login_Page extends javax.swing.JFrame {
         }
         else{
             String Position = Role.getSelectedItem().toString();
-            Account_Database db = new Account_Database(Position);
-            if (db.LoginValidation(Email, Password,Position)){
+            Identifier.Role role = Identifier.Role.valueOf(Position);
+            Account_Database db = new Account_Database(role);
+            if (db.LoginValidation(Email, Password, role)){
+                JOptionPane.showMessageDialog(null, "Login Success");
                 switch (Position) {
                     case "Customer" -> {
-                        owner = db.getData();
-                        GoCustomerHomePage();
+                        currentUser = (Customer) db.getCurrentUser();
+//                        GoCustomerHomePage();
                     }
                     case "Admin" -> {
-                        owner = db.getData();
+                        currentUser = db.getCurrentUser();
                         GoAdminHomePage();
                     }
                     case "Vendor" -> {
-                        owner = db.getData();
-                        GoVendorHomePage();
+                        currentUser = db.getCurrentUser();
+//                        GoVendorHomePage();
                     }
                     case "Runner" -> {
-                        owner = db.getData();
+                        currentUser = db.getCurrentUser();
                         //GoRunnerHomePage();
                     }
                     default -> {
                     }
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid email or password");
             }
         }
     }//GEN-LAST:event_BloginActionPerformed
