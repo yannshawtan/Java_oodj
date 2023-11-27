@@ -177,26 +177,26 @@ public class Main_Database<T> {
     }
     
     
-    public void addData(String type, T object){
+    public void addData(Role role, T object){
         data = ReadData();
         data.add(object);
-        updateData(type, data);
+        updateData(role, data);
         
     }
     
-    public void removeData(String type, int num){
+    public void removeData(Role role, int num){
         data = ReadData();
         data.remove(num-1);
-        updateData(type, data);
+        updateData(role, data);
     }
     
-    public void updateData(String type, ArrayList<T> data){
+    public void updateData(Role role, ArrayList<T> data){
         int num = 0;
         ObjectOutputStream oos = null;
         try{
             oos = writeFile();
-            switch (type) {
-                case "Admin" -> {
+            switch (role) {
+                case Admin -> {
                     for (Object a : data) {
                         if (a instanceof Admin) {
                             num++;
@@ -205,7 +205,7 @@ public class Main_Database<T> {
                         }
                     }
                 }
-                case "Customer" -> {
+                case Customer -> {
                     for (Object c : data) {
                         if (c instanceof Customer) {
                             num++;
@@ -213,49 +213,49 @@ public class Main_Database<T> {
                         }
                     }
                 }
-                case "Runner" -> {
+                case Runner -> {
                     for (Object r : data) {
                         if (r instanceof Runner) {
                             oos.writeObject(r);
                         }
                     }
                 }
-                case "Vendor" -> {
+                case Vendor -> {
                     for (Object v : data) {
                         if (v instanceof Customer) {
                             oos.writeObject(v);
                         }
                     }
                 }
-                case "Delivery" -> {
+                case Delivery -> {
                     for (Object d : data) {
                         if (d instanceof Customer) {
                             oos.writeObject(d);
                         }
                     }
                 }
-                case "Menu" -> {
+                case Menu -> {
                     for (Object m : data) {
                         if (m instanceof Customer) {
                             oos.writeObject(m);
                         }
                     }
                 }
-                case "Order" -> {
+                case Order -> {
                     for (Object o : data) {
                         if (o instanceof Customer) {
                             oos.writeObject(o);
                         }
                     }
                 }
-                case "Transaction" -> {
+                case Transaction -> {
                     for (Object t : data) {
                         if (t instanceof Customer) {
                             oos.writeObject(t);
                         }
                     }
                 }
-                case "Notification" -> {
+                case Notification -> {
                     for (Object n : data) {
                         if (n instanceof Customer) {
                             oos.writeObject(n);

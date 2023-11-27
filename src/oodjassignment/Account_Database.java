@@ -6,201 +6,294 @@ import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
 
-public class Account_Database {
+
+public class Account_Database<T>{
     
-    User owner = new User();
+    private Main_Database<T> MD = null;
+    private ArrayList<T> data;
+    private int count;
+    private Object currentUser;
     
-    public <T> Account_Database(Role role) {
-        Main_Database<T> MD = new Main_Database<>(role);
+    public Account_Database(Role role) {
+        MD = new Main_Database<>(role);
     }
     
-    public void addUser(String name, String email, String pswd, String pst){
-        switch (pst) {
-            case "Admin" -> {
+    public Main_Database<T> databaseType(Role role){
+        switch (role) {
+            case Admin -> MD = new Main_Database<>(role);
+            case Customer -> MD = new Main_Database<>(role);
+            case Vendor -> MD = new Main_Database<>(role);
+            case Runner -> MD = new Main_Database<>(role);
+        }
+        return MD;
+    }
+    
+    public void addUser(String name, String email, String pswd, Role role){
+        MD = databaseType(role);
+        switch (role) {
+            case Admin -> {
                 Admin a = new Admin(name, pswd, email);
+                MD.addData(role, (T) a);
             }
-            case "Customer" -> {
-                //C1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|10.50|
-                Customer c = new Customer(name, pswd, email, 0.0);
+            case Customer -> {
+                Customer c = new Customer(name, pswd, email);
+                MD.addData(role, (T) c);
             }
-            case "Vendor" -> {
-                Vendor c = new Vendor(name, pswd, email, 0.0);
+            case Vendor -> {
+                Vendor v = new Vendor(name, pswd, email);
+                MD.addData(role, (T) v);
             }
-            case "Runner" -> {
-                Runner c = new Runner(name, pswd, email, 0.0);
+            case Runner -> {
+                Runner r = new Runner(name, pswd, email);
+                MD.addData(role, (T) r);
             }
         }
     }
     
-    public void addUser(String usr, String mail, String pswd, String pst){
-        try {
-            String id = GetNextId(pst);
-//            String id = "Test";
-            super.writeFile();
-            // Need to create a function to find the latest id and date
-            String dateCreate = GetCurrentDateandTime(pst);
-            String balance = "0.0";
-            // Name, Email, Password, Position
-            switch (pst) {
-                case "Admin" -> {
-                    //A1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|
-                    bw.write(id + "|" + usr + "|" + mail + "|" + pswd + "|" + dateCreate + "|\n");
-                }
-                case "Customer" -> {
-                    //C1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|10.50|
-                    bw.write(id + "|" + usr + "|" + mail + "|" + pswd + "|" + dateCreate+ "|" + balance + "|\n");
-                }
-                case "Vendor" -> {
-                    //V1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|10.50|5.0|
-                    bw.write(id + "|" + usr + "|" + mail + "|" + pswd + "|" + dateCreate+ "|" + balance + "|\n");
-                }
-                case "Runner" -> {
-                    //R1|Zorus|Zorus@email.com|Zorus|27/09/2023 14:30:45|10.50|5.0|
-                    bw.write(id + "|" + usr + "|" + mail + "|" + pswd + "|" + dateCreate+ "|" + balance + "|\n");
-                }
-                default -> {
+    public boolean LoginValidation(String email, String pswd, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        //count = MD.getCount();
+        for (int i = 0; i<data.size(); i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getEmail().equals(email) && admin.getPassword().equals(pswd)) {
+                    setUser(role, admin);
+                    JOptionPane.showMessageDialog(null, "Login Success");
+                    return true;
                 }
             }
-            super.WriteClose();
-            JOptionPane.showMessageDialog(null, "Register Complete!");
-        } 
-        catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,"File not found!");
-        }
-    }
-    
-    public boolean LoginValidation(String email, String pswd, String pst){
-        Data = super.ReadData();
-        count = super.getCount();
-        for (int i = 0; i<count; i++){
-            Data.get(0).get(1);
-            if (Data.get(i).get(2).equals(email) && Data.get(i).get(3).equals(pswd)){
-                switch (pst) {
-                    case "Admin" -> {
-                        owner.setId(Data.get(i).get(0));
-                        owner.setName(Data.get(i).get(1));
-                        owner.setEmail(Data.get(i).get(2));
-                        owner.setPassword(Data.get(i).get(3));
-                        owner.setPrefix("A");
-                        owner.setCreated_Dt(Data.get(i).get(4));
-                    }
-                    case "Customer" -> {
-                        owner.setId(Data.get(i).get(0));
-                        owner.setName(Data.get(i).get(1));
-                        owner.setEmail(Data.get(i).get(2));
-                        owner.setPassword(Data.get(i).get(3));
-                        owner.setPrefix("C");
-                        owner.setCreated_Dt(Data.get(i).get(4));
-                        owner.setBalance(Data.get(i).get(5));
-                    }
-                    case "Vendor" -> {
-                        owner.setId(Data.get(i).get(0));
-                        owner.setName(Data.get(i).get(1));
-                        owner.setEmail(Data.get(i).get(2));
-                        owner.setPassword(Data.get(i).get(3));
-                        owner.setPrefix("V");
-                        owner.setCreated_Dt(Data.get(i).get(4));
-                        owner.setBalance(Data.get(i).get(5));
-                        owner.setRating(Data.get(i).get(6));
-                    }
-                    case "Runner" -> {
-                        owner.setId(Data.get(i).get(0));
-                        owner.setName(Data.get(i).get(1));
-                        owner.setEmail(Data.get(i).get(2));
-                        owner.setPassword(Data.get(i).get(3));
-                        owner.setPrefix("R");
-                        owner.setCreated_Dt(Data.get(i).get(4));
-                        owner.setBalance(Data.get(i).get(5));
-                        owner.setRating(Data.get(i).get(6));
-                    }
-                    default -> {
-                    }
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email) && customer.getPassword().equals(pswd)) {
+                    setUser(role, customer);
+                    JOptionPane.showMessageDialog(null, "Login Success");
+                    return true;
                 }
-                JOptionPane.showMessageDialog(null, "Login Success");
-                return true;
             }
-        }
-        JOptionPane.showMessageDialog(null, "Incorrect username or password!");
-        return false;
-    }
-    
-    public boolean RegisterValidation(String name, String email){
-        Data = super.ReadData();
-        count = super.getCount();
-        for (int i=0; i<count;i++){
-            if (Data.get(i).get(1).equals(name) || Data.get(i).get(2).equals(email)){
-                return true;
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email) && vendor.getPassword().equals(pswd)) {
+                    setUser(role, vendor);
+                    JOptionPane.showMessageDialog(null, "Login Success");
+                    return true;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email) && runner.getPassword().equals(pswd)) {
+                    setUser(role, runner);
+                    JOptionPane.showMessageDialog(null, "Login Success");
+                    return true;
+                }
             }
         }
         return false;
     }
     
-    public User getData(){
-        return owner;
+    public void setUser(Role role, Object user) {
+        switch (role) {
+            case Admin:
+                currentUser = (Admin) user;
+                break;
+            case Customer:
+                currentUser = (Customer) user;
+                break;
+            case Vendor:
+                currentUser = (Vendor) user;
+                break;
+            case Runner:
+                currentUser = (Runner) user;
+                break;
+        }
+    }
+
+    public Object getCurrentUser() {
+        return currentUser;
+    }
+
+    
+    
+    public boolean RegisterValidation(String email, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size(); i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getEmail().equals(email)){
+                    return true;
+                }
+            }
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email)){
+                    return true;
+                }
+            }
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email)){
+                    return true;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
-    public boolean AccountValidation(String email){
-        Data = super.ReadData();
-        count = super.getCount();
-        for (int i=0; i<count;i++){
-            if (Data.get(i).get(2).equals(email)){
-                return false;
+    
+    public boolean AccountValidation(String email, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size(); i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getEmail().equals(email)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email)){
+                    return false;
+                }
             }
         }
         return true;
     }
     
-    public void changePassword(String email, String password){
-        try {
-            rawData = super.ReadData();
-            count = super.getCount();
-            for (int i = 0; i<count; i++){
-                if (rawData.get(i).get(2).equals(email)){
-                    rawData.get(i).set(2, password);
+    public void changePassword(String email, String password, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size();i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getEmail().equals(email)){
+                    admin.setPassword(password);
+                    data.set(i, (T) admin);
+                    MD.updateData(role, data);
+                    break;
                 }
             }
-            super.newWriteFile();
-            for (int i=0; i<count;i++){
-                String line= "";
-                for (int j = 0; j < rawData.get(i).size(); j++) {
-                    line += rawData.get(i).get(j) + "|";
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email)){
+                    customer.setPassword(password);
+                    data.set(i, (T) customer);
+                    MD.updateData(role, data);
+                    break;
                 }
-                line += "\n";
-                bw.write(line);
             }
-            super.WriteClose();
-        } catch (IOException ex) {
-            System.out.println("Error");
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email)){
+                    vendor.setPassword(password);
+                    data.set(i, (T) vendor);
+                    MD.updateData(role, data);
+                    break;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email)){
+                    runner.setPassword(password);
+                    data.set(i, (T) runner);
+                    MD.updateData(role, data);
+                    break;
+                }
+            }
         }
     }
     
-    public boolean checkBalance(int amount, String email, String pst){
-        // minus the amount being key in to compare if it's enough or not
+    public boolean checkBalance(int amount, String email, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size();i++){
+            if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email)){
+                    if (customer.getBalance() >= amount){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email)){
+                    if (vendor.getBalance() >= amount){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email)){
+                    if (runner.getBalance() >= amount){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
     
-    public void wIthdraw(int amount, String email, String pst){
-        String newBalance = "10.00";
-        try {
-            rawData = super.ReadData();
-            count = super.getCount();
-            for (int i = 0; i<count; i++){
-                if (rawData.get(i).get(2).equals(email)){
-                    rawData.get(i).set(6, newBalance);
+    public void changeBalance(int amount, String email, Role role){
+        MD = databaseType(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size();i++){
+            if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getEmail().equals(email)){
+                    customer.updateBalance(amount);
+                    data.set(i, (T) customer);
+                    MD.updateData(role, data);
+                    break;
                 }
             }
-            super.newWriteFile();
-            for (int i=0; i<count;i++){
-                String line= "";
-                for (int j = 0; j < rawData.get(i).size(); j++) {
-                    line += rawData.get(i).get(j) + "|";
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getEmail().equals(email)){
+                    vendor.updateBalance(amount);
+                    data.set(i, (T) vendor);
+                    MD.updateData(role, data);
+                    break;
                 }
-                line += "\n";
-                bw.write(line);
             }
-            super.WriteClose();
-        } catch (IOException ex) {
-            System.out.println("Error");
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getEmail().equals(email)){
+                    runner.updateBalance(amount);
+                    data.set(i, (T) runner);
+                    MD.updateData(role, data);
+                    break;
+                }
+            }
         }
     }
 }
