@@ -11,6 +11,12 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         return formatDate(currentDate);
     }
     
+    public String getCurrentTime() {
+//        LocalDate currentDate = LocalDate.now();
+//        return formatDate(currentDate);
+        return null;
+    }
+    
     
     User owner = new User();
     
@@ -29,6 +35,15 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         vRate.setEnabled(false);
         cDate.setText(getCurrentDate());
         cDate.setEnabled(false);
+    }
+    
+    public void GoToMenu(User owner) {
+        Manage_Menu MM = new Manage_Menu(owner);
+        MM.setVisible(true);
+        MM.pack();
+        MM.setLocationRelativeTo(null);
+        MM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
     
     @SuppressWarnings("unchecked")
@@ -324,12 +339,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
-        Manage_Menu MM = new Manage_Menu(owner);
-        MM.setVisible(true);
-        MM.pack();
-        MM.setLocationRelativeTo(null);
-        MM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+        GoToMenu(owner);
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
