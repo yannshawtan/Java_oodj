@@ -12,12 +12,11 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     private int totalRating, countRating;
     private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
-    public Vendor(String Name, String Password, String Email, double Balance){
+    public Vendor(String Name, String Password, String Email){
         super("D"); 
         this.Name = Name;
         this.Password = Password;
         this.Email = Email;
-        this.Balance = Balance;
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentTime();
     }
