@@ -43,7 +43,6 @@
                           <Component id="ToForgetPassword" min="-2" max="-2" attributes="0"/>
                           <Component id="ToSearchUser" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                           <Component id="jButtonWIthdraw" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
-                          <Component id="jButtonTopUp" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -74,9 +73,7 @@
               <Component id="ToSearchUser" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonWIthdraw" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButtonTopUp" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -124,13 +121,11 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonWIthdraw">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Withdraw"/>
+        <Property name="text" type="java.lang.String" value="Transaction"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonTopUp">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Top Up"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonWIthdrawActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonLogOut">
       <Properties>

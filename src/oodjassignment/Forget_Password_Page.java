@@ -46,7 +46,7 @@ public class Forget_Password_Page extends javax.swing.JFrame {
         jTextEmail = new javax.swing.JTextField();
         jShowPassword = new javax.swing.JCheckBox();
         jButtonConfirm = new javax.swing.JButton();
-        jButtonCancel = new javax.swing.JButton();
+        jButtonReset = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
         jShowConPassword = new javax.swing.JCheckBox();
         jTextPassword = new javax.swing.JPasswordField();
@@ -82,11 +82,11 @@ public class Forget_Password_Page extends javax.swing.JFrame {
             }
         });
 
-        jButtonCancel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jButtonCancel.setText("Cancel");
-        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+        jButtonReset.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jButtonReset.setText("Reset");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelActionPerformed(evt);
+                jButtonResetActionPerformed(evt);
             }
         });
 
@@ -134,7 +134,7 @@ public class Forget_Password_Page extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButtonReturn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonCancel)
+                                .addComponent(jButtonReset)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonConfirm))
                             .addGroup(layout.createSequentialGroup()
@@ -176,7 +176,7 @@ public class Forget_Password_Page extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonConfirm)
-                    .addComponent(jButtonCancel)
+                    .addComponent(jButtonReset)
                     .addComponent(jButtonReturn))
                 .addGap(23, 23, 23))
         );
@@ -221,14 +221,17 @@ public class Forget_Password_Page extends javax.swing.JFrame {
                 db.changePassword(Email, Password, role);
                 JOptionPane.showMessageDialog(null, "Successfully change password!");
             }
+            jTextEmail.setText("");
+            jTextPassword.setText("");
+            jTextConPassword.setText("");
         }
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
-    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
         jTextEmail.setText("");
         jTextPassword.setText("");
         jTextConPassword.setText("");
-    }//GEN-LAST:event_jButtonCancelActionPerformed
+    }//GEN-LAST:event_jButtonResetActionPerformed
 
     private void jShowConPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jShowConPasswordActionPerformed
         if (jShowConPassword.isSelected()){
@@ -284,8 +287,8 @@ public class Forget_Password_Page extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Role;
-    private javax.swing.JButton jButtonCancel;
     private javax.swing.JButton jButtonConfirm;
+    private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonReturn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

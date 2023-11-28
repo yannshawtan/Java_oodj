@@ -8,7 +8,6 @@ import oodjassignment.Roles.Identifier.Role;
 
 public class Account_Database<T> extends Main_Database{
     
-    private Main_Database<T> MD = null;
     private ArrayList<T> data;
     private int count;
     private Object currentUser;
@@ -16,16 +15,6 @@ public class Account_Database<T> extends Main_Database{
     public Account_Database(Role role) {
         super(role);
     }
-    
-//    public Main_Database<T> databaseType(Role role){
-//        switch (role) {
-//            case Admin -> MD = new Main_Database<>(role);
-//            case Customer -> MD = new Main_Database<>(role);
-//            case Vendor -> MD = new Main_Database<>(role);
-//            case Runner -> MD = new Main_Database<>(role);
-//        }
-//        return MD;
-//    }
     
     public void addUser(String name, String email, String pswd, Role role){
         switch (role) {
@@ -49,7 +38,6 @@ public class Account_Database<T> extends Main_Database{
     }
     
     public boolean LoginValidation(String email, String pswd, Role role){
-//        MD = databaseType(role);
         data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
@@ -106,7 +94,6 @@ public class Account_Database<T> extends Main_Database{
     }
     
     public boolean RegisterValidation(String email, Role role){
-//        MD = databaseType(role);
         data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
@@ -139,7 +126,6 @@ public class Account_Database<T> extends Main_Database{
     
     
     public boolean AccountValidation(String email, Role role){
-//        MD = databaseType(role);
         data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
@@ -171,7 +157,6 @@ public class Account_Database<T> extends Main_Database{
     }
     
     public void changePassword(String email, String password, Role role){
-//        MD = databaseType(role);
         data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Admin){
@@ -179,7 +164,7 @@ public class Account_Database<T> extends Main_Database{
                 if (admin.getEmail().equals(email)){
                     admin.setPassword(password);
                     data.set(i, (T) admin);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -188,7 +173,7 @@ public class Account_Database<T> extends Main_Database{
                 if (customer.getEmail().equals(email)){
                     customer.setPassword(password);
                     data.set(i, (T) customer);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -197,7 +182,7 @@ public class Account_Database<T> extends Main_Database{
                 if (vendor.getEmail().equals(email)){
                     vendor.setPassword(password);
                     data.set(i, (T) vendor);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -206,7 +191,7 @@ public class Account_Database<T> extends Main_Database{
                 if (runner.getEmail().equals(email)){
                     runner.setPassword(password);
                     data.set(i, (T) runner);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -214,7 +199,6 @@ public class Account_Database<T> extends Main_Database{
     }
     
     public boolean checkBalance(double amount, String email, Role role){
-//        MD = databaseType(role);
         data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Customer){
@@ -254,8 +238,7 @@ public class Account_Database<T> extends Main_Database{
         return true;
     }
     
-    public void changeBalance(int amount, String email, Role role){
-//        MD = databaseType(role);
+    public void changeBalance(double amount, String email, Role role){
         data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Customer){
@@ -263,7 +246,7 @@ public class Account_Database<T> extends Main_Database{
                 if (customer.getEmail().equals(email)){
                     customer.updateBalance(amount);
                     data.set(i, (T) customer);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -272,7 +255,7 @@ public class Account_Database<T> extends Main_Database{
                 if (vendor.getEmail().equals(email)){
                     vendor.updateBalance(amount);
                     data.set(i, (T) vendor);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -281,7 +264,7 @@ public class Account_Database<T> extends Main_Database{
                 if (runner.getEmail().equals(email)){
                     runner.updateBalance(amount);
                     data.set(i, (T) runner);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
