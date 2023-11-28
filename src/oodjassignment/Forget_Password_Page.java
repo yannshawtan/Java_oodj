@@ -213,8 +213,11 @@ public class Forget_Password_Page extends javax.swing.JFrame {
             String Position = Role.getSelectedItem().toString();
             Identifier.Role role = Identifier.Role.valueOf(Position);
             Account_Database db = new Account_Database(role);
-            if (db.AccountValidation(Email, role)){
+            if (!db.AccountValidation(Email, role)){
                 JOptionPane.showMessageDialog(null, "Account don't exist!");
+            }
+            else if(!db.PasswordRepetation(Password, role)){
+                JOptionPane.showMessageDialog(null, "Please don't use back the same password!");
             }
             else{
                 db.changePassword(Email, Password, role);
@@ -224,7 +227,6 @@ public class Forget_Password_Page extends javax.swing.JFrame {
             jTextPassword.setText("");
             jTextConPassword.setText("");
         }
-        // create a function for not allowing same password as new password :D
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed

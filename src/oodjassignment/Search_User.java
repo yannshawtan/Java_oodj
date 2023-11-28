@@ -19,35 +19,6 @@ public class Search_User extends javax.swing.JFrame {
         ListOfUser(Position, "");
     }
     
-//    public Search_User() {
-//        ArrayList<Admin> data;
-//        Identifier.Role role = Identifier.Role.Admin;
-////        Main_Database<Admin> db = new Main_Database<>(role);
-//        Account_Database db = new Account_Database(role);
-//        int counts;
-//        data = db.ReadData();
-//        counts = db.getCount();
-//        int count = db.getCount();
-//        
-//        System.out.println(counts + " item in the list");
-//        System.out.println(count + " item in the list");
-//        System.out.println(db.getCount() + " item in the list");
-//        for (int i = 0; i<data.size();i++){
-//            System.out.println(data.get(i));
-//        }
-//        //
-////        ArrayList<Admin> data;
-////        Identifier.Role role = Identifier.Role.Admin;
-////        Main_Database<Admin> MD = new Main_Database<>(role);
-////        int count;
-////        data = MD.ReadData();
-////        count = MD.getCount();
-////        System.out.println(count + " item in the list");
-////        for (int i = 0; i<data.size();i++){
-////            System.out.println(data.get(i));
-////        }
-//    }
-    
     public Search_User(Admin currentUser) {
         initComponents();
         this.currentUser = currentUser;

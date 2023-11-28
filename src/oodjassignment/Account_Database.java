@@ -124,31 +124,61 @@ public class Account_Database<T> extends Main_Database{
         return false;
     }
     
-    
     public boolean AccountValidation(String email, Role role){
         data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
                 if (admin.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Customer){
                 Customer customer = (Customer) data.get(i);
                 if (customer.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Vendor){
                 Vendor vendor = (Vendor) data.get(i);
                 if (vendor.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Runner){
                 Runner runner = (Runner) data.get(i);
                 if (runner.getEmail().equals(email)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean PasswordRepetation(String password, Role role){
+        data = ReadData();
+        for (int i = 0; i<data.size(); i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getPassword().equals(password)){
                     return false;
                 }
             }
