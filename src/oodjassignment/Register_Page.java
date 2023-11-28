@@ -2,7 +2,7 @@ package oodjassignment;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import oodjassignment.Roles.Admin;
+import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 
 public class Register_Page extends javax.swing.JFrame {

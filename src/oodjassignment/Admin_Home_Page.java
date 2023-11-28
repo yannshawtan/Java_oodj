@@ -1,7 +1,7 @@
 package oodjassignment;
 
 import javax.swing.JFrame;
-import oodjassignment.Roles.Admin;
+import oodjassignment.Roles.*;
 
 /**
  *
