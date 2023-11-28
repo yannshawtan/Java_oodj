@@ -194,7 +194,6 @@ public class Forget_Password_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jShowPasswordActionPerformed
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
-        // Check and overwrite old password and pop up a noti to say comeplete
         String Email = jTextEmail.getText();
         String Password = jTextPassword.getText();
         String ConPassword = jTextConPassword.getText();
@@ -214,8 +213,11 @@ public class Forget_Password_Page extends javax.swing.JFrame {
             String Position = Role.getSelectedItem().toString();
             Identifier.Role role = Identifier.Role.valueOf(Position);
             Account_Database db = new Account_Database(role);
-            if (db.AccountValidation(Email, role)){
+            if (!db.AccountValidation(Email, role)){
                 JOptionPane.showMessageDialog(null, "Account don't exist!");
+            }
+            else if(!db.PasswordRepetation(Password, role)){
+                JOptionPane.showMessageDialog(null, "Please don't use back the same password!");
             }
             else{
                 db.changePassword(Email, Password, role);

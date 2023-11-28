@@ -6,23 +6,16 @@ package oodjassignment;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import oodjassignment.Roles.Admin;
 import oodjassignment.Roles.Customer;
 import oodjassignment.Roles.Identifier;
-import static oodjassignment.Roles.Identifier.Role.Admin;
-import static oodjassignment.Roles.Identifier.Role.Runner;
-import static oodjassignment.Roles.Identifier.Role.Vendor;
 
-/**
- *
- * @author user
- */
 public class Account_Transaction extends javax.swing.JFrame {
 
     Admin currentUser;
+    int decimalPlaces;
     
     public Account_Transaction() {
         initComponents();
@@ -224,44 +217,53 @@ public class Account_Transaction extends javax.swing.JFrame {
         String password = jTextPassword.getText();
         String amountString = jTextAmount.getText();
         try {
-            // create a function to make sure they can only enter 2 decimal place
-            BigDecimal amountBigDecimal = new BigDecimal(amountString);
-            amountBigDecimal = amountBigDecimal.setScale(2, RoundingMode.HALF_UP);
-            double amount = amountBigDecimal.doubleValue();
-            if (email.equals("")){
-                JOptionPane.showMessageDialog(null, "Please fill out your email!");
-            }
-            else if(password.equals("")){
-                JOptionPane.showMessageDialog(null, "Please fill out your password!");
+            if (amountString.contains(".")){
+                decimalPlaces = amountString.length() - amountString.indexOf('.') - 1;
             }
             else{
-                Account_Database db = new Account_Database(role);
-                if (!db.LoginValidation(email, password, role)){
-                    JOptionPane.showMessageDialog(null, "Invalid email or password");
+                decimalPlaces = 0;
+            }
+            if (decimalPlaces > 2) {
+                JOptionPane.showMessageDialog(null, "Please enter max 2 decimal digits!");
+            } else {
+                BigDecimal amountBigDecimal = new BigDecimal(amountString);
+                amountBigDecimal = amountBigDecimal.setScale(2, RoundingMode.HALF_UP);
+                double amount = amountBigDecimal.doubleValue();
+                if (email.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please fill out your email!");
+                }
+                else if(password.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please fill out your password!");
                 }
                 else{
-                    if (amount <= 0.0){
-                        JOptionPane.showMessageDialog(null, "Please enter an amount atleast more than 0");
+                    Account_Database db = new Account_Database(role);
+                    if (!db.LoginValidation(email, password, role)){
+                        JOptionPane.showMessageDialog(null, "Invalid email or password");
                     }
                     else{
-                        switch (action){
-                            case "Withdraw" -> {
-                                if(db.checkBalance(amount, email, role)){
-                                    amount *= -1;
-                                    System.out.println(amount);
+                        if (amount <= 0.0){
+                            JOptionPane.showMessageDialog(null, "Please enter an amount atleast more than 0");
+                        }
+                        else{
+                            switch (action){
+                                case "Withdraw" -> {
+                                    if(db.checkBalance(amount, email, role)){
+                                        amount *= -1;
+                                        System.out.println(amount);
+                                        db.changeBalance(amount, email, role);
+                                        jTextAmount.setText("");
+                                        JOptionPane.showMessageDialog(null, "Transaction complete!");
+                                    }
+                                    else{
+                                        JOptionPane.showMessageDialog(null, "insufficient Amount!");
+                                    }
+                                }
+                                // Display new amount
+                                case "Deposit" -> {
                                     db.changeBalance(amount, email, role);
                                     jTextAmount.setText("");
                                     JOptionPane.showMessageDialog(null, "Transaction complete!");
                                 }
-                                else{
-                                    JOptionPane.showMessageDialog(null, "insufficient Amount!");
-                                }
-                            }
-                            // Display new amount
-                            case "Deposit" -> {
-                                db.changeBalance(amount, email, role);
-                                jTextAmount.setText("");
-                                JOptionPane.showMessageDialog(null, "Transaction complete!");
                             }
                         }
                     }
