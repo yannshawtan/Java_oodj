@@ -194,7 +194,6 @@ public class Forget_Password_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jShowPasswordActionPerformed
 
     private void jButtonConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmActionPerformed
-        // Check and overwrite old password and pop up a noti to say comeplete
         String Email = jTextEmail.getText();
         String Password = jTextPassword.getText();
         String ConPassword = jTextConPassword.getText();
@@ -225,6 +224,7 @@ public class Forget_Password_Page extends javax.swing.JFrame {
             jTextPassword.setText("");
             jTextConPassword.setText("");
         }
+        // create a function for not allowing same password as new password :D
     }//GEN-LAST:event_jButtonConfirmActionPerformed
 
     private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
