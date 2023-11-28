@@ -74,18 +74,23 @@ public class Main_Database<T> {
             default -> {
             }
         }
-        try {
-            f.createNewFile();
-        } catch (IOException ex) {
-            System.err.println("error");
-        }
-        
+        CreateFile();
     }
 
     public void CreateFolder(){
         if(!f1.exists()){
             f1.mkdirs();
             //create the folder,using mkdirs instead of mkdir is to open several folder
+        }
+    }
+    
+    public void CreateFile(){
+        if(!f.exists()){
+            try {
+            f.createNewFile();
+            } catch (IOException ex) {
+                System.err.println("error");
+            }
         }
     }
     
