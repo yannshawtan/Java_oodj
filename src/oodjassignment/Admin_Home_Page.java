@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package oodjassignment;
 
 import javax.swing.JFrame;
@@ -62,8 +58,8 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void GoWithdraw(){
-        Withdraw w = new Withdraw(currentUser);
+    public void GoTransaction(){
+        Account_Transaction w = new Account_Transaction(currentUser);
         w.setVisible(true);
         w.pack();
         w.setLocationRelativeTo(null);
@@ -81,7 +77,6 @@ public class Admin_Home_Page extends javax.swing.JFrame {
         ToForgetPassword = new javax.swing.JButton();
         ToSearchUser = new javax.swing.JButton();
         jButtonWIthdraw = new javax.swing.JButton();
-        jButtonTopUp = new javax.swing.JButton();
         jButtonLogOut = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -113,9 +108,12 @@ public class Admin_Home_Page extends javax.swing.JFrame {
             }
         });
 
-        jButtonWIthdraw.setText("Withdraw");
-
-        jButtonTopUp.setText("Top Up");
+        jButtonWIthdraw.setText("Transaction");
+        jButtonWIthdraw.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonWIthdrawActionPerformed(evt);
+            }
+        });
 
         jButtonLogOut.setText("Log Out");
         jButtonLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -145,8 +143,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                             .addComponent(ToRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ToForgetPassword)
                             .addComponent(ToSearchUser, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonWIthdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonTopUp, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButtonWIthdraw, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,9 +166,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
                 .addComponent(ToSearchUser)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonWIthdraw)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonTopUp)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -192,6 +187,10 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     private void jButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogOutActionPerformed
         GoLoginPage();
     }//GEN-LAST:event_jButtonLogOutActionPerformed
+
+    private void jButtonWIthdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonWIthdrawActionPerformed
+        GoTransaction();
+    }//GEN-LAST:event_jButtonWIthdrawActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,7 +233,6 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     private javax.swing.JButton ToSearchUser;
     private javax.swing.JLabel User_Name;
     private javax.swing.JButton jButtonLogOut;
-    private javax.swing.JButton jButtonTopUp;
     private javax.swing.JButton jButtonWIthdraw;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

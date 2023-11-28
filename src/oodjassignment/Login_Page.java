@@ -192,6 +192,8 @@ public class Login_Page extends javax.swing.JFrame {
     private void BloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BloginActionPerformed
         String Email = TFuser.getText();
         String Password = PFpassword.getText();
+        String Position = Role.getSelectedItem().toString();
+        Identifier.Role role = Identifier.Role.valueOf(Position);
         if (Email.equals("")){
             JOptionPane.showMessageDialog(null, "Please fill out your email!");
         }
@@ -199,25 +201,23 @@ public class Login_Page extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please fill out your password!");
         }
         else{
-            String Position = Role.getSelectedItem().toString();
-            Identifier.Role role = Identifier.Role.valueOf(Position);
             Account_Database db = new Account_Database(role);
             if (db.LoginValidation(Email, Password, role)){
                 JOptionPane.showMessageDialog(null, "Login Success");
-                switch (Position) {
-                    case "Customer" -> {
+                switch (role) {
+                    case Customer -> {
                         currentUser = (Customer) db.getCurrentUser();
 //                        GoCustomerHomePage();
                     }
-                    case "Admin" -> {
+                    case Admin -> {
                         currentUser = db.getCurrentUser();
                         GoAdminHomePage();
                     }
-                    case "Vendor" -> {
+                    case Vendor -> {
                         currentUser = db.getCurrentUser();
 //                        GoVendorHomePage();
                     }
-                    case "Runner" -> {
+                    case Runner -> {
                         currentUser = db.getCurrentUser();
                         //GoRunnerHomePage();
                     }

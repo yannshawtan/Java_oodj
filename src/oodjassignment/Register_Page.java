@@ -210,7 +210,6 @@ public class Register_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jBConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfirmActionPerformed
-        
         String Name = jTextName.getText();
         String Email = jTextEmail.getText();
         String Password = jTextPassword.getText();
@@ -239,6 +238,10 @@ public class Register_Page extends javax.swing.JFrame {
             }
             else{
                 db.addUser(Name,Email,Password, role);
+                jTextName.setText("");
+                jTextEmail.setText("");
+                jTextPassword.setText("");
+                jTextConPassword.setText("");
                 JOptionPane.showMessageDialog(null, "Successfully register account!");
             }
         }
