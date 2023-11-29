@@ -43,15 +43,15 @@ public class Tester {
         
 //        MD.addData(role, c1);
 //        MD.addData(role, a1);
-//        MD.addData(Admin, a2);
-//        MD.addData(Admin, a3);
-//        MD.addData(Admin, a4);
+//        MD.addData(role, a2);
+//        MD.addData(role, a3);
+//        MD.addData(role, a4);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
         // For example, u delete item 4, from an list of only 4 item, next time u try that again it will cause error as now the list is only 3 item
         /*
-        MD.removeData(role, 2);
+        MD.removeData(role, 1);
         //*/
         
         // This will read the data as well as how u how many items
@@ -76,7 +76,7 @@ public class Tester {
             }
             System.out.println(data.get(i));
         }
-        MD.updateData(Admin, data);
+        MD.updateData(role, data);
         //*/
         
         
