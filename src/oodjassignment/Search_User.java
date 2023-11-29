@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
-import oodjassignment.Roles.Customer;
 import oodjassignment.Roles.Identifier;
 
 public class Search_User extends javax.swing.JFrame {

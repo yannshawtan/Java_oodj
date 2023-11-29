@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import oodjassignment.Roles.Admin;
-import oodjassignment.Roles.Customer;
+import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 
 public class Account_Transaction extends javax.swing.JFrame {

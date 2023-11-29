@@ -1,16 +1,11 @@
 package oodjassignment;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
-import oodjassignment.Roles.Customer;
-import oodjassignment.Roles.Order;
 import oodjassignment.Roles.Identifier.Role;
 
 
@@ -74,18 +69,23 @@ public class Main_Database<T> {
             default -> {
             }
         }
-        try {
-            f.createNewFile();
-        } catch (IOException ex) {
-            System.err.println("error");
-        }
-        
+        CreateFile();
     }
 
     public void CreateFolder(){
         if(!f1.exists()){
             f1.mkdirs();
             //create the folder,using mkdirs instead of mkdir is to open several folder
+        }
+    }
+    
+    public void CreateFile(){
+        if(!f.exists()){
+            try {
+            f.createNewFile();
+            } catch (IOException ex) {
+                System.err.println("error");
+            }
         }
     }
     

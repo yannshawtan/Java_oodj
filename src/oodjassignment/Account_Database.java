@@ -2,7 +2,6 @@ package oodjassignment;
 
 import java.util.ArrayList;
 import oodjassignment.Roles.*;
-import oodjassignment.Roles.Customer;
 import oodjassignment.Roles.Identifier.Role;
 
 
