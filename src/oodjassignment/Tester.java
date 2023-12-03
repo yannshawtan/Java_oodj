@@ -16,26 +16,27 @@ import oodjassignment.Roles.Identifier;
 public class Tester {
     
     public static void main(String[] args){
-        ArrayList<Admin> data;
+//        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
 //        ArrayList<Runner> data;
-//        ArrayList<Vendor> data;
+        ArrayList<Vendor> data;
         int count;
-        Identifier.Role role = Identifier.Role.Admin;
+//        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
 //        Identifier.Role role = Identifier.Role.Runner;
-//        Identifier.Role role = Identifier.Role.Vendor;
-        Main_Database<Admin> MD = new Main_Database<>(role);
+        Identifier.Role role = Identifier.Role.Vendor;
+//        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-//        Main_Database<Vendor> MD = new Main_Database<>(role);
+        Main_Database<Vendor> MD = new Main_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
-        Admin a1 = new Admin("Zorus", "Zorus", "Zorus@gmail.com");
+//        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
 //        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
+        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
         //*/
         
         // Add data
@@ -46,6 +47,7 @@ public class Tester {
 //        MD.addData(role, a2);
 //        MD.addData(role, a3);
 //        MD.addData(role, a4);
+//        MD.addData(role, v2);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
@@ -55,7 +57,6 @@ public class Tester {
         //*/
         
         // This will read the data as well as how u how many items
-        
         data = MD.ReadData();
         count = MD.getCount();
         System.out.println(count + " item in the list");

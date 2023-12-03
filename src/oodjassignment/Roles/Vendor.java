@@ -13,7 +13,7 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
     public Vendor(String Name, String Password, String Email){
-        super("D"); 
+        super("V"); 
         this.Name = Name;
         this.Password = Password;
         this.Email = Email;
@@ -108,6 +108,6 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     }
     
     public String toString(){
-        return getNumber() + ". This is " + getName() + ", from "+ getId();
+        return "ID: " + getId() + ", NAME: " + getName() + ", PW: " + getPassword() + ", BAL: " + getStringBalance() + ", STAR: " + getStringRating();
     }
 }

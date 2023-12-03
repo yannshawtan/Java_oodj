@@ -175,14 +175,14 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-//    public void GoVendorHomePage() {
-//        Vendor_Home_Page vhp = new Vendor_Home_Page(currentUser);
-//        vhp.setVisible(true);
-//        vhp.pack();
-//        vhp.setLocationRelativeTo(null);
-//        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.dispose();
-//    }
+    public void GoVendorHomePage() {
+        Vendor_Home_Page vhp = new Vendor_Home_Page((Vendor) currentUser);
+        vhp.setVisible(true);
+        vhp.pack();
+        vhp.setLocationRelativeTo(null);
+        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     
     private void TFuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFuserActionPerformed
@@ -206,7 +206,7 @@ public class Login_Page extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Login Success");
                 switch (role) {
                     case Customer -> {
-                        currentUser = (Customer) db.getCurrentUser();
+                        currentUser = db.getCurrentUser();
 //                        GoCustomerHomePage();
                     }
                     case Admin -> {
@@ -215,7 +215,7 @@ public class Login_Page extends javax.swing.JFrame {
                     }
                     case Vendor -> {
                         currentUser = db.getCurrentUser();
-//                        GoVendorHomePage();
+                        GoVendorHomePage();
                     }
                     case Runner -> {
                         currentUser = db.getCurrentUser();
