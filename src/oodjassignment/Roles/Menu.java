@@ -1,18 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package oodjassignment.Roles;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 
 /**
  *
  * @author user
  */
 public class Menu extends Identifier implements Serializable{
+    private String foodName, foodType;
+    private double foodPrice;
+    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
-    public Menu(){
+    public Menu(String foodName, double foodPrice, String foodType){
         super("M");
+        this.foodName = foodName;
+        
     }
 }

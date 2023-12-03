@@ -183,87 +183,89 @@ public class Main_Database<T> {
     
     public void updateData(Role role, ArrayList<T> data){
         int num = 0;
-//        ObjectOutputStream oos = null;
         try{
             writeFile();
             switch (role) {
                 case Admin -> {
                     for (Object a : data) {
-                        if (a instanceof Admin) {
+                        if (a instanceof Admin admin) {
                             num++;
-                            ((Admin) a).setNumber(num);
+                            admin.setNumber(num);
                             oos.writeObject(a);
                         }
                     }
                 }
                 case Customer -> {
                     for (Object c : data) {
-                        if (c instanceof Customer) {
+                        if (c instanceof Customer customer) {
                             num++;
-                            ((Customer) c).setNumber(num);
+                            String temp = customer.getId();
+                            customer.setNumber(num);
                             oos.writeObject(c);
                         }
                     }
                 }
                 case Runner -> {
                     for (Object r : data) {
-                        if (r instanceof Runner) {
+                        if (r instanceof Runner runner) {
                             num++;
-                            ((Runner) r).setNumber(num);
+                            runner.setNumber(num);
                             oos.writeObject(r);
                         }
                     }
                 }
                 case Vendor -> {
                     for (Object v : data) {
-                        if (v instanceof Vendor) {
+                        if (v instanceof Vendor vendor) {
                             num++;
-                            ((Vendor) v).setNumber(num);
+                            String temp = vendor.getId();
+                            // function call update vendor in menu
+                            vendor.setNumber(num);
                             oos.writeObject(v);
                         }
                     }
                 }
                 case Delivery -> {
                     for (Object d : data) {
-                        if (d instanceof Delivery) {
+                        if (d instanceof Delivery delivery) {
                             num++;
-                            ((Delivery) d).setNumber(num);
+                            delivery.setNumber(num);
                             oos.writeObject(d);
                         }
                     }
                 }
                 case Menu -> {
                     for (Object m : data) {
-                        if (m instanceof Menu) {
+                        if (m instanceof Menu menu) {
                             num++;
-                            ((Menu) m).setNumber(num);
+                            menu.setNumber(num);
                             oos.writeObject(m);
                         }
                     }
                 }
                 case Order -> {
                     for (Object o : data) {
-                        if (o instanceof Order) {
+                        if (o instanceof Order order) {
                             num++;
-                            ((Order) o).setNumber(num);
+                            order.setNumber(num);
                             oos.writeObject(o);
                         }
                     }
                 }
                 case Transaction -> {
                     for (Object t : data) {
-                        if (t instanceof Transaction) {
+                        if (t instanceof Transaction transaction) {
                             num++;
-                            ((Transaction) t).setNumber(num);
+                            transaction.setNumber(num);
                             oos.writeObject(t);
                         }
                     }
                 }
                 case Notification -> {
                     for (Object n : data) {
-                        if (n instanceof Notification) {
+                        if (n instanceof Notification notification) {
                             num++;
-                            ((Notification) n).setNumber(num);
+                            notification.setNumber(num);
                             oos.writeObject(n);
                         }
                     }
@@ -288,3 +290,22 @@ public class Main_Database<T> {
 
 
 
+/*
+menu
+a function that change the menu object (vendor id section)
+loop everything that have same id as temp, replace with new id
+*/
+
+
+/*
+order
+a function that change the menu object (vendor id section)(customer, runner)
+loop everything that have same id as temp, replace with new id
+*/
+
+
+/*
+Transaction
+a function that change the menu object (vendor id section)(customer, runner)
+loop everything that have same id as temp, replace with new id
+*/
