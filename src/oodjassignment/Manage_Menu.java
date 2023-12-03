@@ -1,18 +1,19 @@
 package oodjassignment;
 
 import javax.swing.JFrame;
+import oodjassignment.Roles.*;
 
 public class Manage_Menu extends javax.swing.JFrame {
     
-    User owner = new User();
+    Vendor currentUser;
 
     public Manage_Menu() {
         initComponents();
     }
     
-    public Manage_Menu(User owner) {
+    public Manage_Menu(Vendor currentUser) {
         initComponents();
-        this.owner = owner;
+        this.currentUser = currentUser;
     }
 
     @SuppressWarnings("unchecked")
@@ -256,7 +257,7 @@ public class Manage_Menu extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-        Vendor_Home_Page VHP = new Vendor_Home_Page(owner);
+        Vendor_Home_Page VHP = new Vendor_Home_Page(currentUser);
         VHP.setVisible(true);
         VHP.pack();
         VHP.setLocationRelativeTo(null);
