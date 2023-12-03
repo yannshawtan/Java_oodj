@@ -199,6 +199,7 @@ public class Main_Database<T> {
                     for (Object c : data) {
                         if (c instanceof Customer customer) {
                             num++;
+                            String temp = customer.getId();
                             customer.setNumber(num);
                             oos.writeObject(c);
                         }
