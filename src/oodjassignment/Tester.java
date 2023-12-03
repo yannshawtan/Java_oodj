@@ -31,7 +31,7 @@ public class Tester {
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
-        Admin a1 = new Admin("Zorus", "Zorus", "Zorus@gmail.com");
+//        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
 //        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
