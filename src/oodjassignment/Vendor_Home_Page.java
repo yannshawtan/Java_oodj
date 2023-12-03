@@ -2,6 +2,7 @@ package oodjassignment;
 
 import java.time.LocalDate;
 import javax.swing.JFrame;
+import oodjassignment.Roles.*;
 
 public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provider {
     
@@ -17,28 +18,27 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         return null;
     }
     
-    
-    User owner = new User();
+    Vendor currentUser;
     
     public Vendor_Home_Page() {
         initComponents();
     }
     
-    public Vendor_Home_Page(User owner) {
+    public Vendor_Home_Page(Vendor currentUser) {
         initComponents();
-        this.owner = owner;
-        vName.setText(owner.getName());
+        this.currentUser = currentUser;
+        vName.setText(currentUser.getName());
         vName.setEnabled(false);
-        vBal.setText(owner.getBalance());
+        vBal.setText(currentUser.getStringBalance());
         vBal.setEnabled(false);
-        vRate.setText(owner.getRating());
+        vRate.setText(currentUser.getStringRating());
         vRate.setEnabled(false);
         cDate.setText(getCurrentDate());
         cDate.setEnabled(false);
     }
     
-    public void GoToMenu(User owner) {
-        Manage_Menu MM = new Manage_Menu(owner);
+    public void GoToMenu() {
+        Manage_Menu MM = new Manage_Menu(currentUser);
         MM.setVisible(true);
         MM.pack();
         MM.setLocationRelativeTo(null);
@@ -307,7 +307,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1004, 535));
+        setSize(new java.awt.Dimension(1004, 541));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -339,7 +339,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         // TODO add your handling code here:
-        GoToMenu(owner);
+        GoToMenu();
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
