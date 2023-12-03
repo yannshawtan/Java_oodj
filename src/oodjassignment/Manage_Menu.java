@@ -1,6 +1,8 @@
 package oodjassignment;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -50,6 +52,20 @@ public class Manage_Menu extends javax.swing.JFrame {
         }
     }
     
+    public void UpdateMenu(String newFoodName, double newFoodPrice, String newFoodType, String vendorId, String oldFoodName) {
+        ArrayList<Menu> data = MD.ReadData();
+        Menu food = new Menu(newFoodName, newFoodPrice, newFoodType, vendorId);
+        for (int i = 0; i < data.size(); i++) {
+            String checkVendorId = data.get(i).getVendorId();
+            String checkFoodName = data.get(i).getFoodName();
+            if (checkVendorId.equals(vendorId) && checkFoodName.equals(oldFoodName)) {
+                data.set(i, food);
+                MD.updateData(role, data);
+                DisplayMenu();
+            }
+        }
+    }
+    
     public void ClearForm() {
         tfFoodName.setText("");
         tfFoodPrice.setText("");
@@ -71,7 +87,7 @@ public class Manage_Menu extends javax.swing.JFrame {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -305,6 +321,11 @@ public class Manage_Menu extends javax.swing.JFrame {
                 "Food Name", "Price (RM)", "Type"
             }
         ));
+        menuTB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuTBMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(menuTB);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -412,7 +433,54 @@ public class Manage_Menu extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        if (menuTB.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
+        }
+        
+        if (menuTB.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+        
+        if (menuTB.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Table is empty");
+        }
+        
+        if (menuTB.getSelectedRowCount() == 1) {
+            int selectedRow = menuTB.getSelectedRow();
+            String oldFoodName = menuTB.getValueAt(selectedRow, 0).toString();
+            try {
+                foodName = tfFoodName.getText();
+                foodPrice = Math.round(Double.parseDouble(tfFoodPrice.getText()) * 100.0) / 100.0;
+                if (foodName.isEmpty()) {throw new IllegalArgumentException("Please enter a food name.");}
+                if (foodType.isEmpty()) {throw new IllegalArgumentException("Please select a food type.");}
+                UpdateMenu(foodName, foodPrice, foodType, vendorId, oldFoodName);
+                ClearForm();
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid numeric value for the food price.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+        }
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void menuTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTBMouseClicked
+        // TODO add your handling code here:
+        try {
+            int selectedRow = menuTB.getSelectedRow();
+            String selectedFoodName = menuTB.getValueAt(selectedRow, 0).toString();
+            String selectedFoodPrice = menuTB.getValueAt(selectedRow, 1).toString();
+            String selectedFoodType = menuTB.getValueAt(selectedRow, 2).toString();
+            tfFoodName.setText(selectedFoodName);
+            tfFoodPrice.setText(selectedFoodPrice);
+            if (selectedFoodType.equals("Food")) {radioFood.setSelected(true); foodType = "Food";} 
+            if (selectedFoodType.equals("Beverage")) {radioBeverage.setSelected(true); foodType = "Beverage";}
+            if (selectedFoodType.equals("Dessert")) {radioDessert.setSelected(true); foodType = "Dessert";}
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_menuTBMouseClicked
 
     public static void main(String args[]) {
 
