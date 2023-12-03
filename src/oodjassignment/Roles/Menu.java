@@ -10,7 +10,7 @@ public class Menu extends Identifier implements Serializable{
     private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
     public Menu(String foodName, double foodPrice, String foodType, String vendorId){
-        super("M");
+        super("F");
         this.foodName = foodName;
         this.foodPrice = foodPrice;
         this.foodType = foodType;
@@ -47,5 +47,9 @@ public class Menu extends Identifier implements Serializable{
     
     public String getVendorId() {
         return vendorId;
+    }
+    
+    public String toString() {
+        return "ID: " + getId() + ", Vendor: " + getVendorId() + ", Food Name: " + getFoodName() + ", Food Price: " + getFoodPrice() + ", Food Type: " + getFoodType();
     }
 }

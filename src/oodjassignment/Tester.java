@@ -19,15 +19,15 @@ public class Tester {
 //        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
 //        ArrayList<Runner> data;
-        ArrayList<Vendor> data;
+        ArrayList<Menu> data;
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
 //        Identifier.Role role = Identifier.Role.Runner;
-        Identifier.Role role = Identifier.Role.Vendor;
+        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-        Main_Database<Vendor> MD = new Main_Database<>(role);
+        Main_Database<Menu> MD = new Main_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
@@ -36,7 +36,8 @@ public class Tester {
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
-        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
+//        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
+        Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
         //*/
         
         // Add data
@@ -48,6 +49,7 @@ public class Tester {
 //        MD.addData(role, a3);
 //        MD.addData(role, a4);
 //        MD.addData(role, v2);
+//        MD.addData(role, f1);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number

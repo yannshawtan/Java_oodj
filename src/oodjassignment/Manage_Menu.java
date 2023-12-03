@@ -1,11 +1,21 @@
 package oodjassignment;
 
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
 
 public class Manage_Menu extends javax.swing.JFrame {
     
     Vendor currentUser;
+    String foodName, foodType, vendorId;
+    double foodPrice;
+    ButtonGroup buttonGroup = new ButtonGroup();
+    Identifier.Role role = Identifier.Role.Menu;
+    Main_Database<Menu> MD = new Main_Database<>(role);
 
     public Manage_Menu() {
         initComponents();
@@ -14,8 +24,54 @@ public class Manage_Menu extends javax.swing.JFrame {
     public Manage_Menu(Vendor currentUser) {
         initComponents();
         this.currentUser = currentUser;
+        buttonGroup.add(radioFood);
+        buttonGroup.add(radioBeverage);
+        buttonGroup.add(radioDessert);
+        vendorId = currentUser.getId();
+        DisplayMenu();
     }
-
+    
+    public void AddMenu(String foodName, double foodPrice, String foodType, String vendorId) {
+        Menu food = new Menu(foodName, foodPrice, foodType, vendorId);
+        MD.addData(role, food);
+        DisplayMenu();
+    }
+    
+    public void DeleteMenu(String foodName) {
+        ArrayList<Menu> data = MD.ReadData();
+        for (int i = 0; i < data.size(); i++) {
+            String checkVendorId = data.get(i).getVendorId();
+            String checkFoodName = data.get(i).getFoodName();
+            if (checkVendorId.equals(vendorId) && checkFoodName.equals(foodName)) {
+                int num = data.get(i).getNumber();
+                MD.removeData(role, num);
+                DisplayMenu();
+            }
+        }
+    }
+    
+    public void ClearForm() {
+        tfFoodName.setText("");
+        tfFoodPrice.setText("");
+        buttonGroup.clearSelection();
+    }
+    
+    public void DisplayMenu() {
+        DefaultTableModel model = (DefaultTableModel) menuTB.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        menuTB.setRowSorter(sorter);
+        model.setRowCount(0);
+        ArrayList<Menu> data = MD.ReadData();
+        for (int i = 0; i < data.size(); i++) {
+            String checkVendorId = data.get(i).getVendorId();
+            if (checkVendorId.equals(vendorId)) {
+                model.addRow(new Object[] {data.get(i).getFoodName(), data.get(i).getFoodPrice(), data.get(i).getFoodType()});
+            } else {
+                continue;
+            }
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -29,15 +85,15 @@ public class Manage_Menu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        tfFoodPrice = new javax.swing.JTextField();
+        tfFoodName = new javax.swing.JTextField();
+        radioBeverage = new javax.swing.JRadioButton();
+        radioFood = new javax.swing.JRadioButton();
+        radioDessert = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         menuTB = new javax.swing.JTable();
@@ -106,28 +162,38 @@ public class Manage_Menu extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Type:");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jRadioButton1.setText("Beverage");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        tfFoodPrice.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfFoodPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                tfFoodPriceActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Food");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        tfFoodName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        tfFoodName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                tfFoodNameActionPerformed(evt);
             }
         });
 
-        jRadioButton3.setText("Dessert");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        radioBeverage.setText("Beverage");
+        radioBeverage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                radioBeverageActionPerformed(evt);
+            }
+        });
+
+        radioFood.setText("Food");
+        radioFood.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioFoodActionPerformed(evt);
+            }
+        });
+
+        radioDessert.setText("Dessert");
+        radioDessert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDessertActionPerformed(evt);
             }
         });
 
@@ -135,11 +201,26 @@ public class Manage_Menu extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Action:");
 
-        jButton1.setText("Add");
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Update");
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Delete");
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -152,22 +233,26 @@ public class Manage_Menu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
+                                .addComponent(btnAdd)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))
-                            .addComponent(jRadioButton1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jButton3))))
-                .addContainerGap(39, Short.MAX_VALUE))
+                                .addComponent(btnUpdate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnDelete))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radioBeverage)
+                                    .addComponent(radioFood)
+                                    .addComponent(radioDessert))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(tfFoodPrice)
+                            .addComponent(tfFoodName))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,27 +262,26 @@ public class Manage_Menu extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfFoodName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfFoodPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jRadioButton2))
+                    .addComponent(radioFood))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(radioBeverage)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton3)
+                .addComponent(radioDessert)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
-                .addGap(19, 19, 19))
+                    .addComponent(btnAdd)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete))
+                .addGap(52, 52, 52))
         );
 
         jPanel3.setBackground(new java.awt.Color(79, 93, 117));
@@ -233,7 +317,7 @@ public class Manage_Menu extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -265,17 +349,70 @@ public class Manage_Menu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void radioFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFoodActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+        foodType = "Food";
+    }//GEN-LAST:event_radioFoodActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void radioBeverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioBeverageActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        foodType = "Beverage";
+    }//GEN-LAST:event_radioBeverageActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void radioDessertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDessertActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+        foodType = "Dessert";
+    }//GEN-LAST:event_radioDessertActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        try {
+            foodName = tfFoodName.getText();
+            foodPrice = Math.round(Double.parseDouble(tfFoodPrice.getText()) * 100.0) / 100.0;
+            if (foodName.isEmpty()) {throw new IllegalArgumentException("Please enter a food name.");}
+            if (foodType.isEmpty()) {throw new IllegalArgumentException("Please select a food type.");}
+            AddMenu(foodName, foodPrice, foodType, vendorId);
+            ClearForm();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid numeric value for the food price.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } 
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void tfFoodNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFoodNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFoodNameActionPerformed
+
+    private void tfFoodPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfFoodPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfFoodPriceActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        if (menuTB.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
+        }
+        
+        if (menuTB.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+        
+        if (menuTB.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Table is empty");
+        }
+        
+        if (menuTB.getSelectedRowCount() == 1) {
+            int selectedRow = menuTB.getSelectedRow();
+            String selectedFood = menuTB.getValueAt(selectedRow, 0).toString();
+            DeleteMenu(selectedFood);
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     public static void main(String args[]) {
 
@@ -287,10 +424,10 @@ public class Manage_Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -299,14 +436,14 @@ public class Manage_Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel labelName1;
     private javax.swing.JLabel logo;
     private javax.swing.JTable menuTB;
+    private javax.swing.JRadioButton radioBeverage;
+    private javax.swing.JRadioButton radioDessert;
+    private javax.swing.JRadioButton radioFood;
+    private javax.swing.JTextField tfFoodName;
+    private javax.swing.JTextField tfFoodPrice;
     // End of variables declaration//GEN-END:variables
 }
