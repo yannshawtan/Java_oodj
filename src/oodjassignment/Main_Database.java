@@ -106,14 +106,14 @@ public class Main_Database<T> {
     }
     
     
-    public ObjectOutputStream writeFile(){
+    public void writeFile(){
         try {
             fos = new FileOutputStream(f);
             oos = new ObjectOutputStream(fos);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null,"File not found!");
         }
-        return oos;
+//        return oos;
     }
     
     public void setCount(int count){
@@ -121,7 +121,7 @@ public class Main_Database<T> {
     }
     
     public int getCount(){
-        return count;
+        return count; 
     }
 
     public ArrayList<T> ReadData(){
@@ -184,9 +184,9 @@ public class Main_Database<T> {
     
     public void updateData(Role role, ArrayList<T> data){
         int num = 0;
-        ObjectOutputStream oos = null;
+//        ObjectOutputStream oos = null;
         try{
-            oos = writeFile();
+            writeFile();
             switch (role) {
                 case Admin -> {
                     for (Object a : data) {
