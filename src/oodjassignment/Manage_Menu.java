@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
@@ -70,9 +71,10 @@ public class Manage_Menu extends javax.swing.JFrame {
         tfFoodName.setText("");
         tfFoodPrice.setText("");
         buttonGroup.clearSelection();
+        menuSearch.setText("");
     }
     
-    public void DisplayMenu() {
+    public final void DisplayMenu() {
         DefaultTableModel model = (DefaultTableModel) menuTB.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         menuTB.setRowSorter(sorter);
@@ -82,8 +84,26 @@ public class Manage_Menu extends javax.swing.JFrame {
             String checkVendorId = data.get(i).getVendorId();
             if (checkVendorId.equals(vendorId)) {
                 model.addRow(new Object[] {data.get(i).getFoodName(), data.get(i).getFoodPrice(), data.get(i).getFoodType()});
-            } else {
-                continue;
+            }
+        }
+    }
+    
+    public final void DisplayMenu(String search) {
+        DefaultTableModel model = (DefaultTableModel) menuTB.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        menuTB.setRowSorter(sorter);
+        model.setRowCount(0);
+        ArrayList<Menu> data = MD.ReadData();
+        String lowercaseSearch = search.toLowerCase();
+        for (int i = 0; i < data.size(); i++) {
+            String lowercaseFoodName = data.get(i).getFoodName().toLowerCase();
+            String checkVendorId = data.get(i).getVendorId();
+            if (checkVendorId.equals(vendorId)) {
+                if (search.equals("")) {
+                    model.addRow(new Object[] {data.get(i).getFoodName(), data.get(i).getFoodPrice(), data.get(i).getFoodType()});
+                } else if (lowercaseFoodName.contains(lowercaseSearch)) {
+                    model.addRow(new Object[] {data.get(i).getFoodName(), data.get(i).getFoodPrice(), data.get(i).getFoodType()});
+                }
             }
         }
     }
@@ -113,6 +133,8 @@ public class Manage_Menu extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         menuTB = new javax.swing.JTable();
+        menuSearch = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         labelName1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         labelName1.setForeground(new java.awt.Color(0, 0, 0));
@@ -320,13 +342,36 @@ public class Manage_Menu extends javax.swing.JFrame {
             new String [] {
                 "Food Name", "Price (RM)", "Type"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         menuTB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuTBMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(menuTB);
+
+        menuSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSearchActionPerformed(evt);
+            }
+        });
+        menuSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                menuSearchKeyReleased(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Search Food:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -337,8 +382,16 @@ public class Manage_Menu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(menuSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(132, 132, 132))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -348,11 +401,16 @@ public class Manage_Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(menuSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -482,6 +540,16 @@ public class Manage_Menu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuTBMouseClicked
 
+    private void menuSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSearchActionPerformed
+
+    private void menuSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_menuSearchKeyReleased
+        // TODO add your handling code here:
+        String search = menuSearch.getText();
+        DisplayMenu(search);
+    }//GEN-LAST:event_menuSearchKeyReleased
+
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -501,12 +569,14 @@ public class Manage_Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelName1;
     private javax.swing.JLabel logo;
+    private javax.swing.JTextField menuSearch;
     private javax.swing.JTable menuTB;
     private javax.swing.JRadioButton radioBeverage;
     private javax.swing.JRadioButton radioDessert;
