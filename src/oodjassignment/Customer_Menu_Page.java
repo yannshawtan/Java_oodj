@@ -10,12 +10,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JFrame;
-
+import oodjassignment.Roles.*;
 /**
  *
  * @author myste
@@ -26,29 +27,29 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
     /**
      * Creates new form Customer_Menu_Page
      */
-    User owner = new User();
+    Customer currentUser;
     public Customer_Menu_Page() {
         initComponents();
         
-        
     }
     
-    public Customer_Menu_Page(User owner) {
+    public Customer_Menu_Page(Customer currentUser) {
         initComponents();
-        this.owner = owner;
+        this.currentUser = currentUser;
         populateVendorListInAWT();
-        User.setText(owner.getName());
+        User.setText(currentUser.getName());
         setVisible(true);
     }
     
     private void populateVendorListInAWT() {
-    Vendor_Database Vendor_Database = new Vendor_Database();
-    List<User> users = Vendor_Database.populateVendorListForAllUsers();
+    Identifier.Role role = Identifier.Role.Vendor;
+    Main_Database<Vendor> MD = new Main_Database<>(role);
+    ArrayList<Vendor> data = MD.ReadData();
 
     Vendorlist.removeAll();
 
-    for (User user : users) {
-        Vendorlist.add(user.getName());
+    for (Vendor vendor : data) {
+        Vendorlist.add(vendor.getName());
     }
 
     Vendorlist.addItemListener(new ItemListener() {
@@ -57,26 +58,26 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 String selectedName = (String) Vendorlist.getSelectedItem();
                 String selectedId = null;
-                for (User user : users) {
-                    if (user.getName().equals(selectedName)) {
-                        selectedId = user.getId();
+                for (Vendor vendor : data) {
+                    if (vendor.getName().equals(selectedName)) {
+                        selectedId = vendor.getId();
                         break; 
                     }
                 }
                 if (selectedId != null) {
-                    gocusorderpage(selectedId, owner);
+                    gocusorderpage(selectedId);
                 }
             }
         }
     });
-}
-    public void gocusorderpage(String selectedId, User owner){
-        Cus_Order_Page cop = new Cus_Order_Page(selectedId, owner);
-            cop.setVisible(true);
-            cop.pack();
-            cop.setLocationRelativeTo(null);
-            cop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            this.dispose();
+    }
+    public void gocusorderpage(String selectedId){
+        Cus_Order_Page cop = new Cus_Order_Page(selectedId, currentUser);
+        cop.setVisible(true);
+        cop.pack();
+        cop.setLocationRelativeTo(null);
+        cop.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
     
     
@@ -149,12 +150,12 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         
-       Customer_Home_Page chp = new Customer_Home_Page(owner);
-        chp.setVisible(true);
-        chp.pack();
-        chp.setLocationRelativeTo(null);
-        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
+      // Customer_Home_Page chp = new Customer_Home_Page(currentUser);
+        //chp.setVisible(true);
+        //chp.pack();
+        //chp.setLocationRelativeTo(null);
+        //chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.dispose();
     
     }//GEN-LAST:event_backActionPerformed
 
