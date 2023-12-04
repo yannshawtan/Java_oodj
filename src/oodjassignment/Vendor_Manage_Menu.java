@@ -1,17 +1,14 @@
 package oodjassignment;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
 
-public class Manage_Menu extends javax.swing.JFrame {
+public class Vendor_Manage_Menu extends javax.swing.JFrame {
     
     Vendor currentUser;
     String foodName, foodType, vendorId;
@@ -20,11 +17,11 @@ public class Manage_Menu extends javax.swing.JFrame {
     Identifier.Role role = Identifier.Role.Menu;
     Main_Database<Menu> MD = new Main_Database<>(role);
 
-    public Manage_Menu() {
+    public Vendor_Manage_Menu() {
         initComponents();
     }
     
-    public Manage_Menu(Vendor currentUser) {
+    public Vendor_Manage_Menu(Vendor currentUser) {
         initComponents();
         this.currentUser = currentUser;
         buttonGroup.add(radioFood);
@@ -554,7 +551,7 @@ public class Manage_Menu extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Manage_Menu().setVisible(true);
+                new Vendor_Manage_Menu().setVisible(true);
             }
         });
     }

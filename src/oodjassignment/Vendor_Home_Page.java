@@ -38,11 +38,20 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
     }
     
     public void GoToMenu() {
-        Manage_Menu MM = new Manage_Menu(currentUser);
+        Vendor_Manage_Menu MM = new Vendor_Manage_Menu(currentUser);
         MM.setVisible(true);
         MM.pack();
         MM.setLocationRelativeTo(null);
         MM.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
+    public void GoToOrder() {
+        Vendor_Manage_Order MO = new Vendor_Manage_Order(currentUser);
+        MO.setVisible(true);
+        MO.pack();
+        MO.setLocationRelativeTo(null);
+        MO.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
     
@@ -61,7 +70,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         jButton1 = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnOrder = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         labelName1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -166,11 +175,11 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton4.setText("Orders");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnOrder.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnOrder.setText("Orders");
+        btnOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnOrderActionPerformed(evt);
             }
         });
 
@@ -181,7 +190,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))
                 .addGap(18, 34, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -195,7 +204,7 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
                 .addContainerGap(52, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -323,9 +332,10 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
         // TODO add your handling code here:
     }//GEN-LAST:event_cDateActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        GoToOrder();
+    }//GEN-LAST:event_btnOrderActionPerformed
 
     private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
         // TODO add your handling code here:
@@ -380,9 +390,9 @@ public class Vendor_Home_Page extends javax.swing.JFrame implements Date_Provide
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnOrder;
     private javax.swing.JTextField cDate;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
