@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier;
 
-/**
- *
- * @author user
- */
 public class Search_User extends javax.swing.JFrame {
 
-    User owner = new User();
+    Admin currentUser;
+    int counts;
     
     public Search_User() {
         initComponents();
@@ -19,15 +18,15 @@ public class Search_User extends javax.swing.JFrame {
         ListOfUser(Position, "");
     }
     
-    public Search_User(User owner) {
+    public Search_User(Admin currentUser) {
         initComponents();
-        this.owner = owner;
+        this.currentUser = currentUser;
         String Position = Role.getSelectedItem().toString();
         ListOfUser(Position, "");
     }
 
     public void Return(){
-        Admin_Home_Page hp = new Admin_Home_Page(owner);
+        Admin_Home_Page hp = new Admin_Home_Page(currentUser);
         hp.setVisible(true);
         hp.pack();
         hp.setLocationRelativeTo(null);
@@ -35,63 +34,70 @@ public class Search_User extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void ListOfUser(String role, String name){
+    public void ListOfUser(String Position, String name){
         jTableUser.getColumnModel().getColumn(0).setPreferredWidth(15);
         jTableUser.getColumnModel().getColumn(3).setPreferredWidth(30);
         jTableUser.getColumnModel().getColumn(5).setPreferredWidth(30);
         DefaultTableModel model = (DefaultTableModel)jTableUser.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableUser.setRowSorter(sorter);
-        Account_Database db = new Account_Database(role);
-        ArrayList<ArrayList<String>> data = db.ReadData();
         model.setRowCount(0);
-        int counts = db.getCount();
+        Identifier.Role role = Identifier.Role.valueOf(Position);
+        String lowercaseName = name.toLowerCase();
         switch (role) {
-            case "Admin" -> {
+            case Admin -> {
+                Main_Database<Admin> db = new Main_Database<>(role);
+                ArrayList<Admin> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data.get(i).get(1).toLowerCase();
-                    String lowercaseName = name.toLowerCase();
+                    String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), "Null", data.get(i).get(4), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), "Null", data.get(i).get(4), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }    
                 }
             }
-            case "Customer" -> {
+            case Customer -> {
+                Main_Database<Customer> db = new Main_Database(role);
+                ArrayList<Customer> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data.get(i).get(1).toLowerCase();
-                    String lowercaseName = name.toLowerCase();
+                    String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " "+ data.get(i).getCreated_Time(), "Null"});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4), "Null"});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
                     }    
                 }
             }
-            case "Vendor" -> {
+            case Vendor -> {
+                Account_Database db = new Account_Database(role);
+                ArrayList<Vendor> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data.get(i).get(1).toLowerCase();
-                    String lowercaseName = name.toLowerCase();
+                    String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }    
                 }
             }
-            case "Runner" -> {
+            case Runner -> {
+                Account_Database db = new Account_Database(role);
+                ArrayList<Runner> data = db.ReadData();
+                counts = db.getCount();
                 for (int i=0;i<counts;i++){
-                    String lowercaseData = data.get(i).get(1).toLowerCase();
-                    String lowercaseName = name.toLowerCase();
+                    String lowercaseData = data.get(i).getName().toLowerCase();
                     if(name.equals("")){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }
                     else if (lowercaseData.contains(lowercaseName)){
-                        model.addRow(new Object[] {data.get(i).get(0), data.get(i).get(1), data.get(i).get(2), data.get(i).get(5), data.get(i).get(4),  data.get(i).get(6)});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), data.get(i).getStringBalance(), data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), data.get(i).getStringRating()});
                     }    
                 }
             }
@@ -103,7 +109,6 @@ public class Search_User extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextName = new javax.swing.JTextField();
-        jButtonSearch = new javax.swing.JButton();
         jButtonReturn = new javax.swing.JButton();
         Role = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -114,16 +119,14 @@ public class Search_User extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Search User");
 
+        jTextName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNameActionPerformed(evt);
+            }
+        });
         jTextName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextNameKeyReleased(evt);
-            }
-        });
-
-        jButtonSearch.setText("Search");
-        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSearchActionPerformed(evt);
             }
         });
 
@@ -174,20 +177,15 @@ public class Search_User extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButtonReturn)
-                        .addGap(202, 202, 202)
-                        .addComponent(jButtonSearch)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(225, 225, 225))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(225, 225, 225))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(264, 264, 264))))))
+                        .addComponent(Role, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(264, 264, 264))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,22 +197,14 @@ public class Search_User extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSearch)
+                    .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonReturn))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
-        String position = Role.getSelectedItem().toString();
-        String name = jTextName.getText();
-        ListOfUser(position, name);
-    }//GEN-LAST:event_jButtonSearchActionPerformed
 
     private void jButtonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReturnActionPerformed
         Return();
@@ -231,6 +221,10 @@ public class Search_User extends javax.swing.JFrame {
         String name = jTextName.getText();
         ListOfUser(position, name);
     }//GEN-LAST:event_jTextNameKeyReleased
+
+    private void jTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNameActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -266,7 +260,6 @@ public class Search_User extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Role;
     private javax.swing.JButton jButtonReturn;
-    private javax.swing.JButton jButtonSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableUser;

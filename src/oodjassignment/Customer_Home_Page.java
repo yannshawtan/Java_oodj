@@ -5,7 +5,7 @@
 package oodjassignment;
 
 import javax.swing.JFrame;
-
+import oodjassignment.Roles.*;
 /**
  *
  * @author myste
@@ -15,7 +15,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     /**
      * Creates new form Customer_Home_Page
      */
-    User owner = new User();
+    Customer currentUser;
     
     public Customer_Home_Page() {
         initComponents();
@@ -23,10 +23,10 @@ public class Customer_Home_Page extends javax.swing.JFrame {
         setVisible(true);
     }
     
-    public Customer_Home_Page(User owner) {
+    public Customer_Home_Page(Customer currentUser) {
         initComponents();
-        this.owner = owner;
-        User_Name.setText(owner.getName());
+        this.currentUser = currentUser;
+        User_Name.setText(currentUser.getName());
         setVisible(true);
     }
 
@@ -125,8 +125,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_Order_buttonActionPerformed
 
     public void GoCustomerHomePage(){
-        Customer_Menu_Page cmp = new Customer_Menu_Page(owner);
-        System.out.println(owner);
+        Customer_Menu_Page cmp = new Customer_Menu_Page(currentUser);
         cmp.setVisible(true);
         cmp.pack();
         cmp.setLocationRelativeTo(null);

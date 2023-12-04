@@ -13,10 +13,12 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
     public Vendor(String Name, String Password, String Email){
-        super("D"); 
+        super("V"); 
         this.Name = Name;
         this.Password = Password;
         this.Email = Email;
+        this.Balance = 0.00;
+        this.Rating = 0;
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentTime();
     }
@@ -65,6 +67,10 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
         return Balance;
     }
     
+    public String getStringBalance(){
+        return String.valueOf(Balance);
+    }
+    
     public String getCreated_Date(){
         return Created_Dt;
     }
@@ -75,15 +81,15 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     
     public void setRating(int total, int num){
         temp = (double)total/num;
-        this.stringRating = decimalFormat.format(temp);
+        String formattedRating = decimalFormat.format(temp);
+        this.Rating = Double.parseDouble(formattedRating);
     }
     
-    public String getRating(){
-        return stringRating;
+    public String getStringRating(){
+        return String.valueOf(Rating);
     }
     
-    public double getDoubleRating(){
-        Rating = Double.parseDouble(stringRating);
+    public double getRating(){
         return Rating;
     }
     
@@ -102,6 +108,6 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     }
     
     public String toString(){
-        return getNumber() + ". This is " + getName() + ", from "+ getId();
+        return "ID: " + getId() + ", NAME: " + getName() + ", PW: " + getPassword() + ", BAL: " + getStringBalance() + ", STAR: " + getStringRating();
     }
 }

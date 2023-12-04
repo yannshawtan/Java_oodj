@@ -2,10 +2,13 @@ package oodjassignment;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier.Role;
 
 public class Login_Page extends javax.swing.JFrame {
     
-    User owner = new User();
+    //User owner = new User();
+    private Object currentUser;
     public Login_Page() {
         initComponents();
         setVisible(true);
@@ -155,7 +158,7 @@ public class Login_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void GoCustomerHomePage(){
-       Customer_Home_Page chp = new Customer_Home_Page(owner);
+        Customer_Home_Page chp = new Customer_Home_Page((Customer) currentUser);
         chp.setVisible(true);
         chp.pack();
         chp.setLocationRelativeTo(null);
@@ -164,7 +167,7 @@ public class Login_Page extends javax.swing.JFrame {
     }
     
     public void GoAdminHomePage(){
-        Admin_Home_Page ahp = new Admin_Home_Page(owner);
+        Admin_Home_Page ahp = new Admin_Home_Page((Admin) currentUser);
         ahp.setVisible(true);
         ahp.pack();
         ahp.setLocationRelativeTo(null);
@@ -173,7 +176,7 @@ public class Login_Page extends javax.swing.JFrame {
     }
     
     public void GoVendorHomePage() {
-        Vendor_Home_Page vhp = new Vendor_Home_Page(owner);
+        Vendor_Home_Page vhp = new Vendor_Home_Page((Vendor) currentUser);
         vhp.setVisible(true);
         vhp.pack();
         vhp.setLocationRelativeTo(null);
@@ -189,6 +192,8 @@ public class Login_Page extends javax.swing.JFrame {
     private void BloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BloginActionPerformed
         String Email = TFuser.getText();
         String Password = PFpassword.getText();
+        String Position = Role.getSelectedItem().toString();
+        Identifier.Role role = Identifier.Role.valueOf(Position);
         if (Email.equals("")){
             JOptionPane.showMessageDialog(null, "Please fill out your email!");
         }
@@ -196,29 +201,32 @@ public class Login_Page extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please fill out your password!");
         }
         else{
-            String Position = Role.getSelectedItem().toString();
-            Account_Database db = new Account_Database(Position);
-            if (db.LoginValidation(Email, Password,Position)){
-                switch (Position) {
-                    case "Customer" -> {
-                        owner = db.getData();
+            Account_Database db = new Account_Database(role);
+            if (db.LoginValidation(Email, Password, role)){
+                JOptionPane.showMessageDialog(null, "Login Success");
+                switch (role) {
+                    case Customer -> {
+                        currentUser = db.getCurrentUser();
                         GoCustomerHomePage();
                     }
-                    case "Admin" -> {
-                        owner = db.getData();
+                    case Admin -> {
+                        currentUser = db.getCurrentUser();
                         GoAdminHomePage();
                     }
-                    case "Vendor" -> {
-                        owner = db.getData();
+                    case Vendor -> {
+                        currentUser = db.getCurrentUser();
                         GoVendorHomePage();
                     }
-                    case "Runner" -> {
-                        owner = db.getData();
+                    case Runner -> {
+                        currentUser = db.getCurrentUser();
                         //GoRunnerHomePage();
                     }
                     default -> {
                     }
                 }
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Invalid email or password");
             }
         }
     }//GEN-LAST:event_BloginActionPerformed

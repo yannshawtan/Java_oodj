@@ -1,65 +1,48 @@
 package oodjassignment;
 
-import java.io.*;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
 
 
-public class Account_Database<T>{
+public class Account_Database<T> extends Main_Database{
     
-    private Main_Database<T> MD = null;
     private ArrayList<T> data;
     private int count;
     private Object currentUser;
     
     public Account_Database(Role role) {
-        MD = new Main_Database<>(role);
-    }
-    
-    public Main_Database<T> databaseType(Role role){
-        switch (role) {
-            case Admin -> MD = new Main_Database<>(role);
-            case Customer -> MD = new Main_Database<>(role);
-            case Vendor -> MD = new Main_Database<>(role);
-            case Runner -> MD = new Main_Database<>(role);
-        }
-        return MD;
+        super(role);
     }
     
     public void addUser(String name, String email, String pswd, Role role){
-        MD = databaseType(role);
         switch (role) {
             case Admin -> {
                 Admin a = new Admin(name, pswd, email);
-                MD.addData(role, (T) a);
+                addData(role, (T) a);
             }
             case Customer -> {
                 Customer c = new Customer(name, pswd, email);
-                MD.addData(role, (T) c);
+                addData(role, (T) c);
             }
             case Vendor -> {
                 Vendor v = new Vendor(name, pswd, email);
-                MD.addData(role, (T) v);
+                addData(role, (T) v);
             }
             case Runner -> {
                 Runner r = new Runner(name, pswd, email);
-                MD.addData(role, (T) r);
+                addData(role, (T) r);
             }
         }
     }
     
     public boolean LoginValidation(String email, String pswd, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
-        //count = MD.getCount();
+        data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
                 if (admin.getEmail().equals(email) && admin.getPassword().equals(pswd)) {
                     setUser(role, admin);
-                    JOptionPane.showMessageDialog(null, "Login Success");
                     return true;
                 }
             }
@@ -67,7 +50,6 @@ public class Account_Database<T>{
                 Customer customer = (Customer) data.get(i);
                 if (customer.getEmail().equals(email) && customer.getPassword().equals(pswd)) {
                     setUser(role, customer);
-                    JOptionPane.showMessageDialog(null, "Login Success");
                     return true;
                 }
             }
@@ -75,7 +57,6 @@ public class Account_Database<T>{
                 Vendor vendor = (Vendor) data.get(i);
                 if (vendor.getEmail().equals(email) && vendor.getPassword().equals(pswd)) {
                     setUser(role, vendor);
-                    JOptionPane.showMessageDialog(null, "Login Success");
                     return true;
                 }
             }
@@ -83,7 +64,6 @@ public class Account_Database<T>{
                 Runner runner = (Runner) data.get(i);
                 if (runner.getEmail().equals(email) && runner.getPassword().equals(pswd)) {
                     setUser(role, runner);
-                    JOptionPane.showMessageDialog(null, "Login Success");
                     return true;
                 }
             }
@@ -111,12 +91,9 @@ public class Account_Database<T>{
     public Object getCurrentUser() {
         return currentUser;
     }
-
-    
     
     public boolean RegisterValidation(String email, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
+        data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
@@ -146,32 +123,61 @@ public class Account_Database<T>{
         return false;
     }
     
-    
     public boolean AccountValidation(String email, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
+        data = ReadData();
         for (int i = 0; i<data.size(); i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
                 if (admin.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Customer){
                 Customer customer = (Customer) data.get(i);
                 if (customer.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Vendor){
                 Vendor vendor = (Vendor) data.get(i);
                 if (vendor.getEmail().equals(email)){
-                    return false;
+                    return true;
                 }
             }
             else if (data.get(i) instanceof Runner){
                 Runner runner = (Runner) data.get(i);
                 if (runner.getEmail().equals(email)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean PasswordRepetation(String password, Role role){
+        data = ReadData();
+        for (int i = 0; i<data.size(); i++){
+            if (data.get(i) instanceof Admin){
+                Admin admin = (Admin) data.get(i);
+                if (admin.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Customer){
+                Customer customer = (Customer) data.get(i);
+                if (customer.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Vendor){
+                Vendor vendor = (Vendor) data.get(i);
+                if (vendor.getPassword().equals(password)){
+                    return false;
+                }
+            }
+            else if (data.get(i) instanceof Runner){
+                Runner runner = (Runner) data.get(i);
+                if (runner.getPassword().equals(password)){
                     return false;
                 }
             }
@@ -180,15 +186,14 @@ public class Account_Database<T>{
     }
     
     public void changePassword(String email, String password, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
+        data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Admin){
                 Admin admin = (Admin) data.get(i);
                 if (admin.getEmail().equals(email)){
                     admin.setPassword(password);
                     data.set(i, (T) admin);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -197,7 +202,7 @@ public class Account_Database<T>{
                 if (customer.getEmail().equals(email)){
                     customer.setPassword(password);
                     data.set(i, (T) customer);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -206,7 +211,7 @@ public class Account_Database<T>{
                 if (vendor.getEmail().equals(email)){
                     vendor.setPassword(password);
                     data.set(i, (T) vendor);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -215,16 +220,15 @@ public class Account_Database<T>{
                 if (runner.getEmail().equals(email)){
                     runner.setPassword(password);
                     data.set(i, (T) runner);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
         }
     }
     
-    public boolean checkBalance(int amount, String email, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
+    public boolean checkBalance(double amount, String email, Role role){
+        data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Customer){
                 Customer customer = (Customer) data.get(i);
@@ -263,16 +267,15 @@ public class Account_Database<T>{
         return true;
     }
     
-    public void changeBalance(int amount, String email, Role role){
-        MD = databaseType(role);
-        data = MD.ReadData();
+    public void changeBalance(double amount, String email, Role role){
+        data = ReadData();
         for (int i = 0; i<data.size();i++){
             if (data.get(i) instanceof Customer){
                 Customer customer = (Customer) data.get(i);
                 if (customer.getEmail().equals(email)){
                     customer.updateBalance(amount);
                     data.set(i, (T) customer);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -281,7 +284,7 @@ public class Account_Database<T>{
                 if (vendor.getEmail().equals(email)){
                     vendor.updateBalance(amount);
                     data.set(i, (T) vendor);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }
@@ -290,7 +293,7 @@ public class Account_Database<T>{
                 if (runner.getEmail().equals(email)){
                     runner.updateBalance(amount);
                     data.set(i, (T) runner);
-                    MD.updateData(role, data);
+                    updateData(role, data);
                     break;
                 }
             }

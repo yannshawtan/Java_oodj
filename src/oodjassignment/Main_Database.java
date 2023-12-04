@@ -1,10 +1,7 @@
 package oodjassignment;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -72,28 +69,23 @@ public class Main_Database<T> {
             default -> {
             }
         }
-        try {
-            f.createNewFile();
-        } catch (IOException ex) {
-            System.err.println("error");
-        }
-        
+        CreateFile();
     }
-    /*
-    public ObjectOutputStream AppendFile(){
-        if (f.exists()){
-            return writeFile();
-        }
-        else{
-            return newWriteFile();
-        }
-        
-    }
-    */
+
     public void CreateFolder(){
         if(!f1.exists()){
             f1.mkdirs();
             //create the folder,using mkdirs instead of mkdir is to open several folder
+        }
+    }
+    
+    public void CreateFile(){
+        if(!f.exists()){
+            try {
+            f.createNewFile();
+            } catch (IOException ex) {
+                System.err.println("error");
+            }
         }
     }
     
@@ -114,14 +106,13 @@ public class Main_Database<T> {
     }
     
     
-    public ObjectOutputStream writeFile(){
+    public void writeFile(){
         try {
             fos = new FileOutputStream(f);
             oos = new ObjectOutputStream(fos);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null,"File not found!");
         }
-        return oos;
     }
     
     public void setCount(int count){
@@ -129,7 +120,7 @@ public class Main_Database<T> {
     }
     
     public int getCount(){
-        return count;
+        return count; 
     }
 
     public ArrayList<T> ReadData(){
@@ -146,12 +137,12 @@ public class Main_Database<T> {
                 data.add(object);
                 count++;
             }catch(EOFException Ex){
-                setCount(count);
                 break;
             } catch (IOException | ClassNotFoundException ex) {
                 Logger.getLogger(Main_Database.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        setCount(count);
         ReadClose();
         return data;
     }
@@ -192,72 +183,89 @@ public class Main_Database<T> {
     
     public void updateData(Role role, ArrayList<T> data){
         int num = 0;
-        ObjectOutputStream oos = null;
         try{
-            oos = writeFile();
+            writeFile();
             switch (role) {
                 case Admin -> {
                     for (Object a : data) {
-                        if (a instanceof Admin) {
+                        if (a instanceof Admin admin) {
                             num++;
-                            ((Admin) a).setNumber(num);
+                            admin.setNumber(num);
                             oos.writeObject(a);
                         }
                     }
                 }
                 case Customer -> {
                     for (Object c : data) {
-                        if (c instanceof Customer) {
+                        if (c instanceof Customer customer) {
                             num++;
+                            String temp = customer.getId();
+                            customer.setNumber(num);
                             oos.writeObject(c);
                         }
                     }
                 }
                 case Runner -> {
                     for (Object r : data) {
-                        if (r instanceof Runner) {
+                        if (r instanceof Runner runner) {
+                            num++;
+                            runner.setNumber(num);
                             oos.writeObject(r);
                         }
                     }
                 }
                 case Vendor -> {
                     for (Object v : data) {
-                        if (v instanceof Customer) {
+                        if (v instanceof Vendor vendor) {
+                            num++;
+                            String temp = vendor.getId();
+                            // function call update vendor in menu
+                            vendor.setNumber(num);
                             oos.writeObject(v);
                         }
                     }
                 }
                 case Delivery -> {
                     for (Object d : data) {
-                        if (d instanceof Customer) {
+                        if (d instanceof Delivery delivery) {
+                            num++;
+                            delivery.setNumber(num);
                             oos.writeObject(d);
                         }
                     }
                 }
                 case Menu -> {
                     for (Object m : data) {
-                        if (m instanceof Customer) {
+                        if (m instanceof Menu menu) {
+                            num++;
+                            menu.setNumber(num);
                             oos.writeObject(m);
                         }
                     }
                 }
                 case Order -> {
                     for (Object o : data) {
-                        if (o instanceof Customer) {
+                        if (o instanceof Order order) {
+                            num++;
+                            order.setNumber(num);
                             oos.writeObject(o);
                         }
                     }
                 }
                 case Transaction -> {
                     for (Object t : data) {
-                        if (t instanceof Customer) {
+                        if (t instanceof Transaction transaction) {
+                            num++;
+                            transaction.setNumber(num);
                             oos.writeObject(t);
                         }
                     }
                 }
                 case Notification -> {
                     for (Object n : data) {
-                        if (n instanceof Customer) {
+                        if (n instanceof Notification notification) {
+                            num++;
+                            notification.setNumber(num);
                             oos.writeObject(n);
                         }
                     }
@@ -282,3 +290,22 @@ public class Main_Database<T> {
 
 
 
+/*
+menu
+a function that change the menu object (vendor id section)
+loop everything that have same id as temp, replace with new id
+*/
+
+
+/*
+order
+a function that change the menu object (vendor id section)(customer, runner)
+loop everything that have same id as temp, replace with new id
+*/
+
+
+/*
+Transaction
+a function that change the menu object (vendor id section)(customer, runner)
+loop everything that have same id as temp, replace with new id
+*/

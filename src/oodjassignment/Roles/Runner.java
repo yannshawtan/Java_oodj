@@ -27,6 +27,7 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         this.Password = Password;
         this.Email = Email;
         this.Balance = 0.00;
+        updateBalance(0);
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentTime();
     }
@@ -75,6 +76,10 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         return Balance;
     }
     
+    public String getStringBalance(){
+        return String.valueOf(Balance);
+    }
+    
     public String getCreated_Date(){
         return Created_Dt;
     }
@@ -85,15 +90,15 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
     
     public void setRating(int total, int num){
         temp = (double)total/num;
-        this.stringRating = decimalFormat.format(temp);
+        String formattedRating = decimalFormat.format(temp);
+        this.Rating = Double.parseDouble(formattedRating);
     }
     
-    public String getRating(){
-        return stringRating;
+    public String getStringRating(){
+        return String.valueOf(Rating);
     }
     
-    public double getDoubleRating(){
-        Rating = Double.parseDouble(stringRating);
+    public double getRating(){
         return Rating;
     }
     

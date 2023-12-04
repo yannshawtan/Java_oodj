@@ -2,18 +2,20 @@ package oodjassignment;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier;
 
 public class Register_Page extends javax.swing.JFrame {
 
-    User owner = new User();
+    Admin currentUser;
     
     public Register_Page() {
         initComponents();
     }
     
-    public Register_Page(User owner) {
+    public Register_Page(Admin currentUser) {
         initComponents();
-        this.owner = owner;
+        this.currentUser = currentUser;
     }
 
 
@@ -195,7 +197,7 @@ public class Register_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void Return(){
-        Admin_Home_Page hp = new Admin_Home_Page(owner);
+        Admin_Home_Page hp = new Admin_Home_Page(currentUser);
         hp.setVisible(true);
         hp.pack();
         hp.setLocationRelativeTo(null);
@@ -208,7 +210,6 @@ public class Register_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextEmailActionPerformed
 
     private void jBConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConfirmActionPerformed
-        
         String Name = jTextName.getText();
         String Email = jTextEmail.getText();
         String Password = jTextPassword.getText();
@@ -230,12 +231,17 @@ public class Register_Page extends javax.swing.JFrame {
         }
         else{
             String Position = Role.getSelectedItem().toString();
-            Account_Database db = new Account_Database(Position);
-            if (db.RegisterValidation(Name, Email)){
+            Identifier.Role role = Identifier.Role.valueOf(Position);
+            Account_Database db = new Account_Database(role);
+            if (db.RegisterValidation(Email, role)){
                 JOptionPane.showMessageDialog(null, "The email given is already been use!");
             }
             else{
-                db.AddData(Name,Email,Password,Position);
+                db.addUser(Name,Email,Password, role);
+                jTextName.setText("");
+                jTextEmail.setText("");
+                jTextPassword.setText("");
+                jTextConPassword.setText("");
                 JOptionPane.showMessageDialog(null, "Successfully register account!");
             }
         }
