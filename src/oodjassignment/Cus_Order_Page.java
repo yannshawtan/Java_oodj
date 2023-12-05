@@ -29,23 +29,37 @@ public class Cus_Order_Page extends javax.swing.JFrame {
      */
     int count;
     Customer currentUser;
-    public String selectedId;
+    String Status = "Pending Vendor";
+    String CustomerID , Location;
+    ArrayList<String> FoodName;
+    Identifier.Role role = Identifier.Role.Order;
+    Main_Database<Order> MD = new Main_Database<>(role);
+    public String VendorID;
+    public String Options;
+    public Double TotalAmount;
+    
     public Cus_Order_Page() {
         initComponents();
     }
     public Cus_Order_Page(String selectedId, Customer currentUser) {
-        this.selectedId = selectedId;
+        this.VendorID = selectedId;
         this.currentUser = currentUser;
+        CustomerID = currentUser.getId();
         initComponents();
-        
+        Block.setVisible(false);
+        BlockT.setVisible(false);
+        Floor.setVisible(false);
+        FloorT.setVisible(false);
+        Room.setVisible(false);
+        RoomT.setVisible(false);
         populateTable();
     }
     
-    private void calculateTotal() {
+    private Double calculateTotal() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     int rowCount = model.getRowCount();
     int FoodQuantity;
-    double total = 0.0;
+    double TotalAmount = 0.0;
     
     for (int i = 0; i < rowCount; i++) {
         Object quantityObj = model.getValueAt(i, 1);
@@ -68,13 +82,32 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         } else {
         }
 
-        total += price * quantity;
+        TotalAmount += price * quantity;
     }
 
     // Set the text of Total_display to the total
-    Total_display.setText(String.format("%.2f", total));
+    Total_display.setText(String.format("%.2f", TotalAmount));
+        return TotalAmount;
     }
     
+    public void addOrder(String CustomerID, ArrayList<String> FoodName,
+            String Options, Double TotalAmount, String Location, String Status, String VendorID) {
+            Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+            MD.addData(role, food);
+    }
+
+    
+    private String AddLocation(){
+        String Blocks, Floors, Rooms;
+        Blocks = (String) Block.getSelectedItem();
+        Floors = (String) Floor.getSelectedItem();
+        Rooms = (String) Room.getSelectedItem();
+        String Location = null;
+    if (!Optionsbox.getSelectedItem().equals("DineIn")){
+        Location = Blocks + Floors + Rooms; 
+    }
+    return Location;
+    }
     
     private void populateTable() {
         jTable1.setRowHeight(30);
@@ -90,7 +123,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         for (int i = 0; i < count; i++) {
             String menuVendorID = data.get(i).getVendorId();
             System.out.println(menuVendorID);
-            if (selectedId.equals(menuVendorID)) {
+            if (VendorID.equals(menuVendorID)) {
                 System.out.println(data.get(i).getFoodName());
                 model.addRow(new Object[] {data.get(i).getFoodName(), FoodQuantity, data.get(i).getFoodType(), data.get(i).getFoodPrice()});
             }
@@ -116,18 +149,18 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     
     private ArrayList<String> populateFoodList() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        ArrayList<String> foodNames = new ArrayList<>();
+        ArrayList<String> FoodName = new ArrayList<>();
 
         for (int i = 0; i < model.getRowCount(); i++) {
-            String foodName = model.getValueAt(i, 0).toString();
+            String foodNames = model.getValueAt(i, 0).toString();
             int foodQuantity = Integer.parseInt(model.getValueAt(i, 1).toString());
             for (int j = 0; j < foodQuantity; j++) {
-                foodNames.add(foodName);
+                FoodName.add(foodNames);
             }
         }
-        System.out.println(foodNames);
-        return foodNames;
-     }
+        System.out.println(FoodName);
+        return FoodName;
+    }
 
 
 
@@ -147,6 +180,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         Confirm = new javax.swing.JButton();
         Total_display = new java.awt.Label();
+        Optionsbox = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        BlockT = new javax.swing.JLabel();
+        FloorT = new javax.swing.JLabel();
+        RoomT = new javax.swing.JLabel();
+        Block = new javax.swing.JComboBox<>();
+        Floor = new javax.swing.JComboBox<>();
+        Room = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -196,6 +237,32 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         Total_display.setText("label1");
 
+        Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "Delivery" }));
+        Optionsbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionsboxActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Dining Options");
+
+        BlockT.setText("Block");
+
+        FloorT.setText("Floor");
+
+        RoomT.setText("Room Number");
+
+        Block.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E" }));
+        Block.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BlockActionPerformed(evt);
+            }
+        });
+
+        Floor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+
+        Room.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", " ", " " }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -203,22 +270,38 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE))
-                        .addGap(72, 72, 72))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Confirm)
-                        .addGap(84, 84, 84))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(FloorT, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(BlockT, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(RoomT, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Optionsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(28, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Confirm))
+                .addGap(115, 115, 115))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,19 +309,34 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Optionsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(BlockT)
+                            .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(FloorT)
+                            .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RoomT)
+                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(155, 155, 155)
                         .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(Confirm))
-                .addGap(31, 31, 31))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         Total_Price.getAccessibleContext().setAccessibleName("Total_Label");
@@ -256,8 +354,32 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
-        populateFoodList();
+        AddOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
     }//GEN-LAST:event_ConfirmActionPerformed
+
+    private void OptionsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionsboxActionPerformed
+        
+    if(Optionsbox.getSelectedItem().equals("DineIn"))
+       {
+           Block.setVisible(false);
+           BlockT.setVisible(false);
+           Floor.setVisible(false);
+           FloorT.setVisible(false);
+           Room.setVisible(false);
+           RoomT.setVisible(false);
+       } else {
+           Block.setVisible(true);
+           BlockT.setVisible(true);
+           Floor.setVisible(true);
+           FloorT.setVisible(true);
+           Room.setVisible(true);
+           RoomT.setVisible(true);
+       }
+    }//GEN-LAST:event_OptionsboxActionPerformed
+
+    private void BlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlockActionPerformed
+
+    }//GEN-LAST:event_BlockActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,11 +411,19 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Block;
+    private javax.swing.JLabel BlockT;
     private javax.swing.JButton Confirm;
+    private javax.swing.JComboBox<String> Floor;
+    private javax.swing.JLabel FloorT;
+    private javax.swing.JComboBox<String> Optionsbox;
+    private javax.swing.JComboBox<String> Room;
+    private javax.swing.JLabel RoomT;
     private java.awt.Label Total_Price;
     private java.awt.Label Total_display;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

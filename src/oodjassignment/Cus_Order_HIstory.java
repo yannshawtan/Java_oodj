@@ -11,7 +11,7 @@ package oodjassignment;
 public class Cus_Order_History extends javax.swing.JFrame {
 
     /**
-     * Creates new form Cus_Order_HIstory
+     * Creates new form Order_History
      */
     public Cus_Order_History() {
         initComponents();
@@ -32,11 +32,11 @@ public class Cus_Order_History extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 805, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 464, Short.MAX_VALUE)
         );
 
         pack();
