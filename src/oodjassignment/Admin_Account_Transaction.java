@@ -11,16 +11,16 @@ import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 
-public class Account_Transaction extends javax.swing.JFrame {
+public class Admin_Account_Transaction extends javax.swing.JFrame {
 
     Admin currentUser;
     int decimalPlaces;
     
-    public Account_Transaction() {
+    public Admin_Account_Transaction() {
         initComponents();
     }
 
-    public Account_Transaction(Admin currentUser) {
+    public Admin_Account_Transaction(Admin currentUser) {
         initComponents();
         this.currentUser = currentUser;
     }
@@ -297,21 +297,23 @@ public class Account_Transaction extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Account_Transaction.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Account_Transaction().setVisible(true);
+                new Admin_Account_Transaction().setVisible(true);
             }
         });
     }

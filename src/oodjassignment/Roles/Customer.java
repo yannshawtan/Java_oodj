@@ -6,10 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import oodjassignment.Date_Provider;
 
-/**
- *
- * @author user
- */
 public class Customer extends Identifier implements Serializable, Date_Provider{
     
     private String Name, Password, Email, Created_Dt, Created_Time;

@@ -7,18 +7,18 @@ import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 
-public class Search_User extends javax.swing.JFrame {
+public class Admin_Search_User extends javax.swing.JFrame {
 
     Admin currentUser;
     int counts;
     
-    public Search_User() {
+    public Admin_Search_User() {
         initComponents();
         String Position = Role.getSelectedItem().toString();
         ListOfUser(Position, "");
     }
     
-    public Search_User(Admin currentUser) {
+    public Admin_Search_User(Admin currentUser) {
         initComponents();
         this.currentUser = currentUser;
         String Position = Role.getSelectedItem().toString();
@@ -240,20 +240,21 @@ public class Search_User extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Search_User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Search_User().setVisible(true);
+                new Admin_Search_User().setVisible(true);
             }
         });
     }
