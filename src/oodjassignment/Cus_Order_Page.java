@@ -354,7 +354,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
-        AddOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+        addOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
     }//GEN-LAST:event_ConfirmActionPerformed
 
     private void OptionsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionsboxActionPerformed
@@ -408,6 +408,12 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Cus_Order_Page().setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
