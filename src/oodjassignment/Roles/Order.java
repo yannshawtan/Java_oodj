@@ -5,26 +5,20 @@ import java.util.ArrayList;
 
 public class Order extends Identifier implements Serializable{
     
-    private String OrderID,CustomerID,CreatedDt,Options,Status,CompletedDt,FeedbackForVendor, FeedbackForRunner;
+    private String CustomerID,CreatedDt,Options,Status,FeedbackForVendor, FeedbackForRunner, Location, VendorID;
     private int RatingForVendor,RatingForRunner;
-    private ArrayList FoodName;
+    private ArrayList<String> FoodName;
     private Double TotalAmount;
-    public Order(String OrderID, String CustomerID, ArrayList FoodName, String CreatedDt,
-            String Options, String Status, Double TotalAmount,String CompletedDt, int RatingForVendor,String FeedbackForVendor,
-            int RatingForRunner, String FeedbackForRunner){
+    public Order(String CustomerID, ArrayList<String> FoodName,
+            String Options, Double TotalAmount, String Location, String Status, String VendorID){
         super("O"); 
-        this.OrderID = OrderID;
-        this.CompletedDt = CompletedDt;
-        this.CreatedDt = CreatedDt;
-        
-    }
-
-    public String getOrderID() {
-        return OrderID;
-    }
-
-    public void setOrderID(String OrderID) {
-        this.OrderID = OrderID;
+        this.Status = Status;
+        this.CustomerID = CustomerID;
+        this.FoodName = FoodName;
+        this.Options = Options;
+        this.Location = Location;
+        this.VendorID = VendorID;
+        this.TotalAmount = TotalAmount;
     }
 
     public String getCustomerID() {
@@ -59,14 +53,6 @@ public class Order extends Identifier implements Serializable{
         this.Status = Status;
     }
 
-    public String getCompletedDt() {
-        return CompletedDt;
-    }
-
-    public void setCompletedDt(String CompletedDt) {
-        this.CompletedDt = CompletedDt;
-    }
-
     public String getFeedbackForVendor() {
         return FeedbackForVendor;
     }
@@ -99,11 +85,11 @@ public class Order extends Identifier implements Serializable{
         this.RatingForRunner = RatingForRunner;
     }
 
-    public ArrayList getFoodName() {
+    public ArrayList<String> getFoodName() {
         return FoodName;
     }
 
-    public void setFoodName(ArrayList FoodName) {
+    public void setFoodName(ArrayList<String> FoodName) {
         this.FoodName = FoodName;
     }
 
@@ -114,8 +100,25 @@ public class Order extends Identifier implements Serializable{
     public void setTotalAmount(Double TotalAmount) {
         this.TotalAmount = TotalAmount;
     }
-
-   
     
+    public String getVendorID() {
+        return VendorID;
+    }
+
+    public void setVendorID(String VendorID) {
+        this.VendorID = VendorID;
+    }
+    
+    public String getLocation() {
+        return Location;
+    }
+
+    public void setLocation(String Location) {
+        this.Location = Location;
+    }
+
+    public String toString() {
+        return "ID" + getId() + ", CustomerID:" + getCustomerID();
+    }
     
 }
