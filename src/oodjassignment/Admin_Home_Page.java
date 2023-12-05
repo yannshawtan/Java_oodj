@@ -50,7 +50,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
 
     public void GoSearchUser(){
-        Search_User su = new Search_User(currentUser);
+        Admin_Search_User su = new Admin_Search_User(currentUser);
         su.setVisible(true);
         su.pack();
         su.setLocationRelativeTo(null);
@@ -59,7 +59,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoTransaction(){
-        Account_Transaction w = new Account_Transaction(currentUser);
+        Admin_Account_Transaction w = new Admin_Account_Transaction(currentUser);
         w.setVisible(true);
         w.pack();
         w.setLocationRelativeTo(null);
