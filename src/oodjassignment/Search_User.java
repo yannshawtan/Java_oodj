@@ -119,6 +119,11 @@ public class Search_User extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Search User");
 
+        jTextName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNameActionPerformed(evt);
+            }
+        });
         jTextName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jTextNameKeyReleased(evt);
@@ -216,6 +221,10 @@ public class Search_User extends javax.swing.JFrame {
         String name = jTextName.getText();
         ListOfUser(position, name);
     }//GEN-LAST:event_jTextNameKeyReleased
+
+    private void jTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextNameActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -5,6 +5,7 @@
 package oodjassignment;
 
 import java.awt.Component;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -15,7 +16,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.table.TableRowSorter;
+import oodjassignment.Roles.*;
 /**
  *
  * @author myste
@@ -25,27 +27,26 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     /**
      * Creates new form User_Order_Page
      */
-    User owner = new User();
+    int count;
+    Customer currentUser;
     public String selectedId;
     public Cus_Order_Page() {
         initComponents();
     }
-    public Cus_Order_Page(String selectedId, User owner) {
-        super("Order");
-        
+    public Cus_Order_Page(String selectedId, Customer currentUser) {
         this.selectedId = selectedId;
-        this.owner = owner;
+        this.currentUser = currentUser;
         initComponents();
         
         populateTable();
     }
     
     private void calculateTotal() {
-   DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     int rowCount = model.getRowCount();
-
+    int FoodQuantity;
     double total = 0.0;
-
+    
     for (int i = 0; i < rowCount; i++) {
         Object quantityObj = model.getValueAt(i, 1);
         Object priceObj = model.getValueAt(i, 3);
@@ -58,8 +59,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         } else if (quantityObj instanceof String) {
             quantity = Integer.parseInt((String) quantityObj);
         } else {
-            // Handle the case where quantityObj is neither an Integer nor a String
-            // You could throw an exception, return from the method, or assign a default value to quantity
         }
 
         if (priceObj instanceof Double) {
@@ -67,8 +66,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         } else if (priceObj instanceof String) {
             price = Double.parseDouble((String) priceObj);
         } else {
-            // Handle the case where priceObj is neither a Double nor a String
-            // You could throw an exception, return from the method, or assign a default value to price
         }
 
         total += price * quantity;
@@ -78,8 +75,26 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     Total_display.setText(String.format("%.2f", total));
     }
     
-    private DefaultTableModel populateTable() {
-        Menu_Database Menu_Database = new Menu_Database("Menu");
+    
+    private void populateTable() {
+        jTable1.setRowHeight(30);
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTable1.setRowSorter(sorter);
+        model.setRowCount(0);
+        Identifier.Role role = Identifier.Role.Menu;
+        Main_Database<Menu> MD = new Main_Database<>(role);
+        ArrayList<Menu> data = MD.ReadData();
+        count = MD.getCount();
+        int FoodQuantity = 0;
+        for (int i = 0; i < count; i++) {
+            String menuVendorID = data.get(i).getVendorId();
+            System.out.println(menuVendorID);
+            if (selectedId.equals(menuVendorID)) {
+                System.out.println(data.get(i).getFoodName());
+                model.addRow(new Object[] {data.get(i).getFoodName(), FoodQuantity, data.get(i).getFoodType(), data.get(i).getFoodPrice()});
+            }
+        }
         jTable1.getColumnModel().getColumn(1).setCellEditor(new CellEditor());
         jTable1.getColumnModel().getColumn(1).setCellRenderer(new DefaultTableCellRenderer(){
             
@@ -90,13 +105,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             }
             
         });
-
-        List<List<String>> data = Menu_Database.getMenuItemsForCustomer(selectedId); 
-
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        jTable1.setRowHeight(30);
-        model.setRowCount(0); 
-        
         model.addTableModelListener(new TableModelListener() {
         @Override
         public void tableChanged(TableModelEvent e) {
@@ -104,12 +112,23 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             calculateTotal();
         }
     });
-
-        for (List<String> row : data) {
-            model.addRow(new Vector<>(row)); 
-        }
-        return model;
     }
+    
+    private ArrayList<String> populateFoodList() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        ArrayList<String> foodNames = new ArrayList<>();
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String foodName = model.getValueAt(i, 0).toString();
+            int foodQuantity = Integer.parseInt(model.getValueAt(i, 1).toString());
+            for (int j = 0; j < foodQuantity; j++) {
+                foodNames.add(foodName);
+            }
+        }
+        System.out.println(foodNames);
+        return foodNames;
+     }
+
 
 
     /**
@@ -228,8 +247,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Customer_Menu_Page cmp = new Customer_Menu_Page(owner);
-        System.out.println(owner);
+        Customer_Menu_Page cmp = new Customer_Menu_Page(currentUser);
         cmp.setVisible(true);
         cmp.pack();
         cmp.setLocationRelativeTo(null);
@@ -238,7 +256,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
-        // TODO add your handling code here:
+        populateFoodList();
     }//GEN-LAST:event_ConfirmActionPerformed
 
     /**
