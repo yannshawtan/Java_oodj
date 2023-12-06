@@ -18,8 +18,8 @@ public class Tester {
     public static void main(String[] args){
 //        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
-        ArrayList<Order> data;
-//        ArrayList<Runner> data;
+//        ArrayList<Order> data;
+        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
         ArrayList<String> foodName = new  ArrayList<String>();
         foodName.add("Burger");
@@ -27,13 +27,13 @@ public class Tester {
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
-        Identifier.Role role = Identifier.Role.Order;
-//        Identifier.Role role = Identifier.Role.Runner;
+//        Identifier.Role role = Identifier.Role.Order;
+        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
-//        Main_Database<Runner> MD = new Main_Database<>(role);
+        Main_Database<Runner> MD = new Main_Database<>(role);
 //        Main_Database<Menu> MD = new Main_Database<>(role);
-        Account_Database<Order> MD = new Account_Database<>(role);
+//        Account_Database<Order> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
@@ -51,7 +51,7 @@ public class Tester {
         // Add data
         
         
-        MD.addData(role, o1);
+//        MD.addData(role, o1);
 //        MD.addData(role, c1);
 //        MD.addData(role, a1);
 //        MD.addData(role, a2);

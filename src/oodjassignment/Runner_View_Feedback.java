@@ -72,18 +72,18 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
             if(data.get(i).getRunnerId()!= null && data.get(i).getRunnerId().equals(currentUser.getId())){
                 if(order.equals("")){
                     if(formattedDate.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
                     }
                     else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
                     }
                 }
                 else if (lowercaseData.contains(lowercase)){
                     if(formattedDate.equals("")){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
                     }
                     else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
                     }
                 }
             }

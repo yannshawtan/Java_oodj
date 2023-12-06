@@ -92,18 +92,18 @@ public class Runner_Order_History extends javax.swing.JFrame {
                 if(Vendor.equals("")){
                     if(Customer.equals("")){
                         if(formattedDate.equals("")){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                         else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
                     else if (lowercaseCustomerData.contains(lowercaseCustomer)){
                         if(formattedDate.equals("")){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                         else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
 
@@ -111,18 +111,18 @@ public class Runner_Order_History extends javax.swing.JFrame {
                 else if (lowercaseVendorData.contains(lowercaseVendor)){
                     if(Customer.equals("")){
                         if(formattedDate.equals("")){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                         else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
                     else if (lowercaseCustomerData.contains(lowercaseCustomer)){
                         if(formattedDate.equals("")){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                         else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
+                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
                 }

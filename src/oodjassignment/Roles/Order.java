@@ -104,6 +104,15 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         return RatingForVendor;
     }
 
+    public String getStringRatingForVendor() {
+        if (RatingForVendor == 0){
+            return "null";
+        }
+        else{
+            return String.valueOf(RatingForVendor);
+        }
+    }
+
     public void setRatingForVendor(int RatingForVendor) {
         this.RatingForVendor = RatingForVendor;
     }
@@ -112,6 +121,15 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         return RatingForRunner;
     }
 
+    public String getStringRatingForRunner() {
+        if (RatingForRunner == 0){
+            return "null";
+        }
+        else{
+            return String.valueOf(RatingForRunner);
+        }
+    }
+    
     public void setRatingForRunner(int RatingForRunner) {
         this.RatingForRunner = RatingForRunner;
     }
