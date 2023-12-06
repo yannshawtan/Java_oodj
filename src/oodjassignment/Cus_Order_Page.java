@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.event.TableModelEvent;
@@ -30,13 +31,13 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     int count;
     Customer currentUser;
     String Status = "Pending Vendor";
-    String CustomerID , Location;
-    ArrayList<String> FoodName;
+    public String CustomerID;
+    public String Location;
     Identifier.Role role = Identifier.Role.Order;
     Main_Database<Order> MD = new Main_Database<>(role);
     public String VendorID;
     public String Options;
-    public Double TotalAmount;
+    private double TotalAmount = 0.0;
     
     public Cus_Order_Page() {
         initComponents();
@@ -55,11 +56,11 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         populateTable();
     }
     
-    private Double calculateTotal() {
+    private void calculateTotal() {
     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
     int rowCount = model.getRowCount();
     int FoodQuantity;
-    double TotalAmount = 0.0;
+    TotalAmount = 0.0;
     
     for (int i = 0; i < rowCount; i++) {
         Object quantityObj = model.getValueAt(i, 1);
@@ -87,7 +88,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
     // Set the text of Total_display to the total
     Total_display.setText(String.format("%.2f", TotalAmount));
-        return TotalAmount;
     }
     
     public void addOrder(String CustomerID, ArrayList<String> FoodName,
@@ -97,16 +97,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
 
     
-    private String AddLocation(){
+    private void AddLocation(){
         String Blocks, Floors, Rooms;
         Blocks = (String) Block.getSelectedItem();
         Floors = (String) Floor.getSelectedItem();
         Rooms = (String) Room.getSelectedItem();
-        String Location = null;
     if (!Optionsbox.getSelectedItem().equals("DineIn")){
-        Location = Blocks + Floors + Rooms; 
+        Location = Blocks+ "-" + Floors + "-" + Rooms; 
     }
-    return Location;
     }
     
     private void populateTable() {
@@ -150,7 +148,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     private ArrayList<String> populateFoodList() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         ArrayList<String> FoodName = new ArrayList<>();
-
+        
         for (int i = 0; i < model.getRowCount(); i++) {
             String foodNames = model.getValueAt(i, 0).toString();
             int foodQuantity = Integer.parseInt(model.getValueAt(i, 1).toString());
@@ -162,7 +160,15 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         return FoodName;
     }
 
-
+    private void moneydeduct() {
+        Identifier.Role role = Identifier.Role.Customer;
+        Main_Database<Menu> MD = new Main_Database<>(role);
+        data = MD.ReadData();
+        for (int i = 0; i<data.size();i++){
+            
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -354,7 +360,23 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmActionPerformed
-        addOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+        calculateTotal();
+        AddLocation();
+        ArrayList<String> FoodName = populateFoodList();
+        Options=(String) Optionsbox.getSelectedItem();
+        Double cbalance = currentUser.getBalance();
+        try{
+            if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
+            addOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+            if (Options==("Delivery")){
+                
+            }else{
+                
+            }
+        }catch (IllegalArgumentException e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        
     }//GEN-LAST:event_ConfirmActionPerformed
 
     private void OptionsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionsboxActionPerformed
