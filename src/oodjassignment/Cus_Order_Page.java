@@ -84,6 +84,11 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         }
 
         TotalAmount += price * quantity;
+        
+        if (Optionsbox.getSelectedItem().toString().equals("Delivery")) {
+            // Add 5% to TotalAmount for delivery
+            TotalAmount += 0.05 * TotalAmount;
+        }
     }
 
     // Set the text of Total_display to the total
@@ -161,10 +166,17 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
 
     private void moneydeduct() {
+        calculateTotal();
         Identifier.Role role = Identifier.Role.Customer;
-        Main_Database<Menu> MD = new Main_Database<>(role);
-        data = MD.ReadData();
+        Main_Database<Customer> MD = new Main_Database<>(role);
+        ArrayList<Customer>data = MD.ReadData();
+        Double Cbalance = currentUser.getBalance();
+        Double Amount = Cbalance - TotalAmount;
         for (int i = 0; i<data.size();i++){
+            if (data.get(i).getId().equals(CustomerID)){
+                data.get(i).updateBalance(Amount);
+                data.set(i, data.get(i));
+                }
             
         }
         
@@ -364,15 +376,13 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         AddLocation();
         ArrayList<String> FoodName = populateFoodList();
         Options=(String) Optionsbox.getSelectedItem();
-        Double cbalance = currentUser.getBalance();
+        Double Cbalance = currentUser.getBalance();
         try{
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
+            if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
             addOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
-            if (Options==("Delivery")){
-                
-            }else{
-                
-            }
+            moneydeduct();
+            
         }catch (IllegalArgumentException e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
