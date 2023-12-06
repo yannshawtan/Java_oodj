@@ -184,6 +184,14 @@ public class Login_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void GoRunnerHomePage() {
+        Runner_Home_Page vhp = new Runner_Home_Page((Runner) currentUser);
+        vhp.setVisible(true);
+        vhp.pack();
+        vhp.setLocationRelativeTo(null);
+        vhp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     private void TFuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFuserActionPerformed
         // TODO add your handling code here:
@@ -219,7 +227,7 @@ public class Login_Page extends javax.swing.JFrame {
                     }
                     case Runner -> {
                         currentUser = db.getCurrentUser();
-                        //GoRunnerHomePage();
+                        GoRunnerHomePage();
                     }
                     default -> {
                     }
