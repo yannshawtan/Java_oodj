@@ -8,10 +8,9 @@ import oodjassignment.Date_Provider;
 
 public class Order extends Identifier implements Serializable, Date_Provider{
     
-    private String CustomerID, Options, Status, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time;
-
-    
+    private String CustomerID, Options, Status, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time ,RunnerId;
     private int RatingForVendor,RatingForRunner;
+
     private ArrayList<String> FoodName;
     private Double TotalAmount;
     public Order(String CustomerID, ArrayList<String> FoodName,
@@ -26,6 +25,14 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.TotalAmount = TotalAmount;
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentDate();
+    }
+    
+    public String getRunnerId() {
+        return RunnerId;
+    }
+
+    public void setRunnerId(String RunnerId) {
+        this.RunnerId = RunnerId;
     }
     
     public String getCurrentDate() {
@@ -143,7 +150,8 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     }
 
     public String toString() {
-        return "ID" + getId() + ", CustomerID:" + getCustomerID();
+        return "ID" + getId() + ", CustomerID:" + getCustomerID() +", FoodNames" + getFoodName()+ ", get VendorID" + getVendorID() + "Get Location " + getLocation()+"Total Amount"+ getTotalAmount()+
+                "Get Status"+ getStatus() +"getoption"+getOptions(); 
     }
     
 }
