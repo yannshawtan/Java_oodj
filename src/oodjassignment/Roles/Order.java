@@ -24,7 +24,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.VendorID = VendorID;
         this.TotalAmount = TotalAmount;
         this.Created_Dt = getCurrentDate();
-        this.Created_Time = getCurrentDate();
+        this.Created_Time = getCurrentTime();
     }
     
     public String getRunnerId() {
@@ -150,8 +150,8 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     }
 
     public String toString() {
-        return "ID" + getId() + ", CustomerID:" + getCustomerID() +", FoodNames" + getFoodName()+ ", get VendorID" + getVendorID() + "Get Location " + getLocation()+"Total Amount"+ getTotalAmount()+
-                "Get Status"+ getStatus() +"getoption"+getOptions(); 
+        return "ID " + getId() + ", CustomerID " + getCustomerID() +", FoodNames " + getFoodName()+ ", get VendorID " + getVendorID() + "Get Location " + getLocation()+"Total Amount" + getTotalAmount()+
+                "Get Status: "+ getStatus() + ",getoption " +getOptions(); 
     }
     
 }
