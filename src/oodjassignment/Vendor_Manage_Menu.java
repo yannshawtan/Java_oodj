@@ -411,7 +411,7 @@ public class Vendor_Manage_Menu extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        setSize(new java.awt.Dimension(1033, 597));
+        setSize(new java.awt.Dimension(1033, 598));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 

@@ -163,6 +163,7 @@ public class Admin_Search_User extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableUser.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableUser);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

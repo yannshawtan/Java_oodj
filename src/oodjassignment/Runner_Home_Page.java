@@ -5,13 +5,13 @@ import oodjassignment.Roles.*;
 
 public class Runner_Home_Page extends javax.swing.JFrame {
 
-    Vendor currentUser;
+    Runner currentUser;
     
     public Runner_Home_Page() {
         initComponents();
     }
 
-    public Runner_Home_Page(Vendor currentUser) {
+    public Runner_Home_Page(Runner currentUser) {
         initComponents();
         this.currentUser = currentUser;
         User_Name.setText(currentUser.getName());
@@ -25,6 +25,16 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         lp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
+    
+    public void GoProfilePage(){
+        Runner_Profile rp = new Runner_Profile(currentUser);
+        rp.setVisible(true);
+        rp.pack();
+        rp.setLocationRelativeTo(null);
+        rp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -55,6 +65,11 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         jButton1.setText("Order List");
 
         jButton2.setText("Profile");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Order History");
 
@@ -107,6 +122,10 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private void jButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogOutActionPerformed
         GoLoginPage();
     }//GEN-LAST:event_jButtonLogOutActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        GoProfilePage();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
