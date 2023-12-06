@@ -19,6 +19,7 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         this.Password = Password;
         this.Email = Email;
         this.Balance = 0.00;
+        this.Rating = 0;
         updateBalance(0);
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentTime();
