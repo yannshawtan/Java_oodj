@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
+import static oodjassignment.Roles.Notification.Condition.*;
 
 
 public class Tester {
@@ -19,7 +20,8 @@ public class Tester {
 //        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
 //        ArrayList<Order> data;
-        ArrayList<Runner> data;
+        ArrayList<Notification> data;
+//        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
         ArrayList<String> foodName = new  ArrayList<String>();
         foodName.add("Burger");
@@ -28,12 +30,14 @@ public class Tester {
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
 //        Identifier.Role role = Identifier.Role.Order;
-        Identifier.Role role = Identifier.Role.Runner;
+        Identifier.Role role = Identifier.Role.Notification;
+//        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
-        Main_Database<Runner> MD = new Main_Database<>(role);
+//        Main_Database<Runner> MD = new Main_Database<>(role);
 //        Main_Database<Menu> MD = new Main_Database<>(role);
 //        Account_Database<Order> MD = new Account_Database<>(role);
+        Account_Database<Notification> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
@@ -46,11 +50,13 @@ public class Tester {
         Order o1 = new Order("C1", foodName, "Delivery", 10.50, "B-05-06", "Pending", "V1");
         o1.setRunnerId("R1");
         Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
+        Notification n1 = new Notification("A1", "C1", TopUp); 
         //*/        
         
         // Add data
         
         
+        MD.addData(role, n1);
 //        MD.addData(role, o1);
 //        MD.addData(role, c1);
 //        MD.addData(role, a1);

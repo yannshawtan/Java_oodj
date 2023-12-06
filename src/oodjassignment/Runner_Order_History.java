@@ -72,20 +72,18 @@ public class Runner_Order_History extends javax.swing.JFrame {
             formattedDate = "";
         }
         for (int i=0;i<data.size();i++){
-            String lowercaseVendorData = data.get(i).getVendorID().toLowerCase();
-            String lowercaseCustomerData = data.get(i).getCustomerID().toLowerCase();
             if(data.get(i).getRunnerId()!= null && data.get(i).getRunnerId().equals(currentUser.getId())){
                 VendorId = data.get(i).getVendorID();
                 CustomerId = data.get(i).getCustomerID();
                 for (Vendor dv : dataVendor) {
                     if(dv.getId().equals(VendorId)){
-                        VendorName = dv.getName();
+                        VendorName = dv.getName().toLowerCase();
                         break;
                     }
                 }
                 for (Customer dc : dataCustomer) {
                     if(dc.getId().equals(CustomerId)){
-                        CustomerName = dc.getName();
+                        CustomerName = dc.getName().toLowerCase();
                         break;
                     }
                 }
@@ -98,7 +96,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                             model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
-                    else if (lowercaseCustomerData.contains(lowercaseCustomer)){
+                    else if (CustomerName.contains(lowercaseCustomer)){
                         if(formattedDate.equals("")){
                             model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
@@ -108,7 +106,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                     }
 
                 }
-                else if (lowercaseVendorData.contains(lowercaseVendor)){
+                else if (VendorName.contains(lowercaseVendor)){
                     if(Customer.equals("")){
                         if(formattedDate.equals("")){
                             model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
@@ -117,7 +115,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                             model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
                     }
-                    else if (lowercaseCustomerData.contains(lowercaseCustomer)){
+                    else if (CustomerName.contains(lowercaseCustomer)){
                         if(formattedDate.equals("")){
                             model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
                         }
@@ -145,7 +143,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jDateChooser = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        jButtonSearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -205,10 +203,10 @@ public class Runner_Order_History extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Date:");
 
-        jButton1.setText("Search");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSearch.setText("Search");
+        jButtonSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonSearchActionPerformed(evt);
             }
         });
 
@@ -224,17 +222,15 @@ public class Runner_Order_History extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(250, 250, 250))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jTextVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(34, 34, 34)
+                                    .addComponent(jTextVendor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(37, 37, 37)
+                                    .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
@@ -244,7 +240,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                                 .addGap(38, 38, 38))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(142, 142, 142)
-                                .addComponent(jButton1)
+                                .addComponent(jButtonSearch)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonLogOut)
@@ -274,7 +270,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
+                            .addComponent(jButtonSearch))
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -298,9 +294,9 @@ public class Runner_Order_History extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextCustomerActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSearchActionPerformed
         ListOfHistory();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -340,8 +336,8 @@ public class Runner_Order_History extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel User_Name;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonLogOut;
+    private javax.swing.JButton jButtonSearch;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
