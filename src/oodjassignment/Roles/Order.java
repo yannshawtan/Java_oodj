@@ -55,17 +55,9 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     public String getCreated_Dt() {
         return Created_Dt;
     }
-
-    public void setCreated_Dt(String CreatedDt) {
-        this.Created_Dt = CreatedDt;
-    }
     
     public String getCreated_Time() {
         return Created_Time;
-    }
-
-    public void setCreated_Time(String Created_Time) {
-        this.Created_Time = Created_Time;
     }
     
     public String getOptions() {
@@ -166,9 +158,9 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.Location = Location;
     }
 
+    @Override
     public String toString() {
-        return "ID" + getId() + ", CustomerID:" + getCustomerID() +", FoodNames" + getFoodName()+ ", get VendorID" + getVendorID() + "Get Location " + getLocation()+"Total Amount"+ getTotalAmount()+
-                "Get Status"+ getStatus() +"getoption"+getOptions(); 
+        return "Order{" + "CustomerID=" + CustomerID + ", Options=" + Options + ", Status=" + Status + ", FeedbackForVendor=" + FeedbackForVendor + ", FeedbackForRunner=" + FeedbackForRunner + ", Location=" + Location + ", VendorID=" + VendorID + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", RunnerId=" + RunnerId + ", RatingForVendor=" + RatingForVendor + ", RatingForRunner=" + RatingForRunner + ", FoodName=" + FoodName + ", TotalAmount=" + TotalAmount + '}';
     }
     
 }
