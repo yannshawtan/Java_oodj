@@ -13,8 +13,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
 
     private ArrayList<String> FoodName;
     private Double TotalAmount;
-    public Order(String CustomerID, ArrayList<String> FoodName,
-            String Options, Double TotalAmount, String Location, String Status, String VendorID){
+    public Order(String CustomerID, ArrayList<String> FoodName, String Options, Double TotalAmount, String Location, String Status, String VendorID){
         super("O"); 
         this.Status = Status;
         this.CustomerID = CustomerID;
@@ -24,7 +23,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.VendorID = VendorID;
         this.TotalAmount = TotalAmount;
         this.Created_Dt = getCurrentDate();
-        this.Created_Time = getCurrentDate();
+        this.Created_Time = getCurrentTime();
     }
     
     public String getRunnerId() {
