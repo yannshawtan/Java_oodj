@@ -150,7 +150,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
 
     public String toString() {
         return "ID" + getId() + ", CustomerID:" + getCustomerID() +", FoodNames" + getFoodName()+ ", get VendorID" + getVendorID() + "Get Location " + getLocation()+"Total Amount"+ getTotalAmount()+
-                "Get Status"+ getStatus() +"getoptions"+getOptions(); 
+                "Get Status"+ getStatus() +"getoption"+getOptions(); 
     }
     
 }

@@ -38,7 +38,8 @@ public class Tester {
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
 //        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
         Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
-        //*/
+        //*/        
+
         
         // Add data
         
