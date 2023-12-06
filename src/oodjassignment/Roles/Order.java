@@ -2,10 +2,15 @@ package oodjassignment.Roles;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import oodjassignment.Date_Provider;
 
-public class Order extends Identifier implements Serializable{
+public class Order extends Identifier implements Serializable, Date_Provider{
     
-    private String CustomerID,CreatedDt,Options,Status,FeedbackForVendor, FeedbackForRunner, Location, VendorID;
+    private String CustomerID, Options, Status, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time;
+
+    
     private int RatingForVendor,RatingForRunner;
     private ArrayList<String> FoodName;
     private Double TotalAmount;
@@ -19,6 +24,18 @@ public class Order extends Identifier implements Serializable{
         this.Location = Location;
         this.VendorID = VendorID;
         this.TotalAmount = TotalAmount;
+        this.Created_Dt = getCurrentDate();
+        this.Created_Time = getCurrentDate();
+    }
+    
+    public String getCurrentDate() {
+        LocalDate currentDate = LocalDate.now();
+        return formatDate(currentDate);
+    }
+    
+    public String getCurrentTime(){
+        LocalTime currentTime = LocalTime.now();
+        return formatTime(currentTime);
     }
 
     public String getCustomerID() {
@@ -29,14 +46,22 @@ public class Order extends Identifier implements Serializable{
         this.CustomerID = CustomerID;
     }
 
-    public String getCreatedDt() {
-        return CreatedDt;
+    public String getCreated_Dt() {
+        return Created_Dt;
     }
 
-    public void setCreatedDt(String CreatedDt) {
-        this.CreatedDt = CreatedDt;
+    public void setCreated_Dt(String CreatedDt) {
+        this.Created_Dt = CreatedDt;
+    }
+    
+    public String getCreated_Time() {
+        return Created_Time;
     }
 
+    public void setCreated_Time(String Created_Time) {
+        this.Created_Time = Created_Time;
+    }
+    
     public String getOptions() {
         return Options;
     }
