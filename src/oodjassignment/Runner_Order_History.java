@@ -38,21 +38,20 @@ public class Runner_Order_History extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void ListOfUser(String Vendor, String Customer, Calendar date){
-        jTableUser.getColumnModel().getColumn(0).setPreferredWidth(1);
-        jTableUser.getColumnModel().getColumn(1).setPreferredWidth(1);
-        jTableUser.getColumnModel().getColumn(3).setPreferredWidth(1);
-        jTableUser.getColumnModel().getColumn(5).setPreferredWidth(1);
-        DefaultTableModel model = (DefaultTableModel)jTableUser.getModel();
+    public void ListOfFeedback(String Vendor, String Customer){
+        jTableOrder.getColumnModel().getColumn(0).setPreferredWidth(10);
+        jTableOrder.getColumnModel().getColumn(1).setPreferredWidth(15);
+        jTableOrder.getColumnModel().getColumn(2).setPreferredWidth(15);
+        jTableOrder.getColumnModel().getColumn(3).setPreferredWidth(250);
+        DefaultTableModel model = (DefaultTableModel)jTableOrder.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        jTableUser.setRowSorter(sorter);
+        jTableOrder.setRowSorter(sorter);
         model.setRowCount(0);
         Identifier.Role role = Identifier.Role.Order;
         String lowercaseVendor = Vendor.toLowerCase();
         String lowercaseCustomer = Customer.toLowerCase();
         Main_Database<Order> db = new Main_Database<>(role);
         ArrayList<Order> data = db.ReadData();
-        // Here
         Calendar selectedDate = jDateChooser.getCalendar();
         if(selectedDate != null){
             LocalDate localDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -62,49 +61,47 @@ public class Runner_Order_History extends javax.swing.JFrame {
         else{
             formattedDate = "";
         }
-        // There
-//        for (int i=0;i<data.size();i++){
-//            String lowercaseVendorData = data.get(i).getVendorID().toLowerCase();
-//            String lowercaseCustomerData = data.get(i).getCustomerID().toLowerCase();
-//            if(Vendor.equals("")){
-//                if(Customer.equals("")){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                
-//            }
-//            else if (lowercaseVendorData.contains(lowercaseVendor)){
-//                if(Customer.equals("")){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//            }    
-//        }
+        for (int i=0;i<data.size();i++){
+            String lowercaseVendorData = data.get(i).getVendorID().toLowerCase();
+            String lowercaseCustomerData = data.get(i).getCustomerID().toLowerCase();
+            if(Vendor.equals("")){
+                if(Customer.equals("")){
+                    if(formattedDate.equals("")){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                    else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                }
+                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
+                    if(formattedDate.equals("")){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                    else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                }
+                
+            }
+            else if (lowercaseVendorData.contains(lowercaseVendor)){
+                if(Customer.equals("")){
+                    if(formattedDate.equals("")){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                    else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                }
+                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
+                    if(formattedDate.equals("")){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                    else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                        //model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                    }
+                }
+            }    
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -114,7 +111,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
         jButtonLogOut = new javax.swing.JButton();
         User_Name = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableUser = new javax.swing.JTable();
+        jTableOrder = new javax.swing.JTable();
         jTextName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jTextName1 = new javax.swing.JTextField();
@@ -135,7 +132,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
         User_Name.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         User_Name.setText("User");
 
-        jTableUser.setModel(new javax.swing.table.DefaultTableModel(
+        jTableOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -154,8 +151,8 @@ public class Runner_Order_History extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableUser.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTableUser);
+        jTableOrder.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTableOrder);
 
         jTextName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,30 +196,30 @@ public class Runner_Order_History extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonLogOut)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(User_Name)
                         .addGap(269, 269, 269))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonLogOut)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextName1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel1)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextName1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel1)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(25, Short.MAX_VALUE))))
+                                .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,9 +241,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)))
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE))
         );
@@ -321,7 +316,7 @@ public class Runner_Order_History extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableUser;
+    private javax.swing.JTable jTableOrder;
     private javax.swing.JTextField jTextName;
     private javax.swing.JTextField jTextName1;
     // End of variables declaration//GEN-END:variables

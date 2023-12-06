@@ -4,12 +4,15 @@
  */
 package oodjassignment;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
@@ -21,12 +24,14 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
     
     public Runner_View_Feedback() {
         initComponents();
+        ListOfFeedback();
     }
     
     public Runner_View_Feedback(Runner currentUser) {
         initComponents();
         this.currentUser = currentUser;
         User_Name.setText(currentUser.getName());
+        ListOfFeedback();
     }
 
     public void GoHomePage(){
@@ -38,7 +43,8 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void ListOfUser(String Vendor, String Customer, Calendar date){
+    public void ListOfFeedback(){
+        System.out.println("Success");
         jTableFeedback.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTableFeedback.getColumnModel().getColumn(1).setPreferredWidth(15);
         jTableFeedback.getColumnModel().getColumn(2).setPreferredWidth(15);
@@ -48,12 +54,12 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         jTableFeedback.setRowSorter(sorter);
         model.setRowCount(0);
         Identifier.Role role = Identifier.Role.Order;
-        String lowercaseVendor = Vendor.toLowerCase();
-        String lowercaseCustomer = Customer.toLowerCase();
+        String order = jTextOrder.getText();
+        String lowercase = order.toLowerCase();
         Main_Database<Order> db = new Main_Database<>(role);
         ArrayList<Order> data = db.ReadData();
-        // Here
-        Calendar selectedDate = jDateChooser.getCalendar();
+        Date selectedDate = jDateChooser.getDate();
+        
         if(selectedDate != null){
             LocalDate localDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
@@ -62,49 +68,25 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         else{
             formattedDate = "";
         }
-        // There
-//        for (int i=0;i<data.size();i++){
-//            String lowercaseVendorData = data.get(i).getVendorID().toLowerCase();
-//            String lowercaseCustomerData = data.get(i).getCustomerID().toLowerCase();
-//            if(Vendor.equals("")){
-//                if(Customer.equals("")){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                
-//            }
-//            else if (lowercaseVendorData.contains(lowercaseVendor)){
-//                if(Customer.equals("")){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                else if (lowercaseCustomerData.contains(lowercaseCustomer)){
-//                    if(formattedDate.equals("")){
-//                        model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//                    }
-//                    else if(formattedDate.equals(data.get(i).getCreated_Date())){
-//                        
-//                    }
-//                }
-//                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getName(), data.get(i).getEmail(), "Null", data.get(i).getCreated_Date() + " " + data.get(i).getCreated_Time(), "Null"});
-//            }    
-//        }
+        for (int i=0;i<data.size();i++){
+            String lowercaseData = data.get(i).getId().toLowerCase();
+            if(order.equals("")){
+                if(formattedDate.equals("")){
+                    model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                }
+                else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                    model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                }
+            }
+            else if (lowercaseData.contains(lowercase)){
+                if(formattedDate.equals("")){
+                    model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                }
+                else if(formattedDate.equals(data.get(i).getCreated_Dt())){
+                    model.addRow(new Object[] {data.get(i).getId(), data.get(i).getRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});
+                }
+            }    
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -120,6 +102,7 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         jLabelOrder = new javax.swing.JLabel();
         jLabelDate = new javax.swing.JLabel();
         jDateChooser = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -160,11 +143,6 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
                 jTextOrderActionPerformed(evt);
             }
         });
-        jTextOrder.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextOrderKeyReleased(evt);
-            }
-        });
 
         jLabelFilter.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabelFilter.setText("Filter:");
@@ -175,18 +153,24 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         jLabelDate.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDate.setText("Date:");
 
+        jDateChooser.setToolTipText("");
+
+        jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(User_Name)
-                        .addGap(269, 269, 269))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonLogOut)
                             .addGroup(layout.createSequentialGroup()
@@ -200,9 +184,14 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
                                 .addGap(42, 42, 42)
                                 .addComponent(jLabelDate)
                                 .addGap(18, 18, 18)
-                                .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(25, Short.MAX_VALUE))))
-            .addComponent(jScrollPane1)
+                                .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(257, 257, 257)
+                        .addComponent(User_Name))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(242, 242, 242)
+                        .addComponent(jButton1)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,11 +208,11 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
                         .addComponent(jTextOrder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelOrder)
                         .addComponent(jLabelDate))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE))
+                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -237,11 +226,9 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextOrderActionPerformed
 
-    private void jTextOrderKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextOrderKeyReleased
-//        String position = Role.getSelectedItem().toString();
-//        String name = jTextName.getText();
-//        ListOfUser(position, name);
-    }//GEN-LAST:event_jTextOrderKeyReleased
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ListOfFeedback();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -280,6 +267,7 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel User_Name;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonLogOut;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabelDate;
