@@ -17,22 +17,25 @@ public class Tester {
     
     public static void main(String[] args){
 //        ArrayList<Admin> data;
-        ArrayList<Customer> data;
+//        ArrayList<Customer> data;
+        ArrayList<Order> data;
 //        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
-        Identifier.Role role = Identifier.Role.Customer;
+//        Identifier.Role role = Identifier.Role.Customer;
+        Identifier.Role role = Identifier.Role.Order;
 //        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
 //        Main_Database<Menu> MD = new Main_Database<>(role);
-        Account_Database<Customer> MD = new Account_Database<>(role);
+        Account_Database<Order> MD = new Account_Database<>(role);
+//        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
 //        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
-        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
+//        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
