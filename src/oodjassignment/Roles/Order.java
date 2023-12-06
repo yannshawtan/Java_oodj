@@ -13,8 +13,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
 
     private ArrayList<String> FoodName;
     private Double TotalAmount;
-    public Order(String CustomerID, ArrayList<String> FoodName,
-            String Options, Double TotalAmount, String Location, String Status, String VendorID){
+    public Order(String CustomerID, ArrayList<String> FoodName, String Options, Double TotalAmount, String Location, String Status, String VendorID){
         super("O"); 
         this.Status = Status;
         this.CustomerID = CustomerID;
@@ -56,17 +55,9 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     public String getCreated_Dt() {
         return Created_Dt;
     }
-
-    public void setCreated_Dt(String CreatedDt) {
-        this.Created_Dt = CreatedDt;
-    }
     
     public String getCreated_Time() {
         return Created_Time;
-    }
-
-    public void setCreated_Time(String Created_Time) {
-        this.Created_Time = Created_Time;
     }
     
     public String getOptions() {
@@ -105,6 +96,15 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         return RatingForVendor;
     }
 
+    public String getStringRatingForVendor() {
+        if (RatingForVendor == 0){
+            return "null";
+        }
+        else{
+            return String.valueOf(RatingForVendor);
+        }
+    }
+
     public void setRatingForVendor(int RatingForVendor) {
         this.RatingForVendor = RatingForVendor;
     }
@@ -113,6 +113,15 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         return RatingForRunner;
     }
 
+    public String getStringRatingForRunner() {
+        if (RatingForRunner == 0){
+            return "null";
+        }
+        else{
+            return String.valueOf(RatingForRunner);
+        }
+    }
+    
     public void setRatingForRunner(int RatingForRunner) {
         this.RatingForRunner = RatingForRunner;
     }
@@ -149,9 +158,14 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.Location = Location;
     }
 
+    @Override
     public String toString() {
+<<<<<<< HEAD
         return "ID " + getId() + ", CustomerID " + getCustomerID() +", FoodNames " + getFoodName()+ ", get VendorID " + getVendorID() + "Get Location " + getLocation()+"Total Amount" + getTotalAmount()+
                 "Get Status: "+ getStatus() + ",getoption " +getOptions(); 
+=======
+        return "Order{" + "CustomerID=" + CustomerID + ", Options=" + Options + ", Status=" + Status + ", FeedbackForVendor=" + FeedbackForVendor + ", FeedbackForRunner=" + FeedbackForRunner + ", Location=" + Location + ", VendorID=" + VendorID + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", RunnerId=" + RunnerId + ", RatingForVendor=" + RatingForVendor + ", RatingForRunner=" + RatingForRunner + ", FoodName=" + FoodName + ", TotalAmount=" + TotalAmount + '}';
+>>>>>>> master
     }
     
 }
