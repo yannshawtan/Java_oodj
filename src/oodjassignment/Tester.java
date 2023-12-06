@@ -17,27 +17,27 @@ public class Tester {
     
     public static void main(String[] args){
 //        ArrayList<Admin> data;
-//        ArrayList<Customer> data;
+        ArrayList<Customer> data;
 //        ArrayList<Runner> data;
-        ArrayList<Menu> data;
+//        ArrayList<Menu> data;
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
-//        Identifier.Role role = Identifier.Role.Customer;
+        Identifier.Role role = Identifier.Role.Customer;
 //        Identifier.Role role = Identifier.Role.Runner;
-        Identifier.Role role = Identifier.Role.Menu;
+//        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-        Main_Database<Menu> MD = new Main_Database<>(role);
-//        Account_Database<Customer> MD = new Account_Database<>(role);
+//        Main_Database<Menu> MD = new Main_Database<>(role);
+        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
 //        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
-//        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
+        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
 //        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
-        Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
+//        Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
         //*/
         
         // Add data
