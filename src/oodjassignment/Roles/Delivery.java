@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Delivery extends Identifier implements Serializable{
     
-    private String runner_Id, order_Id;
+    private String runnerId, orderId;
     private Status status;
     
     private enum Status{
@@ -12,31 +12,31 @@ public class Delivery extends Identifier implements Serializable{
         Delivered
     }
     
-    public Delivery(String runner_Id, String order_Id) {
+    public Delivery(String runnerId, String orderId) {
         super("D");
-        this.runner_Id = runner_Id;
-        this.order_Id = order_Id;
+        this.runnerId = runnerId;
+        this.orderId = orderId;
         this.status = Status.OTW;
     }
 
-    public String getRunner_Id() {
-        return runner_Id;
+    public String getRunnerId() {
+        return runnerId;
     }
 
-    public String getOrder_Id() {
-        return order_Id;
+    public String getOrderId() {
+        return orderId;
     }
 
     public Status getStatus() {
         return status;
     }
 
-    public void setRunner_Id(String runner_Id) {
-        this.runner_Id = runner_Id;
+    public void setRunnerId(String runnerId) {
+        this.runnerId = runnerId;
     }
 
-    public void setOrder_Id(String order_Id) {
-        this.order_Id = order_Id;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public void setStatus(Status status) {
@@ -45,7 +45,7 @@ public class Delivery extends Identifier implements Serializable{
 
     @Override
     public String toString() {
-        return "Delivery{" + "runner_Id=" + runner_Id + ", order_Id=" + order_Id + ", status=" + status + '}';
+        return "Delivery{" + "runnerId=" + runnerId + ", orderId=" + orderId + ", status=" + status + '}';
     }
     
 }
