@@ -150,12 +150,12 @@ public class Customer_Menu_Page extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         
-      // Customer_Home_Page chp = new Customer_Home_Page(currentUser);
-        //chp.setVisible(true);
-        //chp.pack();
-        //chp.setLocationRelativeTo(null);
-        //chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.dispose();
+        Customer_Home_Page chp = new Customer_Home_Page(currentUser);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     
     }//GEN-LAST:event_backActionPerformed
 
