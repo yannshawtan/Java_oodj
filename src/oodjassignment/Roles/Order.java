@@ -8,8 +8,11 @@ import oodjassignment.Date_Provider;
 
 public class Order extends Identifier implements Serializable, Date_Provider{
     
-    private String CustomerID, Options, Status, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time ,RunnerId;
+    private String CustomerID, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time ,RunnerId;
     private int RatingForVendor,RatingForRunner;
+    private Status Status;
+    private Options Options;
+    
 
     
     public enum Status{
@@ -30,7 +33,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     
     private ArrayList<String> FoodName;
     private Double TotalAmount;
-    public Order(String CustomerID, ArrayList<String> FoodName, String Options, Double TotalAmount, String Location, String Status, String VendorID){
+    public Order(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID){
         super("O"); 
         this.Status = Status;
         this.CustomerID = CustomerID;
@@ -77,19 +80,19 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         return Created_Time;
     }
     
-    public String getOptions() {
+    public Options getOptions() {
         return Options;
     }
 
-    public void setOptions(String Options) {
+    public void setOptions(Options Options) {
         this.Options = Options;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return Status;
     }
 
-    public void setStatus(String Status) {
+    public void setStatus(Status Status) {
         this.Status = Status;
     }
 
@@ -177,7 +180,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
 
     @Override
     public String toString() {
-        return "Order{" + "CustomerID=" + CustomerID + ", Options=" + Options + ", Status=" + Status + ", FeedbackForVendor=" + FeedbackForVendor + ", FeedbackForRunner=" + FeedbackForRunner + ", Location=" + Location + ", VendorID=" + VendorID + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", RunnerId=" + RunnerId + ", RatingForVendor=" + RatingForVendor + ", RatingForRunner=" + RatingForRunner + ", FoodName=" + FoodName + ", TotalAmount=" + TotalAmount + '}';
+        return "Order{" + "CustomerID=" + CustomerID + ", FeedbackForVendor=" + FeedbackForVendor + ", FeedbackForRunner=" + FeedbackForRunner + ", Location=" + Location + ", VendorID=" + VendorID + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", RunnerId=" + RunnerId + ", RatingForVendor=" + RatingForVendor + ", RatingForRunner=" + RatingForRunner + ", Status=" + Status + ", Options=" + Options + ", FoodName=" + FoodName + ", TotalAmount=" + TotalAmount + '}';
     }
     
 }
