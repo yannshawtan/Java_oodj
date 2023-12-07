@@ -6,6 +6,7 @@ package oodjassignment;
 
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
@@ -17,7 +18,7 @@ import oodjassignment.Roles.*;
 public class Runner_Order_List extends javax.swing.JFrame {
 
     Runner currentUser;
-    String VendorId, CustomerId, Customer, Vendor, CustomerName, VendorName, Location, Food;
+    String VendorId, CustomerId, CustomerName, Customer, Vendor, VendorName, OrderId;
     
     public Runner_Order_List() {
         initComponents();
@@ -27,6 +28,12 @@ public class Runner_Order_List extends javax.swing.JFrame {
         initComponents();
         this.currentUser = currentUser;
         User_Name.setText(currentUser.getName());
+        jLabelOrder.setText("Order ID: ");
+        jTextVendor.setEditable(false);
+        jTextCustomer.setEditable(false);
+        jTextLocation.setEditable(false);
+        jTextFood.setEditable(false);
+        ListOfHistory();
     }
     
 
@@ -43,9 +50,9 @@ public class Runner_Order_List extends javax.swing.JFrame {
         jTableOrder.getColumnModel().getColumn(0).setPreferredWidth(15);
         jTableOrder.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTableOrder.getColumnModel().getColumn(2).setPreferredWidth(30);
-        jTableOrder.getColumnModel().getColumn(3).setPreferredWidth(25);
+        jTableOrder.getColumnModel().getColumn(3).setPreferredWidth(100);
         jTableOrder.getColumnModel().getColumn(4).setPreferredWidth(15);
-        jTableOrder.getColumnModel().getColumn(5).setPreferredWidth(100);
+        jTableOrder.getColumnModel().getColumn(5).setPreferredWidth(15);
         DefaultTableModel model = (DefaultTableModel)jTableOrder.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         jTableOrder.setRowSorter(sorter);
@@ -53,19 +60,28 @@ public class Runner_Order_List extends javax.swing.JFrame {
         Customer = jTextCustomer.getText();
         Vendor = jTextVendor.getText();
         Identifier.Role role = Identifier.Role.Order;
-        String lowercaseVendor = Vendor.toLowerCase();
-        String lowercaseCustomer = Customer.toLowerCase();
         Main_Database<Order> db = new Main_Database<>(role);
         ArrayList<Order> data = db.ReadData();
         Main_Database<Vendor> dbVendor = new Main_Database<>(Identifier.Role.Vendor);
         ArrayList<Vendor> dataVendor = dbVendor.ReadData();
         Main_Database<Customer> dbCustomer = new Main_Database<>(Identifier.Role.Customer);
         ArrayList<Customer> dataCustomer = dbCustomer.ReadData();
+        Main_Database<Delivery> dbDelivery = new Main_Database<>(Identifier.Role.Delivery);
+        ArrayList<Delivery> dataDelivery = dbDelivery.ReadData();
         // Print out all the order with Option being delivery and the OrderID does not exist in Delivery table
         // For completing, is the same concept but print out all based on Order ID with same runner ID in delivery Table that is OTW state
         // Send notification when complete order
         for (int i=0;i<data.size();i++){
-            if(data.get(i).getRunnerId()!= null && data.get(i).getRunnerId().equals(currentUser.getId())){
+            OrderId = data.get(i).getId();
+            boolean state = true;
+            for (Delivery dd : dataDelivery) {
+                if(dd.getOrderId().equals(OrderId)){
+                    state = false;
+                    break;
+                }
+            }
+            // Need to add status(Pending Runner, ReadyForCollection) change the option to enum
+            if(data.get(i).getOptions().equals("Delivery") && state){
                 VendorId = data.get(i).getVendorID();
                 CustomerId = data.get(i).getCustomerID();
                 for (Vendor dv : dataVendor) {
@@ -80,43 +96,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
                         break;
                     }
                 }
-                if(Vendor.equals("")){
-                    if(Customer.equals("")){
-//                        if(formattedDate.equals("")){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-//                        else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-                    }
-                    else if (CustomerName.contains(lowercaseCustomer)){
-//                        if(formattedDate.equals("")){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-//                        else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-                    }
-
-                }
-                else if (VendorName.contains(lowercaseVendor)){
-                    if(Customer.equals("")){
-//                        if(formattedDate.equals("")){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-//                        else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-                    }
-                    else if (CustomerName.contains(lowercaseCustomer)){
-//                        if(formattedDate.equals("")){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-//                        else if(formattedDate.equals(data.get(i).getCreated_Dt())){
-//                            model.addRow(new Object[] {data.get(i).getId(), VendorName, CustomerName, data.get(i).getTotalAmount(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt() + " " + data.get(i).getCreated_Time()});
-//                        }
-                    }
-                }
+                model.addRow(new Object[] {OrderId, VendorName, CustomerName, data.get(i).getFoodName(), data.get(i).getLocation(), data.get(i).getTotalAmount()});
             }
         }
     }
@@ -134,7 +114,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
         jLabelCustomer = new javax.swing.JLabel();
         jLabelLocation = new javax.swing.JLabel();
         jLabelFood = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonAccept = new javax.swing.JButton();
         jTextVendor = new javax.swing.JTextField();
         jTextCustomer = new javax.swing.JTextField();
         jTextLocation = new javax.swing.JTextField();
@@ -163,6 +143,11 @@ public class Runner_Order_List extends javax.swing.JFrame {
                 "Order ID", "Vendor", "Customer", "Food", "Location", "Total"
             }
         ));
+        jTableOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableOrderMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableOrder);
 
         jLabelOrder.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -176,8 +161,13 @@ public class Runner_Order_List extends javax.swing.JFrame {
 
         jLabelFood.setText("Food:");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Accept");
+        jButtonAccept.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonAccept.setText("Accept");
+        jButtonAccept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAcceptActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,7 +198,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
                     .addComponent(jLabelOrder)
                     .addComponent(jLabelFood)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButtonAccept)
                         .addGap(12, 12, 12)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -241,7 +231,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22)
-                        .addComponent(jButton1))
+                        .addComponent(jButtonAccept))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelFood)
                         .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -255,6 +245,28 @@ public class Runner_Order_List extends javax.swing.JFrame {
     private void jButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogOutActionPerformed
         GoHomePage();
     }//GEN-LAST:event_jButtonLogOutActionPerformed
+
+    private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
+        try {
+            int selectedRow = jTableOrder.getSelectedRow();
+            String selectedOrderId = jTableOrder.getValueAt(selectedRow, 0).toString();
+            String selectedVendor = jTableOrder.getValueAt(selectedRow, 1).toString();
+            String selectedCustomer = jTableOrder.getValueAt(selectedRow, 2).toString();
+            String selectedLocation = jTableOrder.getValueAt(selectedRow, 3).toString();
+            String selectedFood = jTableOrder.getValueAt(selectedRow, 4).toString();
+            jLabelOrder.setText("Order ID: " + selectedOrderId);
+            jTextVendor.setText(selectedVendor);
+            jTextCustomer.setText(selectedCustomer);
+            jTextLocation.setText(selectedLocation);
+            jTextFood.setText(selectedFood);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jTableOrderMouseClicked
+
+    private void jButtonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAcceptActionPerformed
+        // A function to accept order, basically create a Delivery table
+    }//GEN-LAST:event_jButtonAcceptActionPerformed
 
     /**
      * @param args the command line arguments
@@ -294,7 +306,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel User_Name;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAccept;
     private javax.swing.JButton jButtonLogOut;
     private javax.swing.JLabel jLabelCustomer;
     private javax.swing.JLabel jLabelFood;

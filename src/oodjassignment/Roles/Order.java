@@ -11,6 +11,23 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     private String CustomerID, Options, Status, FeedbackForVendor, FeedbackForRunner, Location, VendorID ,Created_Dt, Created_Time ,RunnerId;
     private int RatingForVendor,RatingForRunner;
 
+    
+    public enum Status{
+        PendingVendor,
+        PendingRunner,
+        InKitchen,
+        ReadyForCollection,
+        OutForDelivery,
+        Completed,
+        Decline
+    }
+    
+    public enum Options{
+        DineIn,
+        TakeAway,
+        Delivery
+    }
+    
     private ArrayList<String> FoodName;
     private Double TotalAmount;
     public Order(String CustomerID, ArrayList<String> FoodName, String Options, Double TotalAmount, String Location, String Status, String VendorID){

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Notification extends Identifier implements Serializable{
     
-    private String sender_Id,receiver_Id;
+    private String senderId,receiverId;
     private Condition condition;
     private State state;
     
@@ -24,20 +24,20 @@ public class Notification extends Identifier implements Serializable{
         Sent
     }
     
-    public Notification(String sender_Id, String receiver_Id, Condition condition) {
+    public Notification(String senderId, String receiverId, Condition condition) {
         super("N");
-        this.sender_Id = sender_Id;
-        this.receiver_Id = receiver_Id;
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.condition = condition;
         this.state = State.Sent;
     }
 
-    public String getSender_Id() {
-        return sender_Id;
+    public String getSenderId() {
+        return senderId;
     }
 
-    public String getReceiver_Id() {
-        return receiver_Id;
+    public String getReceiverId() {
+        return receiverId;
     }
 
     public Condition getCondition() {
@@ -56,17 +56,17 @@ public class Notification extends Identifier implements Serializable{
         this.state = state;
     }
 
-    public void setSender_Id(String sender_Id) {
-        this.sender_Id = sender_Id;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
     }
 
-    public void setReceiver_Id(String receiver_Id) {
-        this.receiver_Id = receiver_Id;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
     }
 
     @Override
     public String toString() {
-        return "Notification{" + "sender_Id=" + sender_Id + ", receiver_Id=" + receiver_Id + ", condition=" + condition + ", state=" + state + '}';
+        return "Notification{" + "senderId=" + senderId + ", receiverId=" + receiverId + ", condition=" + condition + ", state=" + state + '}';
     }
     
     
