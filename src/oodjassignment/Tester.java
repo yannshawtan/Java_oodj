@@ -67,6 +67,7 @@ public class Tester {
 //        MD.addData(role, a4);
 //        MD.addData(role, v2);
 //        MD.addData(role, f1);
+//        MD.addData(role, o1);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
