@@ -19,6 +19,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Order.Options;
+import oodjassignment.Roles.Order.Status;
 /**
  *
  * @author myste
@@ -30,7 +32,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
      */
     int count;
     Customer currentUser;
-    String Status = "Pending Vendor";
     public String CustomerID;
     public String Location;
     Identifier.Role role = Identifier.Role.Order;
@@ -95,10 +96,9 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     Total_display.setText(String.format("%.2f", TotalAmount));
     }
     
-    public void addOrder(String CustomerID, ArrayList<String> FoodName,
-            String Options, Double TotalAmount, String Location, String Status, String VendorID) {
-            Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
-            MD.addData(role, food);
+    public void addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID) {
+        Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+        MD.addData(role, food);
     }
 
     
@@ -255,7 +255,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         Total_display.setText("label1");
 
-        Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "Delivery" }));
+        Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "TakeAway", "Delivery" }));
         Optionsbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OptionsboxActionPerformed(evt);
@@ -311,7 +311,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                             .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -375,12 +375,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         calculateTotal();
         AddLocation();
         ArrayList<String> FoodName = populateFoodList();
-        Options=(String) Optionsbox.getSelectedItem();
+        Options options = (Options) Optionsbox.getSelectedItem();
         Double Cbalance = currentUser.getBalance();
+         Status status = Status.PendingVendor;
         try{
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
-            addOrder(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
+            
+            addOrder(CustomerID, FoodName, options, TotalAmount, Location, status, VendorID);
             moneydeduct();
             
         }catch (IllegalArgumentException e){
@@ -399,7 +401,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
            FloorT.setVisible(false);
            Room.setVisible(false);
            RoomT.setVisible(false);
-       } else {
+        } else {
            Block.setVisible(true);
            BlockT.setVisible(true);
            Floor.setVisible(true);
