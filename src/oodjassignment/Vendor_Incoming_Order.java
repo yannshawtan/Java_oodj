@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Order.*;
 
 public class Vendor_Incoming_Order extends javax.swing.JFrame {
     
@@ -18,7 +19,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
     public Vendor_Incoming_Order() {
         initComponents();
     }
-    
+        
     public Vendor_Incoming_Order(Vendor currentUser) {
         initComponents();
         this.currentUser = currentUser;
@@ -46,6 +47,29 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
         return foodMap;
     }
+    
+    public String optionEnumToString(Options option) {
+        switch (option) {
+            case DineIn -> {return "Dine In";}
+            case TakeAway -> {return "Takeaway";}
+            case Delivery -> {return "Delivery";}
+            default -> {return "Not an Option";}
+        }
+    }
+    
+    public String statusEnumToString(Status status) {
+        switch (status) {
+            case PendingVendor -> {return "Pending Vendor";}
+            case PendingRunner -> {return "Pending Runner";}
+            case InKitchen -> {return "In Kitchen";}
+            case ReadyForCollection -> {return "Ready For Collection";}
+            case OutForDelivery -> {return "Out For Delivery";}
+            case Completed -> {return "Completed";}
+            case Decline -> {return "Declined";}
+            default -> {return "Not an Option";}
+        }
+    }
+    
     
     public String findCustomerName(String custId) {
         String custName = "";
@@ -89,8 +113,8 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         ArrayList<Order> data = MD.ReadData();
         for (int i = 0; i < data.size(); i++) {
             String checkVendorId = data.get(i).getVendorID();
-            String checkStatus = data.get(i).getStatus();
-            if (checkVendorId.equals(vendorId) && checkStatus.equals("Pending Vendor")) {
+            String checkStatus = statusEnumToString(data.get(i).getStatus());
+            if (checkVendorId.equals(vendorId)) { // && checkStatus == Order.Status.PendingRunner
                 model.addRow(new Object[] {data.get(i).getId(), findCustomerName(data.get(i).getCustomerID()), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
             }
         }
@@ -340,6 +364,11 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
 
         btnAccept.setText("Accept");
+        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcceptActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -417,7 +446,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                 if (checkOrderId.equals(orderId)) {
                     custName = findCustomerName(data.get(i).getCustomerID());
                     orderTime = concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time());
-                    option = data.get(i).getOptions();
+                    option = optionEnumToString(data.get(i).getOptions());
                     orderTotal = data.get(i).getTotalAmount();
                     food = data.get(i).getFoodName();
                 }
@@ -435,6 +464,18 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_orderTBMouseClicked
+
+    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+        // TODO add your handling code here:
+        
+        /*
+        Upon Clicking:
+        1. Add Order Total into Vendor Balance [apply delivery formula (if any)]
+        2. Save transaction into transaction database (C1 -> V1)
+        3. Change status to "in kitchen" or "pending runner"
+        4. Send notification to customer or runner
+        */
+    }//GEN-LAST:event_btnAcceptActionPerformed
 
     /**
      * @param args the command line arguments
