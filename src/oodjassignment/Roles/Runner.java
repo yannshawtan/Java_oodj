@@ -109,8 +109,9 @@ public class Runner extends Identifier implements Serializable, Date_Provider{
         return countRating;
     }
     
-    public String toString(){
-        return getNumber() + ". This is " + getName() + ", from "+ getId();
+    @Override
+    public String toString() {
+        return "Runner{" + "Name=" + Name + ", Password=" + Password + ", Email=" + Email + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", stringRating=" + stringRating + ", Balance=" + Balance + ", temp=" + temp + ", Rating=" + Rating + ", totalRating=" + totalRating + ", countRating=" + countRating + ", decimalFormat=" + decimalFormat + '}';
     }
     
     

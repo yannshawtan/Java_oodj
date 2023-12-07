@@ -41,6 +41,7 @@ public class Tester {
         
 //        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
 //        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
+        Runner r1 = new Runner("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
@@ -53,7 +54,12 @@ public class Tester {
         
         
 //        MD.addData(role, n1);
+<<<<<<< HEAD
 //       MD.addData(role, o1);
+=======
+//        MD.addData(role, r1);
+//        MD.addData(role, o1);
+>>>>>>> master
 //        MD.addData(role, c1);
 //        MD.addData(role, a1);
 //        MD.addData(role, a2);

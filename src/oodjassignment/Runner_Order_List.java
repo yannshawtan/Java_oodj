@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
+import static oodjassignment.Roles.Order.Options.*;
+import static oodjassignment.Roles.Order.Status.*;
 
 /**
  *
@@ -18,7 +20,7 @@ import oodjassignment.Roles.*;
 public class Runner_Order_List extends javax.swing.JFrame {
 
     Runner currentUser;
-    String VendorId, CustomerId, CustomerName, Customer, Vendor, VendorName, OrderId;
+    String VendorId, CustomerId, CustomerName, Customer, Vendor, VendorName, OrderId, selectedOrderId, selectedVendor, selectedCustomer,selectedLocation, selectedFood;
     
     public Runner_Order_List() {
         initComponents();
@@ -33,7 +35,8 @@ public class Runner_Order_List extends javax.swing.JFrame {
         jTextCustomer.setEditable(false);
         jTextLocation.setEditable(false);
         jTextFood.setEditable(false);
-        ListOfHistory();
+        jButtonAccept.setEnabled(false);
+        ListOfOrder();
     }
     
 
@@ -46,7 +49,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void ListOfHistory(){
+    public void ListOfOrder(){
         jTableOrder.getColumnModel().getColumn(0).setPreferredWidth(15);
         jTableOrder.getColumnModel().getColumn(1).setPreferredWidth(30);
         jTableOrder.getColumnModel().getColumn(2).setPreferredWidth(30);
@@ -73,30 +76,24 @@ public class Runner_Order_List extends javax.swing.JFrame {
         // Send notification when complete order
         for (int i=0;i<data.size();i++){
             OrderId = data.get(i).getId();
-            boolean state = true;
-            for (Delivery dd : dataDelivery) {
-                if(dd.getOrderId().equals(OrderId)){
-                    state = false;
-                    break;
-                }
-            }
-            // Need to add status(Pending Runner, ReadyForCollection) change the option to enum
-            if(data.get(i).getOptions().equals("Delivery") && state){
-                VendorId = data.get(i).getVendorID();
-                CustomerId = data.get(i).getCustomerID();
-                for (Vendor dv : dataVendor) {
-                    if(dv.getId().equals(VendorId)){
-                        VendorName = dv.getName().toLowerCase();
-                        break;
+            if (data.get(i).getOptions().equals(Delivery) && data.get(i).getRunnerId() == null){
+                if((data.get(i).getStatus().equals(PendingRunner))){
+                    VendorId = data.get(i).getVendorID();
+                    CustomerId = data.get(i).getCustomerID();
+                    for (Vendor dv : dataVendor) {
+                        if(dv.getId().equals(VendorId)){
+                            VendorName = dv.getName().toLowerCase();
+                            break;
+                        }
                     }
-                }
-                for (Customer dc : dataCustomer) {
-                    if(dc.getId().equals(CustomerId)){
-                        CustomerName = dc.getName().toLowerCase();
-                        break;
+                    for (Customer dc : dataCustomer) {
+                        if(dc.getId().equals(CustomerId)){
+                            CustomerName = dc.getName().toLowerCase();
+                            break;
+                        }
                     }
+                    model.addRow(new Object[] {OrderId, VendorName, CustomerName, data.get(i).getFoodName(), data.get(i).getLocation(), data.get(i).getTotalAmount()});
                 }
-                model.addRow(new Object[] {OrderId, VendorName, CustomerName, data.get(i).getFoodName(), data.get(i).getLocation(), data.get(i).getTotalAmount()});
             }
         }
     }
@@ -142,7 +139,15 @@ public class Runner_Order_List extends javax.swing.JFrame {
             new String [] {
                 "Order ID", "Vendor", "Customer", "Food", "Location", "Total"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTableOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableOrderMouseClicked(evt);
@@ -249,23 +254,28 @@ public class Runner_Order_List extends javax.swing.JFrame {
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
         try {
             int selectedRow = jTableOrder.getSelectedRow();
-            String selectedOrderId = jTableOrder.getValueAt(selectedRow, 0).toString();
-            String selectedVendor = jTableOrder.getValueAt(selectedRow, 1).toString();
-            String selectedCustomer = jTableOrder.getValueAt(selectedRow, 2).toString();
-            String selectedLocation = jTableOrder.getValueAt(selectedRow, 3).toString();
-            String selectedFood = jTableOrder.getValueAt(selectedRow, 4).toString();
+            this.selectedOrderId = jTableOrder.getValueAt(selectedRow, 0).toString();
+            this.selectedVendor = jTableOrder.getValueAt(selectedRow, 1).toString();
+            this.selectedCustomer = jTableOrder.getValueAt(selectedRow, 2).toString();
+            this.selectedLocation = jTableOrder.getValueAt(selectedRow, 3).toString();
+            this.selectedFood = jTableOrder.getValueAt(selectedRow, 4).toString();
             jLabelOrder.setText("Order ID: " + selectedOrderId);
             jTextVendor.setText(selectedVendor);
             jTextCustomer.setText(selectedCustomer);
             jTextLocation.setText(selectedLocation);
             jTextFood.setText(selectedFood);
+            jButtonAccept.setEnabled(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jTableOrderMouseClicked
 
     private void jButtonAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAcceptActionPerformed
-        // A function to accept order, basically create a Delivery table
+        Runner_Database<Runner> rd = new Runner_Database<>(Identifier.Role.Runner);
+        rd.UpdateOrder(currentUser.getId(), selectedOrderId);
+        ListOfOrder();
+        jButtonAccept.setEnabled(false);
+        JOptionPane.showMessageDialog(null, "Successfully accepted the order!");
     }//GEN-LAST:event_jButtonAcceptActionPerformed
 
     /**

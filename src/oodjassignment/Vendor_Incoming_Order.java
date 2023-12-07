@@ -70,6 +70,18 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
     }
     
+    public void acceptOrder(String orderId, String custId) {
+        System.out.println(orderId + " " + custId);
+        ArrayList<Order> data = MD.ReadData();
+        
+        /*
+        Upon Accept:
+        1. Add Order Total into Vendor Balance [apply delivery formula (if any)]
+        2. Save transaction into transaction database (C1 -> V1)
+        3. Change status to "in kitchen" or "pending runner"
+        4. Send notification to customer or runner
+        */
+    }
     
     public String findCustomerName(String custId) {
         String custName = "";
@@ -115,7 +127,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             String checkVendorId = data.get(i).getVendorID();
             String checkStatus = statusEnumToString(data.get(i).getStatus());
             if (checkVendorId.equals(vendorId)) { // && checkStatus == Order.Status.PendingRunner
-                model.addRow(new Object[] {data.get(i).getId(), findCustomerName(data.get(i).getCustomerID()), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
+                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getCustomerID(), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
             }
         }
     }
@@ -338,7 +350,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Order ID", "Customer Name", "Created At"
+                "Order ID", "Customer ID", "Created At"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -428,12 +440,19 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
 
     private void btnDeclineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeclineActionPerformed
         // TODO add your handling code here:
+        
+        /*
+        Upon Decline:
+        1. set status to "Declined"
+        2. send notification to customer
+        3. refund customer full order amount
+        */
     }//GEN-LAST:event_btnDeclineActionPerformed
 
     private void orderTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTBMouseClicked
         // TODO add your handling code here:
         try {
-            String orderId, custName = "", orderTime = "", option = "";
+            String orderId, custId, custName = "", orderTime = "", option = "";
             double orderTotal = 0;
             ArrayList<String> food = new ArrayList<String>();
             HashMap<String, Integer> foodMap;
@@ -444,7 +463,8 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             for (int i = 0; i < data.size(); i++) {
                 String checkOrderId = data.get(i).getId();
                 if (checkOrderId.equals(orderId)) {
-                    custName = findCustomerName(data.get(i).getCustomerID());
+                    custId = data.get(i).getCustomerID();
+                    custName = findCustomerName(custId);
                     orderTime = concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time());
                     option = optionEnumToString(data.get(i).getOptions());
                     orderTotal = data.get(i).getTotalAmount();
@@ -466,15 +486,24 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
     }//GEN-LAST:event_orderTBMouseClicked
 
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+        if (orderTB.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
+        }
         
-        /*
-        Upon Clicking:
-        1. Add Order Total into Vendor Balance [apply delivery formula (if any)]
-        2. Save transaction into transaction database (C1 -> V1)
-        3. Change status to "in kitchen" or "pending runner"
-        4. Send notification to customer or runner
-        */
+        if (orderTB.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+        
+        if (orderTB.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Table is empty");
+        }
+        
+        if (orderTB.getSelectedRowCount() == 1) {
+            int selectedRow = orderTB.getSelectedRow();
+            String orderId = orderTB.getValueAt(selectedRow, 0).toString();
+            String custId = orderTB.getValueAt(selectedRow, 1).toString();
+        }
     }//GEN-LAST:event_btnAcceptActionPerformed
 
     /**

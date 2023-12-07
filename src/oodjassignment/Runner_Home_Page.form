@@ -41,16 +41,17 @@
               <EmptySpace min="0" pref="116" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonOrderList" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Component id="jButtonProfile" min="-2" pref="101" max="-2" attributes="0"/>
-                          <Component id="jButtonHistory" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButtonOngoingOrder" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButtonOrderList" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButtonProfile" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButtonHistory" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -69,6 +70,8 @@
               <Component id="jButtonProfile" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonOrderList" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButtonOngoingOrder" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonHistory" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="27" max="32767" attributes="0"/>
@@ -123,6 +126,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonHistoryActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonOngoingOrder">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ongoing Order"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOngoingOrderActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -5,7 +5,11 @@
 package oodjassignment;
 
 import java.util.ArrayList;
-import oodjassignment.Roles.Identifier;
+import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier.Role;
+import static oodjassignment.Roles.Identifier.Role.Order;
+import static oodjassignment.Roles.Notification.Condition.*;
+import oodjassignment.Roles.Order.Status;
 
 /**
  *
@@ -13,16 +17,75 @@ import oodjassignment.Roles.Identifier;
  */
 public class Runner_Database<T> extends Main_Database{
     
-    private ArrayList<T> data;
-    private int count;
-    private Object currentUser;
     
     public Runner_Database(Identifier.Role role) {
         super(role);
     }
     
-    public void AcceptOrder(){
-
+    public void UpdateOrder(String RunnerId, String OrderId){
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        Main_Database<Delivery> dd = new Main_Database<>(Role.Delivery);
+        ArrayList<Delivery> ddata = dd.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(OrderId)) {
+                switch (order.getStatus()) {
+                    case PendingRunner -> {
+                        order.setStatus(Status.InKitchen);
+                        order.setRunnerId(RunnerId);
+                        data.set(i, order);
+                        db.updateData(Role.Order, data);
+                        break;
+                    }
+                    case ReadyForCollection -> {
+                        order.setStatus(Status.OutForDelivery);
+                        data.set(i, order);
+                        db.updateData(Role.Order, data);
+                        Delivery d = new Delivery(RunnerId, OrderId);
+                        dd.addData(Role.Delivery, d);
+                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
+                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
+                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        break;
+                    }
+                    case OutForDelivery -> {
+                        order.setStatus(Status.Completed);
+                        data.set(i, order);
+                        db.updateData(Role.Order, data);
+                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
+                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
+                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        break;
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+    }
+    
+    public Runner getMoney(Runner currentUser, String OrderId){
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        ArrayList<Runner> rdata = ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(OrderId)) {
+                for (int j = 0; j<rdata.size(); j++) {
+                    Runner runner = (Runner) rdata.get(j);
+                    if (runner.getId().equals(currentUser.getId())){
+                        double money = order.getTotalAmount()*5/105;
+                        runner.updateBalance(money);
+                        currentUser.updateBalance(money);
+                        rdata.set(j, runner);
+                        updateData(Role.Runner, rdata);
+                        return currentUser;
+                    }
+                }
+            }
+        }
+        return currentUser;
     }
     
 }

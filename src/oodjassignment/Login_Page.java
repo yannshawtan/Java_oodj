@@ -1,5 +1,6 @@
 package oodjassignment;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
@@ -76,6 +77,11 @@ public class Login_Page extends javax.swing.JFrame {
         PFpassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PFpasswordActionPerformed(evt);
+            }
+        });
+        PFpassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PFpasswordKeyPressed(evt);
             }
         });
 
@@ -260,6 +266,50 @@ public class Login_Page extends javax.swing.JFrame {
     private void RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_RoleActionPerformed
+
+    private void PFpasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PFpasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            String Email = TFuser.getText();
+            String Password = PFpassword.getText();
+            String Position = Role.getSelectedItem().toString();
+            Identifier.Role role = Identifier.Role.valueOf(Position);
+            if (Email.equals("")){
+                JOptionPane.showMessageDialog(null, "Please fill out your email!");
+            }
+            else if(Password.equals("")){
+                JOptionPane.showMessageDialog(null, "Please fill out your password!");
+            }
+            else{
+                Account_Database db = new Account_Database(role);
+                if (db.LoginValidation(Email, Password, role)){
+                    JOptionPane.showMessageDialog(null, "Login Success");
+                    switch (role) {
+                        case Customer -> {
+                            currentUser = db.getCurrentUser();
+                            GoCustomerHomePage();
+                        }
+                        case Admin -> {
+                            currentUser = db.getCurrentUser();
+                            GoAdminHomePage();
+                        }
+                        case Vendor -> {
+                            currentUser = db.getCurrentUser();
+                            GoVendorHomePage();
+                        }
+                        case Runner -> {
+                            currentUser = db.getCurrentUser();
+                            GoRunnerHomePage();
+                        }
+                        default -> {
+                        }
+                    }
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Invalid email or password");
+                }
+            }
+        }
+    }//GEN-LAST:event_PFpasswordKeyPressed
  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -7,7 +7,7 @@ public class Delivery extends Identifier implements Serializable{
     private String runnerId, orderId;
     private Status status;
     
-    private enum Status{
+    public enum Status{
         OTW,
         Delivered
     }
@@ -19,27 +19,27 @@ public class Delivery extends Identifier implements Serializable{
         this.status = Status.OTW;
     }
 
-    public String getRunnerId() {
+    public String getRunnerId(){
         return runnerId;
     }
 
-    public String getOrderId() {
+    public String getOrderId(){
         return orderId;
     }
 
-    public Status getStatus() {
+    public Status getStatus(){
         return status;
     }
 
-    public void setRunnerId(String runnerId) {
+    public void setRunnerId(String runnerId){
         this.runnerId = runnerId;
     }
 
-    public void setOrderId(String orderId) {
+    public void setOrderId(String orderId){
         this.orderId = orderId;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Status status){
         this.status = status;
     }
 
