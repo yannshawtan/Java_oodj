@@ -44,6 +44,15 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void GoOrderListPage(){
+        Runner_Order_List ol = new Runner_Order_List(currentUser);
+        ol.setVisible(true);
+        ol.pack();
+        ol.setLocationRelativeTo(null);
+        ol.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,6 +81,11 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         User_Name.setText("User");
 
         jButtonOrderList.setText("Order List");
+        jButtonOrderList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOrderListActionPerformed(evt);
+            }
+        });
 
         jButtonProfile.setText("Profile");
         jButtonProfile.addActionListener(new java.awt.event.ActionListener() {
@@ -146,6 +160,10 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private void jButtonHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHistoryActionPerformed
         GoHistoryPage();
     }//GEN-LAST:event_jButtonHistoryActionPerformed
+
+    private void jButtonOrderListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrderListActionPerformed
+        GoOrderListPage();
+    }//GEN-LAST:event_jButtonOrderListActionPerformed
 
     /**
      * @param args the command line arguments
