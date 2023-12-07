@@ -40,7 +40,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        profile = new javax.swing.JButton();
         Order_button = new javax.swing.JButton();
         User_Name = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
@@ -50,10 +50,10 @@ public class Customer_Home_Page extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
-        jButton2.setText("Profile");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        profile.setText("Profile");
+        profile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                profileActionPerformed(evt);
             }
         });
 
@@ -88,7 +88,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
                 .addContainerGap(247, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Orderhistory, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(User_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
@@ -104,7 +104,7 @@ public class Customer_Home_Page extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(User_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(profile, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Order_button, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -151,9 +151,14 @@ public class Customer_Home_Page extends javax.swing.JFrame {
         oh.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void profileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileActionPerformed
+        Cus_Profile_Page pf = new Cus_Profile_Page(currentUser);
+        pf.setVisible(true);
+        pf.pack();
+        pf.setLocationRelativeTo(null);
+        pf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }//GEN-LAST:event_profileActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
@@ -202,8 +207,8 @@ public class Customer_Home_Page extends javax.swing.JFrame {
     private javax.swing.JButton Order_button;
     private javax.swing.JButton Orderhistory;
     private javax.swing.JLabel User_Name;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton profile;
     // End of variables declaration//GEN-END:variables
 }
