@@ -281,7 +281,7 @@
     <Component class="javax.swing.JComboBox" name="Room">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="9">
+          <StringArray count="7">
             <StringItem index="0" value="01"/>
             <StringItem index="1" value="02"/>
             <StringItem index="2" value="03"/>
@@ -289,8 +289,6 @@
             <StringItem index="4" value="05"/>
             <StringItem index="5" value="06"/>
             <StringItem index="6" value="07"/>
-            <StringItem index="7" value=" "/>
-            <StringItem index="8" value=" "/>
           </StringArray>
         </Property>
       </Properties>

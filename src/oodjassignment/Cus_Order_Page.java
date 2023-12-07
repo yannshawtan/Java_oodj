@@ -279,7 +279,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         Floor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
 
-        Room.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", " ", " " }));
+        Room.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -375,9 +375,11 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         calculateTotal();
         AddLocation();
         ArrayList<String> FoodName = populateFoodList();
-        Options options = (Options) Optionsbox.getSelectedItem();
+        String selectedOptionString = (String) Optionsbox.getSelectedItem();
+        Options options = Order.Options.valueOf(selectedOptionString);
         Double Cbalance = currentUser.getBalance();
-         Status status = Status.PendingVendor;
+        Status status = Status.PendingVendor;
+        System.out.println(options);
         try{
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
