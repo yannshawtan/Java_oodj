@@ -160,12 +160,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
 
     @Override
     public String toString() {
-<<<<<<< HEAD
-        return "ID " + getId() + ", CustomerID " + getCustomerID() +", FoodNames " + getFoodName()+ ", get VendorID " + getVendorID() + "Get Location " + getLocation()+"Total Amount" + getTotalAmount()+
-                "Get Status: "+ getStatus() + ",getoption " +getOptions(); 
-=======
         return "Order{" + "CustomerID=" + CustomerID + ", Options=" + Options + ", Status=" + Status + ", FeedbackForVendor=" + FeedbackForVendor + ", FeedbackForRunner=" + FeedbackForRunner + ", Location=" + Location + ", VendorID=" + VendorID + ", Created_Dt=" + Created_Dt + ", Created_Time=" + Created_Time + ", RunnerId=" + RunnerId + ", RatingForVendor=" + RatingForVendor + ", RatingForRunner=" + RatingForRunner + ", FoodName=" + FoodName + ", TotalAmount=" + TotalAmount + '}';
->>>>>>> master
     }
     
 }
