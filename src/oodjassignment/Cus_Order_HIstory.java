@@ -5,6 +5,7 @@
 package oodjassignment;
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -24,9 +25,9 @@ public class Cus_Order_History extends javax.swing.JFrame {
     Customer currentUser;
     Identifier.Role role = Identifier.Role.Order;
     Main_Database<Order> MD = new Main_Database<>(role);
-    
     public Cus_Order_History(Customer currentUser) {
         initComponents();
+        System.out.println(currentUser);
         this.currentUser = currentUser;
         DisplayHistory();
     }
@@ -44,7 +45,9 @@ public class Cus_Order_History extends javax.swing.JFrame {
         OrderhistoryT = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        View = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        OrderId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,10 +79,18 @@ public class Cus_Order_History extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("View Receipt");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        View.setText("View Receipt");
+        View.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ViewActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Selected Order");
+
+        OrderId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OrderIdActionPerformed(evt);
             }
         });
 
@@ -91,29 +102,40 @@ public class Cus_Order_History extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(View)
                 .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(307, 307, 307)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(146, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(View))
                 .addGap(36, 36, 36))
         );
 
@@ -121,12 +143,28 @@ public class Cus_Order_History extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        Customer_Home_Page chp = new Customer_Home_Page(currentUser);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
+        String SelectedId = OrderId.getText();
+        GoCusReceipt(SelectedId);
+        System.out.println(SelectedId);
+    }//GEN-LAST:event_ViewActionPerformed
+    
+    private void GoCusReceipt(String SelectedId){
+        Cus_Receipt cs = new Cus_Receipt(SelectedId, currentUser);
+        cs.setVisible(true);
+        cs.pack();
+        cs.setLocationRelativeTo(null);
+        cs.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
     
     private void DisplayHistory() {
         DefaultTableModel model = (DefaultTableModel) OrderhistoryT.getModel();
@@ -146,11 +184,16 @@ public class Cus_Order_History extends javax.swing.JFrame {
     private void OrderhistoryTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrderhistoryTMouseClicked
         try {
             int selectedRow = OrderhistoryT.getSelectedRow();
-            String selectedId = OrderhistoryT.getValueAt(selectedRow, 0).toString();
+            String SelectedId = OrderhistoryT.getValueAt(selectedRow, 0).toString();
+            OrderId.setText(SelectedId);
         }catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_OrderhistoryTMouseClicked
+
+    private void OrderIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderIdActionPerformed
+        OrderId.setEditable(false);
+    }//GEN-LAST:event_OrderIdActionPerformed
     
     
     
@@ -183,18 +226,19 @@ public class Cus_Order_History extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//                new Cus_Order_History().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField OrderId;
     private javax.swing.JTable OrderhistoryT;
+    private javax.swing.JButton View;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
