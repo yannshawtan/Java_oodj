@@ -11,6 +11,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.Menu;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Order.Options;
+import oodjassignment.Roles.Order.Status;
 
 /**
  *
@@ -29,6 +31,8 @@ public class Cus_Order_History extends javax.swing.JFrame {
         initComponents();
         System.out.println(currentUser);
         this.currentUser = currentUser;
+        Vendor.setVisible(false);
+        Runner.setVisible(false);
         DisplayHistory();
     }
 
@@ -48,18 +52,20 @@ public class Cus_Order_History extends javax.swing.JFrame {
         View = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         OrderId = new javax.swing.JTextField();
+        Vendor = new javax.swing.JButton();
+        Runner = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         OrderhistoryT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "OrderID", "Restaurant", "TotalPrice", "Created Date"
+                "OrderID", "Restaurant", "TotalPrice", "Options", "Status", "Created Date"
             }
         ));
         OrderhistoryT.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -94,6 +100,10 @@ public class Cus_Order_History extends javax.swing.JFrame {
             }
         });
 
+        Vendor.setText("Vendor rating");
+
+        Runner.setText("Runner Rating");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,8 +125,10 @@ public class Cus_Order_History extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(85, Short.MAX_VALUE))
+                            .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Vendor)
+                            .addComponent(Runner))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,7 +143,11 @@ public class Cus_Order_History extends javax.swing.JFrame {
                         .addGap(36, 36, 36)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addComponent(Vendor)
+                        .addGap(61, 61, 61)
+                        .addComponent(Runner)))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -174,23 +190,53 @@ public class Cus_Order_History extends javax.swing.JFrame {
         ArrayList<Order> data = MD.ReadData();
         String CustomerID = currentUser.getId();
         for (int i = 0; i < data.size(); i++) {
-            String checkCustomerId = data.get(i).getCustomerID();
-            if (checkCustomerId.equals(CustomerID)) {
-                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getTotalAmount(), data.get(i).getCreated_Dt(),data.get(i).getCreated_Time()});
+            String checkOrderId = data.get(i).getCustomerID();
+            if (checkOrderId.equals(CustomerID)) {
+                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getTotalAmount(), data.get(i).getOptions(), data.get(i).getStatus(), data.get(i).getCreated_Dt(),data.get(i).getCreated_Time()});
             }
         }
     }
+   
     
     private void OrderhistoryTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrderhistoryTMouseClicked
         try {
             int selectedRow = OrderhistoryT.getSelectedRow();
             String SelectedId = OrderhistoryT.getValueAt(selectedRow, 0).toString();
             OrderId.setText(SelectedId);
+            ArrayList<Order> data = MD.ReadData();
+            for (int i = 0; i < data.size(); i++) {
+            String checkOrderId = data.get(i).getCustomerID();
+            
+            if (checkOrderId.equals(SelectedId)) {
+                processFeedbackVisibility(data.get(i));
+            }
+            
+            
+        }
+            
+            
+            
         }catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_OrderhistoryTMouseClicked
+    
 
+    private void processFeedbackVisibility(Order order) {
+        String VFeedback = order.getFeedbackForVendor();
+        String RFeedback = order.getFeedbackForRunner();
+        Status status = order.getStatus();
+        Options options = order.getOptions();
+
+        if (options == Options.DineIn && status == Status.Completed && VFeedback == null) {
+            Vendor.setVisible(true);
+        }
+
+        if (options == Options.Delivery && status == Status.Completed && RFeedback == null) {
+            Runner.setVisible(true);
+        }
+    }
+    
     private void OrderIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderIdActionPerformed
         OrderId.setEditable(false);
     }//GEN-LAST:event_OrderIdActionPerformed
@@ -235,6 +281,8 @@ public class Cus_Order_History extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField OrderId;
     private javax.swing.JTable OrderhistoryT;
+    private javax.swing.JButton Runner;
+    private javax.swing.JButton Vendor;
     private javax.swing.JButton View;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
