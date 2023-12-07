@@ -32,7 +32,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoRegister(){
-        Register_Page rp = new Register_Page(currentUser);
+        Admin_Register_Page rp = new Admin_Register_Page(currentUser);
         rp.setVisible(true);
         rp.pack();
         rp.setLocationRelativeTo(null);

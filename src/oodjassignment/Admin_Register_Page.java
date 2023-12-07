@@ -5,15 +5,15 @@ import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 
-public class Register_Page extends javax.swing.JFrame {
+public class Admin_Register_Page extends javax.swing.JFrame {
 
     Admin currentUser;
     
-    public Register_Page() {
+    public Admin_Register_Page() {
         initComponents();
     }
     
-    public Register_Page(Admin currentUser) {
+    public Admin_Register_Page(Admin currentUser) {
         initComponents();
         this.currentUser = currentUser;
     }
@@ -298,14 +298,22 @@ public class Register_Page extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Admin_Register_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -318,7 +326,7 @@ public class Register_Page extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Register_Page().setVisible(true);
+                new Admin_Register_Page().setVisible(true);
             }
         });
     }

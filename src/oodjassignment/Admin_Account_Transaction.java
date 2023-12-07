@@ -62,6 +62,11 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
         });
 
         Role.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Vendor", "Runner" }));
+        Role.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RoleActionPerformed(evt);
+            }
+        });
 
         jEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jEmail.setText("Email:");
@@ -279,6 +284,10 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
         jTextPassword.setText("");
         jTextAmount.setText("");
     }//GEN-LAST:event_jBResetActionPerformed
+
+    private void RoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RoleActionPerformed
 
     /**
      * @param args the command line arguments

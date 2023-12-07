@@ -34,12 +34,12 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         ListOfFeedback();
     }
 
-    public void GoHomePage(){
-        Runner_Home_Page hp = new Runner_Home_Page(currentUser);
-        hp.setVisible(true);
-        hp.pack();
-        hp.setLocationRelativeTo(null);
-        hp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void Return(){
+        Runner_Profile rp = new Runner_Profile(currentUser);
+        rp.setVisible(true);
+        rp.pack();
+        rp.setLocationRelativeTo(null);
+        rp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
     
@@ -220,7 +220,7 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogOutActionPerformed
-        GoHomePage();
+        Return();
     }//GEN-LAST:event_jButtonLogOutActionPerformed
 
     private void jTextOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextOrderActionPerformed

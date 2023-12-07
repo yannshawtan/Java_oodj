@@ -53,6 +53,15 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void GoOngoingOrderPage(){
+        Runner_Ongoing_Order oo = new Runner_Ongoing_Order(currentUser);
+        oo.setVisible(true);
+        oo.pack();
+        oo.setLocationRelativeTo(null);
+        oo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -64,6 +73,7 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         jButtonOrderList = new javax.swing.JButton();
         jButtonProfile = new javax.swing.JButton();
         jButtonHistory = new javax.swing.JButton();
+        jButtonOngoingOrder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +111,13 @@ public class Runner_Home_Page extends javax.swing.JFrame {
             }
         });
 
+        jButtonOngoingOrder.setText("Ongoing Order");
+        jButtonOngoingOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOngoingOrderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,14 +136,15 @@ public class Runner_Home_Page extends javax.swing.JFrame {
                 .addGap(0, 116, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonOrderList, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonHistory))
-                        .addGap(136, 136, 136))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(107, 107, 107))))
+                        .addGap(107, 107, 107))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonOngoingOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonOrderList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(127, 127, 127))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,6 +159,8 @@ public class Runner_Home_Page extends javax.swing.JFrame {
                 .addComponent(jButtonProfile)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonOrderList)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonOngoingOrder)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonHistory)
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -164,6 +184,10 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private void jButtonOrderListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOrderListActionPerformed
         GoOrderListPage();
     }//GEN-LAST:event_jButtonOrderListActionPerformed
+
+    private void jButtonOngoingOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOngoingOrderActionPerformed
+        GoOngoingOrderPage();
+    }//GEN-LAST:event_jButtonOngoingOrderActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,6 +228,7 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private javax.swing.JLabel User_Name;
     private javax.swing.JButton jButtonHistory;
     private javax.swing.JButton jButtonLogOut;
+    private javax.swing.JButton jButtonOngoingOrder;
     private javax.swing.JButton jButtonOrderList;
     private javax.swing.JButton jButtonProfile;
     private javax.swing.JLabel jLabel1;

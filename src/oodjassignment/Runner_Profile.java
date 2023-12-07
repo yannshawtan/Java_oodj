@@ -22,6 +22,7 @@ public class Runner_Profile extends javax.swing.JFrame {
     public Runner_Profile(Runner currentUser) {
         initComponents();
         this.currentUser = currentUser;
+        User_Name.setText(currentUser.getName());
         jTextBalance.setText(currentUser.getStringBalance());
         jTextRating.setText(currentUser.getStringRating());
         jTextBalance.setEditable(false);
