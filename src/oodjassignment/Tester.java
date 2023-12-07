@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
 import static oodjassignment.Roles.Notification.Condition.*;
+import static oodjassignment.Roles.Order.Options.*;
+import static oodjassignment.Roles.Order.Status.*;
 
 public class Tester {
     
@@ -42,7 +44,7 @@ public class Tester {
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
 //        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
-        Order o1 = new Order("C1", foodName, "Dine in", 10.50, "B-05-06", "Pending", "V1");
+        Order o1 = new Order("C1", foodName, DineIn, 10.50, "B-05-06", PendingRunner, "V1");
         o1.setRunnerId("R1");
         Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
         Notification n1 = new Notification("A1", "C1", TopUp); 
