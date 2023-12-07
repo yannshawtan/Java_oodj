@@ -70,6 +70,16 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
     }
     
+    public void clearOrderDetails() {
+        labelOrderId.setText("");
+        labelCustomer.setText("");
+        labelOrderTime.setText("");
+        labelOrderTotal.setText(String.valueOf(""));
+        labelOption.setText("");
+        DefaultTableModel model = (DefaultTableModel) foodTB.getModel();
+        model.setRowCount(0);
+    }
+    
     public String findCustomerName(String custId) {
         String custName = "";
         Identifier.Role role = Identifier.Role.Customer;
@@ -113,7 +123,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         for (int i = 0; i < data.size(); i++) {
             String checkVendorId = data.get(i).getVendorID();
             String checkStatus = statusEnumToString(data.get(i).getStatus());
-            if (checkVendorId.equals(vendorId)) { // && checkStatus == Order.Status.PendingRunner
+            if (checkVendorId.equals(vendorId) && checkStatus.equals("Pending Vendor")) {
                 model.addRow(new Object[] {data.get(i).getId(), data.get(i).getCustomerID(), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
             }
         }
@@ -497,7 +507,9 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             vd.acceptOrder(vendorId, orderId); // change status
             vd.getMoney(currentUser, orderId); // receive money
             td.vendorReceiveTXN(currentUser, custId, orderId); // save in TXN table
-            // missing: send notification
+            nd.acceptedByVendor(currentUser, custId, orderId);
+            DisplayOrder();
+            clearOrderDetails();
         }
         
         /*

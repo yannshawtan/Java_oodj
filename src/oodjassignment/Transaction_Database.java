@@ -3,7 +3,6 @@ package oodjassignment;
 import java.util.ArrayList;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
-import oodjassignment.Roles.Order.Status;
 
 public class Transaction_Database<T> extends Main_Database{
     
@@ -17,9 +16,8 @@ public class Transaction_Database<T> extends Main_Database{
         Main_Database<Order> OD = new Main_Database<>(Role.Order);
         ArrayList<Order> orderData = OD.ReadData();
         Main_Database<Transaction> TD = new Main_Database<>(Role.Transaction);
-        ArrayList<Transaction> txnData = TD.ReadData();
-        for (int i = 0; i < data.size(); i++) {
-            Order order = (Order) data.get(i);
+        for (int i = 0; i < orderData.size(); i++) {
+            Order order = (Order) orderData.get(i);
             if (order.getId().equals(orderId)) {
                 double amount = order.getTotalAmount();
                 double vendorCut = amount * 100/105;

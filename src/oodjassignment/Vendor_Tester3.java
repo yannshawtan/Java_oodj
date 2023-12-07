@@ -1,51 +1,43 @@
 package oodjassignment;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier;
-import static oodjassignment.Roles.Order.Options.*;
-import static oodjassignment.Roles.Order.Status.*;
 
-public class Tester {
+public class Vendor_Tester3 {
     
     public static void main(String[] args){
 //        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
-        ArrayList<Order> data;
 //        ArrayList<Notification> data;
+        ArrayList<Notification> data;
 //        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
-        ArrayList<String> foodName = new  ArrayList<String>();
-        foodName.add("Chili Pan Mee");
-        foodName.add("Kopi Ais");
-        foodName.add("Kopi Ais");
+//        ArrayList<String> foodName = new  ArrayList<String>();
+//        foodName.add("Chili Pan Mee");
+//        foodName.add("Kopi Ais");
+//        foodName.add("Kopi Ais");
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
-        Identifier.Role role = Identifier.Role.Order;
+        Identifier.Role role = Identifier.Role.Notification;
 //        Identifier.Role role = Identifier.Role.Notification;
 //        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-//        Main_Database<Menu> MD = new Main_Database<>(role);
-        Account_Database<Order> MD = new Account_Database<>(role);
+        Main_Database<Notification> MD = new Main_Database<>(role);
 //        Account_Database<Notification> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
         
 //        Admin a1 = new Admin("Rudory", "nastyru", "rudory@gmail.com");
 //        Customer c1 = new Customer("Zorus", "Zorus", "Zorus@gmail.com");
-        Runner r1 = new Runner("Zorus", "Zorus", "Zorus@gmail.com");
+//        Runner r1 = new Runner("Zorus", "Zorus", "Zorus@gmail.com");
 //        Admin a2 = new Admin("Shaw", "Shaw", "Shaw@gmail.com");
 //        Admin a3 = new Admin("Dalton", "Dalton", "Dalton@gmail.com");
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
 //        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
-        Order o1 = new Order("C1", foodName, DineIn, 10.50, "B-05-06", Completed, "V1");
+//        Order o1 = new Order("C1", foodName, Delivery, 10.50, "B-05-06", PendingVendor, "V1");
 //        o1.setRunnerId("R1");
 //        Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
 //        Notification n1 = new Notification("A1", "C1", TopUp); 

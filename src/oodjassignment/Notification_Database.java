@@ -23,10 +23,18 @@ public class Notification_Database<T> extends Main_Database{
     }
     
     
-    public void CreateNotification(String senderId, String receiverId, Notification.Condition condition){
-        Notification d = new Notification(senderId, receiverId, condition);
-        addData(Role.Delivery, d);
-        
+    public void CreateNotification(String senderId, String receiverId, String message){
+        Notification d = new Notification(senderId, receiverId, message);
+        addData(Role.Delivery, d); 
+    }
+    
+    public void acceptedByVendor(Vendor sender, String receiver, String orderId) {
+        String vendorId = sender.getId();
+        String vendorName = sender.getName();
+        String message = orderId + ": Your order has been accepted by " + vendorName;
+        Main_Database<Notification> ND = new Main_Database<>(Role.Notification);
+        Notification n = new Notification(vendorId, receiver, message);
+        ND.addData(Role.Notification, n);
     }
     
 //    public void DisplayNotification(String receiverId){

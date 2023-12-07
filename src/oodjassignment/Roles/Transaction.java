@@ -27,6 +27,8 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
         this.type = type;
         this.orderId = "null";
         this.Amount = Amount;
+        this.CreatedDt = getCurrentDate();
+        this.CreatedTime = getCurrentTime();
     }
     
     // OrderFood or Delivery Constructor
@@ -37,6 +39,8 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
         this.type = type;
         this.orderId = orderId;
         this.Amount = Amount;
+        this.CreatedDt = getCurrentDate();
+        this.CreatedTime = getCurrentTime();
     }
     
     public String getCurrentDate() {
