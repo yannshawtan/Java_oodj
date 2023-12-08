@@ -31,24 +31,24 @@
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
           </Group>
           <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="307" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="156" max="-2" attributes="0"/>
+              <EmptySpace pref="342" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="538" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="307" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" pref="156" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                  <Component id="OrderId" min="-2" pref="71" max="-2" attributes="0"/>
+                  <Component id="Runner" min="-2" max="-2" attributes="0"/>
+                  <Component id="Vendor" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="538" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="OrderId" min="-2" pref="71" max="-2" attributes="0"/>
-                          <Component id="Vendor" min="-2" max="-2" attributes="0"/>
-                          <Component id="Runner" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jButton2" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="60" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -67,9 +67,11 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="OrderId" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="Vendor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="Runner" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -96,11 +98,11 @@
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="6" rowCount="4">
                 <Column editable="true" title="OrderID" type="java.lang.Object"/>
-                <Column editable="true" title="Restaurant" type="java.lang.Object"/>
                 <Column editable="true" title="TotalPrice" type="java.lang.Object"/>
                 <Column editable="true" title="Options" type="java.lang.Object"/>
                 <Column editable="true" title="Status" type="java.lang.Object"/>
                 <Column editable="true" title="Created Date" type="java.lang.Object"/>
+                <Column editable="true" title="Created Time" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -190,6 +192,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Runner Rating"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="check for feedback"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
