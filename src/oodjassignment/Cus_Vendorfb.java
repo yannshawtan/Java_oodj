@@ -23,10 +23,12 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
     Customer currentUser;
     Identifier.Role role = Identifier.Role.Order;
     Main_Database<Order> MD = new Main_Database<>(role);
-    private String selectedOrderID;
-    public Cus_Vendorfb(String selectedOrderID,Customer currentUser) {
+    private String SelectedId;
+    public Cus_Vendorfb(String selectedId,Customer currentUser) {
         initComponents();
-        this.selectedOrderID =selectedOrderID;
+        this.SelectedId = selectedId;
+        this.currentUser = currentUser;
+        System.out.println(SelectedId);
     }
 
     /**
@@ -43,9 +45,9 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        Ratingst = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         Feedbackt = new javax.swing.JTextArea();
+        Ratingst = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +74,8 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
         Feedbackt.setColumns(20);
         Feedbackt.setRows(5);
         jScrollPane1.setViewportView(Feedbackt);
+
+        Ratingst.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,16 +140,15 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
     }
     
     private void VendorOverallRating(){
+        Identifier.Role role = Identifier.Role.Vendor;
         Main_Database<Vendor> MD = new Main_Database<>(role);
         ArrayList<Vendor> data = MD.ReadData();
-        data = MD.ReadData();
-        String ratingValue = Ratingst.getText();
-        Vendor currentUser;
-        //int Vrating = currentUser.getRating();
+        Object ratingValue = Ratingst.getSelectedItem();
+        int rating = Integer.parseInt(ratingValue.toString());
         for (int i = 0; i<data.size();i++){
-            
-            //data.get(i).setRating(ratingValue);
+            data.get(i).newTotalRating(rating);
         }
+        MD.updateData(role, data);
     }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -156,19 +159,23 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
         System.out.println(count + " is the size of the list");
         try{
             String Vendorfeedback = Feedbackt.getText();
-            String ratingValue = Ratingst.getText();
+            Object ratingValue = Ratingst.getSelectedItem();
         if(Vendorfeedback.isEmpty()){throw new IllegalArgumentException("Please enter feedbacks and rating");}
         if(ratingValue.equals(null)){throw new IllegalArgumentException("Please enter feedbacks and rating");}
         for (int i = 0; i<data.size();i++){
-            int rating = Integer.parseInt(ratingValue);
-            if (data.get(i).getId().equals(selectedOrderID)){
+            
+            int rating = Integer.parseInt(ratingValue.toString());
+            
+            if (data.get(i).getId().equals(SelectedId)){
+                System.out.println("3");
+                System.out.println(SelectedId);
                 data.get(i).setFeedbackForVendor(Feedbackt.getText());
                 data.get(i).setRatingForVendor(rating);
-                
                 data.set(i, data.get(i));
             }
             System.out.println(data.get(i));
         }
+        VendorOverallRating();
         MD.updateData(role, data);
         goCusHomePage();
         } catch (NumberFormatException e) {
@@ -225,7 +232,7 @@ public class Cus_Vendorfb extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Feedbackt;
-    private javax.swing.JTextField Ratingst;
+    private javax.swing.JComboBox<String> Ratingst;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
