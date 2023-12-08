@@ -4,11 +4,14 @@
  */
 package oodjassignment;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Locale;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
-import static oodjassignment.Roles.Identifier.Role.Order;
-import static oodjassignment.Roles.Notification.Condition.*;
 import oodjassignment.Roles.Order.Status;
 
 /**
@@ -44,18 +47,16 @@ public class Runner_Database<T> extends Main_Database{
                         db.updateData(Role.Order, data);
                         Delivery d = new Delivery(RunnerId, OrderId);
                         dd.addData(Role.Delivery, d);
-                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
-                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
-                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        Notification_Database<Notification> nb = new Notification_Database(Role.Notification);
+                        nb.pickUpByRunner(RunnerId, order.getVendorID(),order.getCustomerID(), OrderId );
                         break;
                     }
                     case OutForDelivery -> {
                         order.setStatus(Status.Completed);
                         data.set(i, order);
                         db.updateData(Role.Order, data);
-                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
-                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
-                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        Notification_Database<Notification> nb = new Notification_Database(Role.Notification);
+                        nb.completedByRunner(RunnerId, order.getVendorID(),order.getCustomerID(), OrderId );
                         break;
                     }
                     default -> {
@@ -80,6 +81,8 @@ public class Runner_Database<T> extends Main_Database{
                         currentUser.updateBalance(money);
                         rdata.set(j, runner);
                         updateData(Role.Runner, rdata);
+                        Transaction_Database<Transaction> td = new Transaction_Database(Role.Transaction);
+                        td.runnerReceiveTXN(currentUser, order.getCustomerID(), order.getId());
                         return currentUser;
                     }
                 }
@@ -87,5 +90,42 @@ public class Runner_Database<T> extends Main_Database{
         }
         return currentUser;
     }
+    
+    public double getTotalAmount(String RunnerId, String interval) {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        double totalAmount = 0.0;
+        Transaction_Database<Transaction> td = new Transaction_Database(Role.Transaction);
+        ArrayList<Transaction> data = td.ReadData();
+        for (Transaction transaction : data) {
+            System.out.println(transaction.getReceiverId());
+            if (transaction.getReceiverId().equals(RunnerId)){
+                LocalDate transactionDate = LocalDate.parse(transaction.getCreatedDt(), formatter);
+                switch (interval) {
+                    case "Daily" -> {
+                        if (transactionDate.equals(currentDate)) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    case "Monthly" -> {
+                        if (isSameMonth(transactionDate, currentDate)) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    case "Yearly" -> {
+                        if (transactionDate.getYear() == currentDate.getYear()) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    default -> throw new IllegalArgumentException("Invalid interval: " + interval);
+                }
+            }
+        }
+        return totalAmount;
+    }
+
+    private boolean isSameMonth(LocalDate date1, LocalDate date2) {
+    return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth();
+}
     
 }

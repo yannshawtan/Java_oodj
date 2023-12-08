@@ -62,6 +62,15 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void GoNotificationPage(){
+        Notification_Page np = new Notification_Page(currentUser);
+        np.setVisible(true);
+        np.pack();
+        np.setLocationRelativeTo(null);
+        np.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -74,6 +83,7 @@ public class Runner_Home_Page extends javax.swing.JFrame {
         jButtonProfile = new javax.swing.JButton();
         jButtonHistory = new javax.swing.JButton();
         jButtonOngoingOrder = new javax.swing.JButton();
+        jButtonNotification = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -118,6 +128,13 @@ public class Runner_Home_Page extends javax.swing.JFrame {
             }
         });
 
+        jButtonNotification.setText("Noticication");
+        jButtonNotification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNotificationActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,7 +160,8 @@ public class Runner_Home_Page extends javax.swing.JFrame {
                             .addComponent(jButtonOngoingOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonOrderList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButtonProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButtonHistory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonNotification, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(127, 127, 127))))
         );
         layout.setVerticalGroup(
@@ -163,7 +181,9 @@ public class Runner_Home_Page extends javax.swing.JFrame {
                 .addComponent(jButtonOngoingOrder)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonHistory)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonNotification)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
@@ -188,6 +208,10 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private void jButtonOngoingOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOngoingOrderActionPerformed
         GoOngoingOrderPage();
     }//GEN-LAST:event_jButtonOngoingOrderActionPerformed
+
+    private void jButtonNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNotificationActionPerformed
+        GoNotificationPage();
+    }//GEN-LAST:event_jButtonNotificationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +252,7 @@ public class Runner_Home_Page extends javax.swing.JFrame {
     private javax.swing.JLabel User_Name;
     private javax.swing.JButton jButtonHistory;
     private javax.swing.JButton jButtonLogOut;
+    private javax.swing.JButton jButtonNotification;
     private javax.swing.JButton jButtonOngoingOrder;
     private javax.swing.JButton jButtonOrderList;
     private javax.swing.JButton jButtonProfile;

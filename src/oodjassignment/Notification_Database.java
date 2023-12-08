@@ -32,9 +32,47 @@ public class Notification_Database<T> extends Main_Database{
         String vendorId = sender.getId();
         String vendorName = sender.getName();
         String message = orderId + ": Your order has been accepted by " + vendorName;
-        Main_Database<Notification> ND = new Main_Database<>(Role.Notification);
         Notification n = new Notification(vendorId, receiver, message);
-        ND.addData(Role.Notification, n);
+        addData(Role.Notification, n);
+    }
+    
+    public void declinedByVendor(Vendor sender, String receiver, String orderId) {
+        String vendorId = sender.getId();
+        String vendorName = sender.getName();
+        String message = orderId + ": Your order has been declined by " + vendorName + " and your balance is refunded!";
+        Notification n = new Notification(vendorId, receiver, message);
+        addData(Role.Notification, n);
+    }
+    
+    public void pickUpByRunner(String sender, String receiver1, String receiver2, String orderId) {
+        String message = orderId + ": Food is out for delivery!";
+        Notification n1 = new Notification(sender, receiver1, message);
+        Notification n2 = new Notification(sender, receiver2, message);
+        addData(Role.Notification, n1);
+        addData(Role.Notification, n2);
+    }
+    
+    public void completedByRunner(String sender, String receiver1, String receiver2, String orderId) {
+        String message = orderId + ": Food has been delivered!";
+        Notification n1 = new Notification(sender, receiver1, message);
+        Notification n2 = new Notification(sender, receiver2, message);
+        addData(Role.Notification, n1);
+        addData(Role.Notification, n2);
+    }
+    
+    public void transaction(String sender, String receiverId, String transactionId, String action, double amount) {
+        String message = transactionId;
+        switch (action){
+            case "Withdraw" -> {
+                message = transactionId + ": " + amount + " has been deducted from your wallet!";
+            }
+            // Display new amount
+            case "Deposit" -> {
+                message = transactionId + ": " + amount + " has been added to your wallet!";
+            }
+        }
+        Notification n = new Notification(sender, receiverId, message);
+        addData(Role.Notification, n);
     }
     
 //    public void DisplayNotification(String receiverId){
