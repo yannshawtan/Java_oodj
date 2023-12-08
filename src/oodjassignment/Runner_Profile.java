@@ -14,6 +14,7 @@ import oodjassignment.Roles.*;
 public class Runner_Profile extends javax.swing.JFrame {
 
     Runner currentUser;
+    double value;
     
     public Runner_Profile() {
         initComponents();
@@ -29,6 +30,7 @@ public class Runner_Profile extends javax.swing.JFrame {
         jTextBalance.setEditable(false);
         jTextRating.setEditable(false);
         jTextEarn.setEditable(false);
+        Earn();
     }
     
     public void GoHomePage(){
@@ -50,7 +52,10 @@ public class Runner_Profile extends javax.swing.JFrame {
     }
     
     public void Earn(){
-        
+        String Interval = jInterval.getSelectedItem().toString();
+        Runner_Database<Runner> rd = new Runner_Database<>(Identifier.Role.Runner);
+        value = rd.getTotalAmount(currentUser.getId(), Interval);
+        jTextEarn.setText(String.valueOf(value));
     }
     
     @SuppressWarnings("unchecked")
@@ -64,7 +69,7 @@ public class Runner_Profile extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jTextBalance = new javax.swing.JTextField();
         jTextRating = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jInterval = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jTextEarn = new javax.swing.JTextField();
 
@@ -93,7 +98,12 @@ public class Runner_Profile extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily", "Monthly", "Yearly" }));
+        jInterval.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Daily", "Monthly", "Yearly" }));
+        jInterval.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jIntervalActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Earn:");
@@ -121,7 +131,7 @@ public class Runner_Profile extends javax.swing.JFrame {
                                 .addComponent(jTextBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextEarn))))
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jInterval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -147,7 +157,7 @@ public class Runner_Profile extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextEarn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jInterval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addComponent(jButton1)
                 .addGap(41, 41, 41))
@@ -163,6 +173,10 @@ public class Runner_Profile extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         GoViewFeedback();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jIntervalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIntervalActionPerformed
+        Earn();
+    }//GEN-LAST:event_jIntervalActionPerformed
 
     
     public static void main(String args[]) {
@@ -201,7 +215,7 @@ public class Runner_Profile extends javax.swing.JFrame {
     private javax.swing.JLabel User_Name;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonLogOut;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jInterval;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

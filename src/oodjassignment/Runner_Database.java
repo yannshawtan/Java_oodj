@@ -4,7 +4,12 @@
  */
 package oodjassignment;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Locale;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
 import oodjassignment.Roles.Order.Status;
@@ -85,5 +90,42 @@ public class Runner_Database<T> extends Main_Database{
         }
         return currentUser;
     }
+    
+    public double getTotalAmount(String RunnerId, String interval) {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+        double totalAmount = 0.0;
+        Transaction_Database<Transaction> td = new Transaction_Database(Role.Transaction);
+        ArrayList<Transaction> data = td.ReadData();
+        for (Transaction transaction : data) {
+            System.out.println(transaction.getReceiverId());
+            if (transaction.getReceiverId().equals(RunnerId)){
+                LocalDate transactionDate = LocalDate.parse(transaction.getCreatedDt(), formatter);
+                switch (interval) {
+                    case "Daily" -> {
+                        if (transactionDate.equals(currentDate)) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    case "Monthly" -> {
+                        if (isSameMonth(transactionDate, currentDate)) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    case "Yearly" -> {
+                        if (transactionDate.getYear() == currentDate.getYear()) {
+                            totalAmount += transaction.getAmount();
+                        }
+                    }
+                    default -> throw new IllegalArgumentException("Invalid interval: " + interval);
+                }
+            }
+        }
+        return totalAmount;
+    }
+
+    private boolean isSameMonth(LocalDate date1, LocalDate date2) {
+    return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth();
+}
     
 }
