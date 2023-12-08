@@ -44,7 +44,6 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
     }
     
     public void ListOfFeedback(){
-        System.out.println("Success");
         jTableFeedback.getColumnModel().getColumn(0).setPreferredWidth(10);
         jTableFeedback.getColumnModel().getColumn(1).setPreferredWidth(15);
         jTableFeedback.getColumnModel().getColumn(2).setPreferredWidth(15);

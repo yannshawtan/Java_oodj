@@ -50,6 +50,7 @@
                           <Component id="jButtonOrderList" alignment="0" max="32767" attributes="0"/>
                           <Component id="jButtonProfile" alignment="0" max="32767" attributes="0"/>
                           <Component id="jButtonHistory" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButtonNotification" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="127" max="-2" attributes="0"/>
                   </Group>
@@ -74,7 +75,9 @@
               <Component id="jButtonOngoingOrder" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonHistory" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButtonNotification" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="29" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -134,6 +137,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonOngoingOrderActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonNotification">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Noticication"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNotificationActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
