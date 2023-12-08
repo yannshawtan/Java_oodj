@@ -7,8 +7,6 @@ package oodjassignment;
 import java.util.ArrayList;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Identifier.Role;
-import static oodjassignment.Roles.Identifier.Role.Order;
-import static oodjassignment.Roles.Notification.Condition.*;
 import oodjassignment.Roles.Order.Status;
 
 /**
@@ -44,18 +42,16 @@ public class Runner_Database<T> extends Main_Database{
                         db.updateData(Role.Order, data);
                         Delivery d = new Delivery(RunnerId, OrderId);
                         dd.addData(Role.Delivery, d);
-                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
-                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
-                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        Notification_Database<Notification> nb = new Notification_Database(Role.Notification);
+                        nb.pickUpByRunner(RunnerId, order.getVendorID(),order.getCustomerID(), OrderId );
                         break;
                     }
                     case OutForDelivery -> {
                         order.setStatus(Status.Completed);
                         data.set(i, order);
                         db.updateData(Role.Order, data);
-                        //                Notification_Database<Runner> nb = new Notification_Database(Role.Runner);
-                        //                nb.CreateNotification(RunnerId, order.getVendorID(), AcceptDeliery);
-                        //                nb.CreateNotification(RunnerId, order.getCustomerID(), AcceptDeliery);
+                        Notification_Database<Notification> nb = new Notification_Database(Role.Notification);
+                        nb.completedByRunner(RunnerId, order.getVendorID(),order.getCustomerID(), OrderId );
                         break;
                     }
                     default -> {
@@ -80,6 +76,8 @@ public class Runner_Database<T> extends Main_Database{
                         currentUser.updateBalance(money);
                         rdata.set(j, runner);
                         updateData(Role.Runner, rdata);
+                        Transaction_Database<Transaction> td = new Transaction_Database(Role.Transaction);
+                        td.runnerReceiveTXN(currentUser, order.getCustomerID(), order.getId());
                         return currentUser;
                     }
                 }

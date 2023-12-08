@@ -291,15 +291,37 @@ public class Runner_Ongoing_Order extends javax.swing.JFrame {
 
     private void jButtonCompleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompleteActionPerformed
         Runner_Database<Runner> rd = new Runner_Database<>(Identifier.Role.Runner);
+        Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
+        Main_Database<Vendor> dbVendor = new Main_Database<>(Identifier.Role.Vendor);
+        ArrayList<Vendor> dataVendor = dbVendor.ReadData();
+        Main_Database<Customer> dbCustomer = new Main_Database<>(Identifier.Role.Customer);
+        ArrayList<Customer> dataCustomer = dbCustomer.ReadData();
+        for (Customer dc : dataCustomer) {
+            if(dc.getName().equals(selectedCustomer)){
+                Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
+                this.CustomerId = dc.getId();
+                td.runnerReceiveTXN(currentUser, CustomerId, OrderId);
+                break;
+
+            }
+        }
+//        for (Vendor dv : dataVendor) {
+//            if(dv.getId().equals(VendorId)){
+//                this.VendorId = dv.getId();
+//                break;
+//            }
+//        } 
         rd.UpdateOrder(currentUser.getId(), selectedOrderId);
         ListOfOrder();
         String position = Type.getSelectedItem().toString();
         jButtonComplete.setEnabled(false);
         if (position.equals("Pick Up")){
+//            nd.pickUpByRunner(currentUser.getId(), CustomerId, VendorId, OrderId);
             JOptionPane.showMessageDialog(null, "Successfully pick up the order!");
         }
         else if(position.equals("On Going")){
             this.currentUser = rd.getMoney(currentUser, selectedOrderId);
+//            nd.completedByRunner(currentUser.getId(), CustomerId, VendorId, OrderId);
             JOptionPane.showMessageDialog(null, "Succefully complete the order and received money!");
         }
         

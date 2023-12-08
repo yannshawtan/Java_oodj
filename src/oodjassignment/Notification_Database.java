@@ -37,6 +37,39 @@ public class Notification_Database<T> extends Main_Database{
         ND.addData(Role.Notification, n);
     }
     
+    public void pickUpByRunner(String sender, String receiver1, String receiver2, String orderId) {
+        String message = orderId + ": Food is out for delivery!";
+        Main_Database<Notification> ND = new Main_Database<>(Role.Notification);
+        Notification n1 = new Notification(sender, receiver1, message);
+        Notification n2 = new Notification(sender, receiver2, message);
+        ND.addData(Role.Notification, n1);
+        ND.addData(Role.Notification, n2);
+    }
+    
+    public void completedByRunner(String sender, String receiver1, String receiver2, String orderId) {
+        String message = orderId + ": Food has been delivered!";
+        Main_Database<Notification> ND = new Main_Database<>(Role.Notification);
+        Notification n1 = new Notification(sender, receiver1, message);
+        Notification n2 = new Notification(sender, receiver2, message);
+        ND.addData(Role.Notification, n1);
+        ND.addData(Role.Notification, n2);
+    }
+    
+    public void transaction(String sender, String receiverId, String transactionId, String action, double amount) {
+        String message = transactionId;
+        switch (action){
+            case "Withdraw" -> {
+                message = transactionId + ": " + amount + " has been deducted from your wallet!";
+            }
+            // Display new amount
+            case "Deposit" -> {
+                message = transactionId + ": " + amount + " has been added to your wallet!";
+            }
+        }
+        Notification n = new Notification(sender, receiverId, message);
+        addData(Role.Notification, n);
+    }
+    
 //    public void DisplayNotification(String receiverId){
 //        data = ReadData();
 //        Notification.Condition condition = null;
