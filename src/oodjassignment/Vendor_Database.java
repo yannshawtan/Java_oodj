@@ -50,6 +50,26 @@ public class Vendor_Database<T> extends Main_Database{
         }
     }
     
+    public void declineOrder(String VendorId, String OrderId){
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(OrderId)) {
+                switch (order.getStatus()) {
+                    case PendingVendor -> {
+                        order.setStatus(Status.Decline);
+                            data.set(i, order);
+                            db.updateData(Role.Order, data);
+                            break;
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+    }
+    
     public Vendor getMoney(Vendor currentUser, String OrderId){
         Main_Database<Order> db = new Main_Database<>(Role.Order);
         ArrayList<Order> data = db.ReadData();
@@ -74,6 +94,28 @@ public class Vendor_Database<T> extends Main_Database{
             }
         }
         return currentUser;
+    }
+    
+    public void refundMoney(String custId, String orderId) {
+        Main_Database<Order> ob = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = ob.ReadData();
+        Main_Database<Customer> cd = new Main_Database<>(Role.Customer);
+        ArrayList<Customer> cdata = cd.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (orderId.equals(order.getId())) {
+                for (int j = 0; j<cdata.size(); j++) {
+                    Customer customer = (Customer) cdata.get(j);
+                    if (custId.equals(customer.getId())){
+                        double money = order.getTotalAmount();
+                        customer.updateBalance(money);
+                        cdata.set(j, customer);
+                        cd.updateData(Role.Customer, cdata);
+                        break;
+                    }
+                }
+            }
+        }
     }
     
 }

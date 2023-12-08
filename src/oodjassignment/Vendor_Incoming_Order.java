@@ -71,11 +71,11 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
     }
     
     public void clearOrderDetails() {
-        labelOrderId.setText("");
-        labelCustomer.setText("");
-        labelOrderTime.setText("");
-        labelOrderTotal.setText(String.valueOf(""));
-        labelOption.setText("");
+        labelOrderId.setText("please select a row");
+        labelCustomer.setText("please select a row");
+        labelOrderTime.setText("please select a row");
+        labelOrderTotal.setText(String.valueOf("please select a row"));
+        labelOption.setText("please select a row");
         DefaultTableModel model = (DefaultTableModel) foodTB.getModel();
         model.setRowCount(0);
     }
@@ -445,6 +445,33 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         3. refund customer full order amount
         */
         
+        if (orderTB.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
+        }
+        
+        if (orderTB.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+        
+        if (orderTB.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Table is empty");
+        }
+        
+        if (orderTB.getSelectedRowCount() == 1) {
+            int selectedRow = orderTB.getSelectedRow();
+            String orderId = orderTB.getValueAt(selectedRow, 0).toString();
+            String custId = orderTB.getValueAt(selectedRow, 1).toString();
+            Vendor_Database<Vendor> vd = new Vendor_Database<>(Identifier.Role.Vendor);
+            Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
+            Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
+            vd.declineOrder(vendorId, orderId); // change status from PendingVendor to Declined
+            vd.refundMoney(custId, orderId); // refund money to customer
+            nd.declinedByVendor(currentUser, custId, orderId);
+            DisplayOrder();
+            clearOrderDetails();
+            JOptionPane.showMessageDialog(null, "Order has been Declined!");
+        }
+        
     }//GEN-LAST:event_btnDeclineActionPerformed
 
     private void orderTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTBMouseClicked
@@ -510,15 +537,8 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             nd.acceptedByVendor(currentUser, custId, orderId);
             DisplayOrder();
             clearOrderDetails();
+            JOptionPane.showMessageDialog(null, "Order has been Accepted!");
         }
-        
-        /*
-            Upon Accept:
-            1. Save transaction into transaction database (C1 -> V1)  [done]
-            2. Add Order Total into Vendor Balance [apply delivery formula (if any)] [done]
-            3. Change status to "in kitchen" or "pending runner"
-            4. Send notification to customer or runner
-        */
     }//GEN-LAST:event_btnAcceptActionPerformed
 
     /**
