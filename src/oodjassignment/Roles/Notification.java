@@ -4,31 +4,19 @@ import java.io.Serializable;
 
 public class Notification extends Identifier implements Serializable{
     
-    private String senderId,receiverId;
-    private Condition condition;
+    private String senderId,receiverId, message;
     private State state;
-    
-    public enum Condition{
-        Withdraw,
-        TopUp,
-        Accept,
-        Decline,
-        AcceptDeliery,
-        Delivered,
-        Pending
-        
-    }
     
     public enum State{
         Seen,
         Sent
     }
     
-    public Notification(String senderId, String receiverId, Condition condition) {
+    public Notification(String senderId, String receiverId, String message) {
         super("N");
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.condition = condition;
+        this.message = message;
         this.state = State.Sent;
     }
 
@@ -40,16 +28,16 @@ public class Notification extends Identifier implements Serializable{
         return receiverId;
     }
 
-    public Condition getCondition() {
-        return condition;
+    public String getMessage() {
+        return message;
     }
 
     public State getState() {
         return state;
     }
 
-    public void setCondition(Condition Condition) {
-        this.condition = condition;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setState(State state) {
@@ -66,9 +54,7 @@ public class Notification extends Identifier implements Serializable{
 
     @Override
     public String toString() {
-        return "Notification{" + "senderId=" + senderId + ", receiverId=" + receiverId + ", condition=" + condition + ", state=" + state + '}';
+        return "Notification{" + "senderId=" + senderId + ", receiverId=" + receiverId + ", message=" + message + ", state=" + state + '}';
     }
-    
-    
-    
+
 }

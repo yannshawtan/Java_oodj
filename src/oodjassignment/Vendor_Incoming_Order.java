@@ -70,17 +70,14 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
     }
     
-    public void acceptOrder(String orderId, String custId) {
-        System.out.println(orderId + " " + custId);
-        ArrayList<Order> data = MD.ReadData();
-        
-        /*
-        Upon Accept:
-        1. Add Order Total into Vendor Balance [apply delivery formula (if any)]
-        2. Save transaction into transaction database (C1 -> V1)
-        3. Change status to "in kitchen" or "pending runner"
-        4. Send notification to customer or runner
-        */
+    public void clearOrderDetails() {
+        labelOrderId.setText("");
+        labelCustomer.setText("");
+        labelOrderTime.setText("");
+        labelOrderTotal.setText(String.valueOf(""));
+        labelOption.setText("");
+        DefaultTableModel model = (DefaultTableModel) foodTB.getModel();
+        model.setRowCount(0);
     }
     
     public String findCustomerName(String custId) {
@@ -126,7 +123,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         for (int i = 0; i < data.size(); i++) {
             String checkVendorId = data.get(i).getVendorID();
             String checkStatus = statusEnumToString(data.get(i).getStatus());
-            if (checkVendorId.equals(vendorId)) { // && checkStatus == Order.Status.PendingRunner
+            if (checkVendorId.equals(vendorId) && checkStatus.equals("Pending Vendor")) {
                 model.addRow(new Object[] {data.get(i).getId(), data.get(i).getCustomerID(), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
             }
         }
@@ -447,6 +444,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         2. send notification to customer
         3. refund customer full order amount
         */
+        
     }//GEN-LAST:event_btnDeclineActionPerformed
 
     private void orderTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTBMouseClicked
@@ -503,7 +501,24 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             int selectedRow = orderTB.getSelectedRow();
             String orderId = orderTB.getValueAt(selectedRow, 0).toString();
             String custId = orderTB.getValueAt(selectedRow, 1).toString();
+            Vendor_Database<Vendor> vd = new Vendor_Database<>(Identifier.Role.Vendor);
+            Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
+            Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
+            vd.acceptOrder(vendorId, orderId); // change status
+            vd.getMoney(currentUser, orderId); // receive money
+            td.vendorReceiveTXN(currentUser, custId, orderId); // save in TXN table
+            nd.acceptedByVendor(currentUser, custId, orderId);
+            DisplayOrder();
+            clearOrderDetails();
         }
+        
+        /*
+            Upon Accept:
+            1. Save transaction into transaction database (C1 -> V1)  [done]
+            2. Add Order Total into Vendor Balance [apply delivery formula (if any)] [done]
+            3. Change status to "in kitchen" or "pending runner"
+            4. Send notification to customer or runner
+        */
     }//GEN-LAST:event_btnAcceptActionPerformed
 
     /**

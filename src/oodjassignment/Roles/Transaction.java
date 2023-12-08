@@ -11,13 +11,15 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
     private double Amount;
     private Type type;
     
-    private enum Type{
+    public enum Type {
         Withdraw,
         TopUp,
         OrderFood,
         Delivery
     }
-
+    
+    
+    // Top-up or Withdraw Constructor
     public Transaction(String senderId, String receiverId, Type type, double Amount) {
         super("T");
         this.senderId = senderId;
@@ -25,8 +27,11 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
         this.type = type;
         this.orderId = "null";
         this.Amount = Amount;
+        this.CreatedDt = getCurrentDate();
+        this.CreatedTime = getCurrentTime();
     }
     
+    // OrderFood or Delivery Constructor
     public Transaction(String senderId, String receiverId, Type type, double Amount, String orderId) {
         super("T");
         this.senderId = senderId;
@@ -34,6 +39,8 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
         this.type = type;
         this.orderId = orderId;
         this.Amount = Amount;
+        this.CreatedDt = getCurrentDate();
+        this.CreatedTime = getCurrentTime();
     }
     
     public String getCurrentDate() {
@@ -92,6 +99,11 @@ public class Transaction extends Identifier implements Serializable, Date_Provid
 
     public void setAmount(double Amount) {
         this.Amount = Amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" + "senderId=" + senderId + ", receiverId=" + receiverId + ", CreatedDt=" + CreatedDt + ", CreatedTime=" + CreatedTime + ", orderId=" + orderId + ", Amount=" + Amount + ", type=" + type + '}';
     }
     
     
