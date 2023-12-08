@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Order.Options;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
     Customer currentUser;
     private Double TotalAmount = 0.0;
     private String selectedOrderID;
-    private String Location,VendorID;
+    private String Location,VendorID,currentUserID;
     private ArrayList<String> FoodName;
     Identifier.Role role = Identifier.Role.Order;
     Main_Database<Order> MD = new Main_Database<>(role);
@@ -30,6 +31,8 @@ public class Cus_Reorder extends javax.swing.JFrame {
         initComponents();
         this.selectedOrderID = selectedOrderID;
         this.currentUser = currentUser;
+        this.VendorID = VendorID;
+        this.currentUserID = currentUser.getId();
     }
     
     public void addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, Double TotalAmount, String Location, Order.Status Status, String VendorID) {
@@ -49,16 +52,20 @@ public class Cus_Reorder extends javax.swing.JFrame {
     
     private void totalcal(){
         TotalAmount = 0.0;
+        Options option = null;
         ArrayList<Order> data = MD.ReadData();
         for (int i = 0; i < data.size(); i++) {
             String checkOrderId = data.get(i).getId();
             if (checkOrderId.equals(selectedOrderID)) {
                 TotalAmount = data.get(i).getTotalAmount();
+                option = data.get(i).getOptions();
             }
         }
-        if (Optionsbox.getSelectedItem().toString().equals("Delivery")) {
+        if (Optionsbox.getSelectedItem().toString().equals("DineIn") && option.equals(Options.Delivery)) {
             // Add 5% to TotalAmount for delivery
-            TotalAmount += 0.05 * TotalAmount;
+            TotalAmount *= 1.05 ;
+        }else {
+            TotalAmount =TotalAmount;
         }
     }
     private void getOrder(){
@@ -66,10 +73,31 @@ public class Cus_Reorder extends javax.swing.JFrame {
         for (int i = 0; i < data.size(); i++) {
             String checkOrderId = data.get(i).getId();
             if (checkOrderId.equals(selectedOrderID)) {
-                String VendorID = data.get(i).getVendorID();
+                VendorID = data.get(i).getVendorID();
                 FoodName = data.get(i).getFoodName();
             }
         }
+    }
+    
+    private void moneydeduct() {
+        Identifier.Role roles = Identifier.Role.Customer;
+        Main_Database<Customer> MD = new Main_Database<>(roles);
+        ArrayList<Customer>data = MD.ReadData();
+        TotalAmount *= -1;
+        System.out.println("1");
+        for (int i = 0; i<data.size();i++){
+            System.out.println("2");
+            if (data.get(i).getId().equals(currentUserID)){
+                System.out.println("3");
+                System.out.println(TotalAmount);
+                currentUser.updateBalance(TotalAmount);
+                data.get(i).updateBalance(TotalAmount);
+                data.set(i, data.get(i));
+                MD.updateData(roles, data);
+                break;
+            }
+        }
+        
     }
     
     /**
@@ -206,6 +234,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
             
             addOrder(currentUser.getId(), FoodName, options, TotalAmount, Location, status, VendorID);
+            moneydeduct();
         }catch (IllegalArgumentException e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }

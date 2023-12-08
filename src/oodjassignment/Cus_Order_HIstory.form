@@ -187,11 +187,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Vendor rating"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VendorActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Runner">
       <Properties>
         <Property name="text" type="java.lang.String" value="Runner Rating"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RunnerActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
