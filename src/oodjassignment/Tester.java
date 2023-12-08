@@ -53,9 +53,14 @@ public class Tester {
         
         
 //        MD.addData(role, n1);
+<<<<<<< HEAD
+//        MD.addData(role, r1);
+//       MD.addData(role, o1);
+=======
 //        MD.addData(role, o1);
 //        MD.addData(role, r1);
 //        MD.addData(role, o1);
+>>>>>>> master
 //        MD.addData(role, c1);
 //        MD.addData(role, a1);
 //        MD.addData(role, a2);
