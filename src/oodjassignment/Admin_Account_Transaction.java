@@ -15,6 +15,8 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
 
     Admin currentUser;
     int decimalPlaces;
+    String id;
+    double amount;
     
     public Admin_Account_Transaction() {
         initComponents();
@@ -232,7 +234,7 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
             } else {
                 BigDecimal amountBigDecimal = new BigDecimal(amountString);
                 amountBigDecimal = amountBigDecimal.setScale(2, RoundingMode.HALF_UP);
-                double amount = amountBigDecimal.doubleValue();
+                amount = amountBigDecimal.doubleValue();
                 if (email.equals("")){
                     JOptionPane.showMessageDialog(null, "Please fill out your email!");
                 }
@@ -241,6 +243,8 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
                 }
                 else{
                     Account_Database db = new Account_Database(role);
+                    Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
+                    Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
                     if (!db.LoginValidation(email, password, role)){
                         JOptionPane.showMessageDialog(null, "Invalid email or password");
                     }
@@ -252,11 +256,11 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
                             switch (action){
                                 case "Withdraw" -> {
                                     if(db.checkBalance(amount, email, role)){
-                                        amount *= -1;
-                                        System.out.println(amount);
-                                        db.changeBalance(amount, email, role);
+                                        this.amount *= -1;
+                                        this.id = db.changeBalance(amount, email, role);
                                         jTextAmount.setText("");
                                         JOptionPane.showMessageDialog(null, "Transaction complete!");
+                                        this.amount *= -1;
                                     }
                                     else{
                                         JOptionPane.showMessageDialog(null, "insufficient Amount!");
@@ -264,11 +268,13 @@ public class Admin_Account_Transaction extends javax.swing.JFrame {
                                 }
                                 // Display new amount
                                 case "Deposit" -> {
-                                    db.changeBalance(amount, email, role);
+                                    this.id = db.changeBalance(amount, email, role);
                                     jTextAmount.setText("");
                                     JOptionPane.showMessageDialog(null, "Transaction complete!");
                                 }
                             }
+                            String transactionId = td.adminTXN(currentUser, id, amount, action);
+                            nd.transaction(currentUser.getId(), id, transactionId, action, amount);
                         }
                     }
                 }

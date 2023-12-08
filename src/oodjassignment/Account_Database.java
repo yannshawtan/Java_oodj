@@ -267,36 +267,34 @@ public class Account_Database<T> extends Main_Database{
         return true;
     }
     
-    public void changeBalance(double amount, String email, Role role){
+    public String changeBalance(double amount, String email, Role role){
         data = ReadData();
         for (int i = 0; i<data.size();i++){
-            if (data.get(i) instanceof Customer){
-                Customer customer = (Customer) data.get(i);
+            if (data.get(i) instanceof Customer customer){
                 if (customer.getEmail().equals(email)){
                     customer.updateBalance(amount);
                     data.set(i, (T) customer);
                     updateData(role, data);
-                    break;
+                    return customer.getId();
                 }
             }
-            else if (data.get(i) instanceof Vendor){
-                Vendor vendor = (Vendor) data.get(i);
+            else if (data.get(i) instanceof Vendor vendor){
                 if (vendor.getEmail().equals(email)){
                     vendor.updateBalance(amount);
                     data.set(i, (T) vendor);
                     updateData(role, data);
-                    break;
+                    return vendor.getId();
                 }
             }
-            else if (data.get(i) instanceof Runner){
-                Runner runner = (Runner) data.get(i);
+            else if (data.get(i) instanceof Runner runner){
                 if (runner.getEmail().equals(email)){
                     runner.updateBalance(amount);
                     data.set(i, (T) runner);
                     updateData(role, data);
-                    break;
+                    return runner.getId();
                 }
             }
         }
+        return "";
     }
 }
