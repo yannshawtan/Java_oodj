@@ -57,13 +57,13 @@ public class Vendor_Tester {
 //        MD.addData(role, a4);
 //        MD.addData(role, v2);
 //        MD.addData(role, f1);
-        MD.addData(role, o1);
+//        MD.addData(role, o1);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
         // For example, u delete item 4, from an list of only 4 item, next time u try that again it will cause error as now the list is only 3 item
-        /*
-        MD.removeData(role, 1);
+        //
+//        MD.removeData(role, 2);
         //*/
         
         // This will read the data as well as how u how many items

@@ -36,6 +36,14 @@ public class Notification_Database<T> extends Main_Database{
         addData(Role.Notification, n);
     }
     
+    public void declinedByVendor(Vendor sender, String receiver, String orderId) {
+        String vendorId = sender.getId();
+        String vendorName = sender.getName();
+        String message = orderId + ": Your order has been declined by " + vendorName + " and your balance is refunded!";
+        Notification n = new Notification(vendorId, receiver, message);
+        addData(Role.Notification, n);
+    }
+    
     public void pickUpByRunner(String sender, String receiver1, String receiver2, String orderId) {
         String message = orderId + ": Food is out for delivery!";
         Notification n1 = new Notification(sender, receiver1, message);
