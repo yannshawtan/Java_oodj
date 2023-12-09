@@ -11,7 +11,8 @@ public class Vendor_Tester {
 //        ArrayList<Admin> data;
 //        ArrayList<Customer> data;
 //        ArrayList<Notification> data;
-        ArrayList<Order> data;
+//        ArrayList<Order> data;
+        ArrayList<Vendor> data;
 //        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
         ArrayList<String> foodName = new  ArrayList<String>();
@@ -21,13 +22,15 @@ public class Vendor_Tester {
         int count;
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
-        Identifier.Role role = Identifier.Role.Order;
+//        Identifier.Role role = Identifier.Role.Order;
+        Identifier.Role role = Identifier.Role.Vendor;
 //        Identifier.Role role = Identifier.Role.Notification;
 //        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-        Main_Database<Order> MD = new Main_Database<>(role);
+//        Main_Database<Order> MD = new Main_Database<>(role);
+        Main_Database<Vendor> MD = new Main_Database<>(role);
 //        Account_Database<Notification> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
@@ -67,16 +70,16 @@ public class Vendor_Tester {
         //*/
         
         // This will read the data as well as how u how many items
-//        data = MD.ReadData();
-//        count = MD.getCount();
-//        System.out.println(count + " item in the list");
-//        for (int i = 0; i<data.size();i++){
-//            System.out.println(data.get(i));
-//        }
+        data = MD.ReadData();
+        count = MD.getCount();
+        System.out.println(count + " item in the list");
+        for (int i = 0; i<data.size();i++){
+            System.out.println(data.get(i));
+        }
         //*/
         
         // change a specific data
-
+/*
         data = MD.ReadData();
         count = MD.getCount();
         System.out.println(count + " is the size of the list");
