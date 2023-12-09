@@ -45,7 +45,6 @@ public class Notification_Database<T> extends Main_Database{
     }
     
     public void completedByVendor(Vendor sender, String custId, String orderId) {
-        // CONTINUE HERE!!!
         String vendorId = sender.getId();
         Main_Database<Order> db = new Main_Database<>(Role.Order);
         ArrayList<Order> data = db.ReadData();
