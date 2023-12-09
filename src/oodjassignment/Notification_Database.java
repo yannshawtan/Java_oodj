@@ -28,6 +28,12 @@ public class Notification_Database<T> extends Main_Database{
         addData(Role.Delivery, d); 
     }
     
+    public void SendOrderToVendor(String Sender, String Receiver,String orderId, String CusName){
+        String message = orderId + ": Your order has been accepted by " + CusName;
+        Notification n = new Notification(Sender, Receiver, message);
+        addData(Role.Notification, n);
+    }
+    
     public void acceptedByVendor(Vendor sender, String receiver, String orderId) {
         String vendorId = sender.getId();
         String vendorName = sender.getName();

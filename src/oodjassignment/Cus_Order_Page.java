@@ -105,9 +105,10 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID) {
+    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID) {
         Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
         MD.addData(role, food);
+        return food;
     }
     
     
@@ -116,7 +117,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         Blocks = (String) Block.getSelectedItem();
         Floors = (String) Floor.getSelectedItem();
         Rooms = (String) Room.getSelectedItem();
-    if (!Optionsbox.getSelectedItem().equals("DineIn")){
+    if (Optionsbox.getSelectedItem().equals("Delivery")){
         Location = Blocks+ "-" + Floors + "-" + Rooms; 
     }
     }
@@ -130,6 +131,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         Identifier.Role role = Identifier.Role.Menu;
         Main_Database<Menu> MD = new Main_Database<>(role);
         ArrayList<Menu> data = MD.ReadData();
+        
         count = MD.getCount();
         int FoodQuantity = 0;
         for (int i = 0; i < count; i++) {
@@ -206,7 +208,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        Vname = new javax.swing.JLabel();
         Total_Price = new java.awt.Label();
         jButton1 = new javax.swing.JButton();
         Confirm = new javax.swing.JButton();
@@ -247,7 +249,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setPreferredWidth(200);
         }
 
-        jLabel1.setText("jLabel1");
+        Vname.setText("Menu");
 
         Total_Price.setName(""); // NOI18N
         Total_Price.setText("Total");
@@ -299,7 +301,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Vname, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,7 +337,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Vname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -387,6 +389,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         calculateTotal();
         AddLocation();
         ArrayList<String> FoodName = populateFoodList();
+        Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
         String selectedOptionString = (String) Optionsbox.getSelectedItem();
         Options options = Order.Options.valueOf(selectedOptionString);
         Double Cbalance = currentUser.getBalance();
@@ -396,10 +399,11 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
             
-            addOrder(CustomerID, FoodName, options, TotalAmount, Location, status, VendorID);
+            Order newOrder = addOrder(CustomerID, FoodName, options, TotalAmount, Location, status, VendorID);
+            nd.SendOrderToVendor(currentUser.getId(), VendorID, newOrder.getId(),currentUser.getName());
             moneydeduct();
             GoCustomerHomePage();
-            JOptionPane.showMessageDialog(null, "Login Success");
+            JOptionPane.showMessageDialog(null, "Order Sent");
         }catch (IllegalArgumentException e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -477,8 +481,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     private javax.swing.JLabel RoomT;
     private java.awt.Label Total_Price;
     private java.awt.Label Total_display;
+    private javax.swing.JLabel Vname;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

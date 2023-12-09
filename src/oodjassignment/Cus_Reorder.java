@@ -33,6 +33,21 @@ public class Cus_Reorder extends javax.swing.JFrame {
         this.currentUser = currentUser;
         this.VendorID = VendorID;
         this.currentUserID = currentUser.getId();
+        Block.setVisible(false);
+           BlockT.setVisible(false);
+           Floor.setVisible(false);
+           FloorT.setVisible(false);
+           Room.setVisible(false);
+           RoomT.setVisible(false);
+    }
+    
+    public void GoCustomerHomePage(){
+        Customer_Home_Page chp = new Customer_Home_Page((Customer) currentUser);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
     }
     
     public void addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, Double TotalAmount, String Location, Order.Status Status, String VendorID) {
@@ -45,7 +60,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
         Blocks = (String) Block.getSelectedItem();
         Floors = (String) Floor.getSelectedItem();
         Rooms = (String) Room.getSelectedItem();
-    if (!Optionsbox.getSelectedItem().equals("DineIn")){
+    if (Optionsbox.getSelectedItem().equals("Delivery")){
         Location = Blocks+ "-" + Floors + "-" + Rooms; 
     }
     }
@@ -61,7 +76,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
                 option = data.get(i).getOptions();
             }
         }
-        if (Optionsbox.getSelectedItem().toString().equals("DineIn") && option.equals(Options.Delivery)) {
+        if (Optionsbox.getSelectedItem().toString().equals("Delivery") && option.equals(Options.DineIn)) {
             // Add 5% to TotalAmount for delivery
             TotalAmount *= 1.05 ;
         }else {
@@ -84,12 +99,8 @@ public class Cus_Reorder extends javax.swing.JFrame {
         Main_Database<Customer> MD = new Main_Database<>(roles);
         ArrayList<Customer>data = MD.ReadData();
         TotalAmount *= -1;
-        System.out.println("1");
         for (int i = 0; i<data.size();i++){
-            System.out.println("2");
             if (data.get(i).getId().equals(currentUserID)){
-                System.out.println("3");
-                System.out.println(TotalAmount);
                 currentUser.updateBalance(TotalAmount);
                 data.get(i).updateBalance(TotalAmount);
                 data.set(i, data.get(i));
@@ -114,9 +125,9 @@ public class Cus_Reorder extends javax.swing.JFrame {
         Optionsbox = new javax.swing.JComboBox<>();
         Back = new javax.swing.JButton();
         Confirm = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        BlockT = new javax.swing.JLabel();
+        FloorT = new javax.swing.JLabel();
+        RoomT = new javax.swing.JLabel();
         Block = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         Floor = new javax.swing.JComboBox<>();
@@ -129,6 +140,11 @@ public class Cus_Reorder extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "TakeAway", "Delivery" }));
+        Optionsbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OptionsboxActionPerformed(evt);
+            }
+        });
 
         Back.setText("Back");
         Back.addActionListener(new java.awt.event.ActionListener() {
@@ -144,11 +160,11 @@ public class Cus_Reorder extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Block");
+        BlockT.setText("Block");
 
-        jLabel2.setText("Floor");
+        FloorT.setText("Floor");
 
-        jLabel3.setText("Room");
+        RoomT.setText("Room");
 
         Block.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B", "C", "D", "E" }));
 
@@ -174,15 +190,15 @@ public class Cus_Reorder extends javax.swing.JFrame {
                         .addGap(73, 73, 73)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(RoomT, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(FloorT, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(BlockT, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(106, 106, 106)
                                 .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
@@ -202,15 +218,15 @@ public class Cus_Reorder extends javax.swing.JFrame {
                 .addComponent(Optionsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                    .addComponent(BlockT)
                     .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(FloorT)
                     .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(RoomT)
                     .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -235,6 +251,8 @@ public class Cus_Reorder extends javax.swing.JFrame {
             
             addOrder(currentUser.getId(), FoodName, options, TotalAmount, Location, status, VendorID);
             moneydeduct();
+            GoCustomerHomePage();
+            JOptionPane.showMessageDialog(null, "Order Sent");
         }catch (IllegalArgumentException e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -250,6 +268,24 @@ public class Cus_Reorder extends javax.swing.JFrame {
         ch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_BackActionPerformed
+
+    private void OptionsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionsboxActionPerformed
+        if (Optionsbox.getSelectedItem()==("Delivery")){
+            Block.setVisible(true);
+           BlockT.setVisible(true);
+           Floor.setVisible(true);
+           FloorT.setVisible(true);
+           Room.setVisible(true);
+           RoomT.setVisible(true);
+        } else {
+           Block.setVisible(false);
+           BlockT.setVisible(false);
+           Floor.setVisible(false);
+           FloorT.setVisible(false);
+           Room.setVisible(false);
+           RoomT.setVisible(false);
+        }
+    }//GEN-LAST:event_OptionsboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,13 +325,13 @@ public class Cus_Reorder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
     private javax.swing.JComboBox<String> Block;
+    private javax.swing.JLabel BlockT;
     private javax.swing.JButton Confirm;
     private javax.swing.JComboBox<String> Floor;
+    private javax.swing.JLabel FloorT;
     private javax.swing.JComboBox<String> Optionsbox;
     private javax.swing.JComboBox<String> Room;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel RoomT;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
