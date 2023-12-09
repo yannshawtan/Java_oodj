@@ -52,8 +52,7 @@ public class Transaction_Database<T> extends Main_Database{
                 double amount = order.getTotalAmount();
                 double finalAmount = amount * 5/105;
                 Transaction t = new Transaction(custId, currentUser.getId(), Transaction.Type.OrderFood, finalAmount, orderId);
-                TD.addData(Role.Transaction, t);
-//                addData(Role.Transaction, t);
+                addData(Role.Transaction, t);
             }
         }
     }
