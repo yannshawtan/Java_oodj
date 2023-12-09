@@ -305,23 +305,16 @@ public class Runner_Ongoing_Order extends javax.swing.JFrame {
 
             }
         }
-//        for (Vendor dv : dataVendor) {
-//            if(dv.getId().equals(VendorId)){
-//                this.VendorId = dv.getId();
-//                break;
-//            }
-//        } 
+
         rd.UpdateOrder(currentUser.getId(), selectedOrderId);
         ListOfOrder();
         String position = Type.getSelectedItem().toString();
         jButtonComplete.setEnabled(false);
         if (position.equals("Pick Up")){
-//            nd.pickUpByRunner(currentUser.getId(), CustomerId, VendorId, OrderId);
             JOptionPane.showMessageDialog(null, "Successfully pick up the order!");
         }
         else if(position.equals("On Going")){
             this.currentUser = rd.getMoney(currentUser, selectedOrderId);
-//            nd.completedByRunner(currentUser.getId(), CustomerId, VendorId, OrderId);
             JOptionPane.showMessageDialog(null, "Succefully complete the order and received money!");
         }
         

@@ -28,6 +28,12 @@ public class Notification_Database<T> extends Main_Database{
         addData(Role.Delivery, d); 
     }
     
+    public void SendOrderToVendor(String Sender, String Receiver,String orderId, String CusName){
+        String message = orderId + CusName +": has sent an Order ";
+        Notification n = new Notification(Sender, Receiver, message);
+        addData(Role.Notification, n);
+    }
+    
     public void acceptedByVendor(Vendor sender, String receiver, String orderId) {
         String vendorId = sender.getId();
         String vendorName = sender.getName();
@@ -51,9 +57,6 @@ public class Notification_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(orderId)) {
-                order.setStatus(Order.Status.ReadyForCollection);
-                data.set(i, order);
-                db.updateData(Role.Order, data);
                 switch (order.getOptions()) {
                     case DineIn -> {
                         String message = orderId + ": Food is Ready for Collection";
@@ -87,9 +90,6 @@ public class Notification_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(orderId)) {
-                order.setStatus(Order.Status.ReadyForCollection);
-                data.set(i, order);
-                db.updateData(Role.Order, data);
                 switch (order.getOptions()) {
                     case DineIn -> {
                         String message = orderId + ": Thanks for collecting your food";

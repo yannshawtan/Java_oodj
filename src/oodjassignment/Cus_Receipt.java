@@ -28,7 +28,6 @@ public class Cus_Receipt extends javax.swing.JFrame {
     String selectedOrderID;
     Main_Database<Order> MD = new Main_Database<>(role);
     public Cus_Receipt(String SelectedId,Customer currentUser) {
-        System.out.println(currentUser);
         this.currentUser = currentUser;
         this.selectedOrderID = SelectedId;
         initComponents();
