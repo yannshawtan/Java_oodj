@@ -12,7 +12,7 @@ public class Vendor_Tester {
 //        ArrayList<Customer> data;
 //        ArrayList<Notification> data;
 //        ArrayList<Order> data;
-        ArrayList<Vendor> data;
+        ArrayList<Order> data;
 //        ArrayList<Runner> data;
 //        ArrayList<Menu> data;
         ArrayList<String> foodName = new  ArrayList<String>();
@@ -23,14 +23,14 @@ public class Vendor_Tester {
 //        Identifier.Role role = Identifier.Role.Admin;
 //        Identifier.Role role = Identifier.Role.Customer;
 //        Identifier.Role role = Identifier.Role.Order;
-        Identifier.Role role = Identifier.Role.Vendor;
+        Identifier.Role role = Identifier.Role.Order;
 //        Identifier.Role role = Identifier.Role.Notification;
 //        Identifier.Role role = Identifier.Role.Runner;
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
 //        Main_Database<Order> MD = new Main_Database<>(role);
-        Main_Database<Vendor> MD = new Main_Database<>(role);
+        Main_Database<Order> MD = new Main_Database<>(role);
 //        Account_Database<Notification> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
@@ -66,7 +66,7 @@ public class Vendor_Tester {
         // Remove data, remember to check the location number as because u delete the item will affect its total number
         // For example, u delete item 4, from an list of only 4 item, next time u try that again it will cause error as now the list is only 3 item
         //
-//        MD.removeData(role, 2);
+//        MD.removeData(role, 1);
         //*/
         
         // This will read the data as well as how u how many items
