@@ -68,7 +68,7 @@ public class Runner_View_Feedback extends javax.swing.JFrame {
         }
         for (int i=0;i<data.size();i++){
             String lowercaseData = data.get(i).getId().toLowerCase();
-            if(data.get(i).getRunnerId()!= null && data.get(i).getRunnerId().equals(currentUser.getId())){
+            if((data.get(i).getRunnerId()!= null && !"null".equals(data.get(i).getStringRatingForRunner())) && data.get(i).getRunnerId().equals(currentUser.getId())){
                 if(order.equals("")){
                     if(formattedDate.equals("")){
                         model.addRow(new Object[] {data.get(i).getId(), data.get(i).getStringRatingForRunner(), data.get(i).getCreated_Dt(), data.get(i).getFeedbackForRunner()});

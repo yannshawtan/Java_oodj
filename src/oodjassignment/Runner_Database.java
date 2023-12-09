@@ -98,7 +98,6 @@ public class Runner_Database<T> extends Main_Database{
         Transaction_Database<Transaction> td = new Transaction_Database(Role.Transaction);
         ArrayList<Transaction> data = td.ReadData();
         for (Transaction transaction : data) {
-            System.out.println(transaction.getReceiverId());
             if (transaction.getReceiverId().equals(RunnerId)){
                 LocalDate transactionDate = LocalDate.parse(transaction.getCreatedDt(), formatter);
                 switch (interval) {

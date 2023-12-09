@@ -274,13 +274,13 @@ public class Main_Database<T> {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
         } finally{
             if (oos != null) {
                 try {
                     oos.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+//                    Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
