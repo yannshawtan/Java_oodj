@@ -64,7 +64,6 @@ public class Vendor_Database<T> extends Main_Database{
             if (order.getId().equals(OrderId)) {
                 switch (order.getStatus()) {
                     case ReadyForCollection -> {
-                        System.out.println(order);
                         order.setStatus(Status.Completed);
                         data.set(i, order);
                         db.updateData(Role.Order, data);

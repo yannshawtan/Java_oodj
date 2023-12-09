@@ -51,9 +51,6 @@ public class Notification_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(orderId)) {
-                order.setStatus(Order.Status.ReadyForCollection);
-                data.set(i, order);
-                db.updateData(Role.Order, data);
                 switch (order.getOptions()) {
                     case DineIn -> {
                         String message = orderId + ": Food is Ready for Collection";
@@ -87,9 +84,6 @@ public class Notification_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(orderId)) {
-                order.setStatus(Order.Status.ReadyForCollection);
-                data.set(i, order);
-                db.updateData(Role.Order, data);
                 switch (order.getOptions()) {
                     case DineIn -> {
                         String message = orderId + ": Thanks for collecting your food";
