@@ -50,9 +50,10 @@ public class Cus_Reorder extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public void addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, Double TotalAmount, String Location, Order.Status Status, String VendorID) {
+    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, Double TotalAmount, String Location, Order.Status Status, String VendorID) {
         Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
         MD.addData(role, food);
+        return food;
     }
     
     private void AddLocation(){
@@ -245,11 +246,13 @@ public class Cus_Reorder extends javax.swing.JFrame {
         String selectedOptionString = (String) Optionsbox.getSelectedItem();
         Order.Options options = Order.Options.valueOf(selectedOptionString);
         Double Cbalance = currentUser.getBalance();
+        Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
         Order.Status status = Order.Status.PendingVendor;
         try{
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
             
-            addOrder(currentUser.getId(), FoodName, options, TotalAmount, Location, status, VendorID);
+           Order newOrder = addOrder(currentUser.getId(), FoodName, options, TotalAmount, Location, status, VendorID);
+            nd.SendOrderToVendor(currentUser.getId(), VendorID, newOrder.getId(),currentUser.getName());
             moneydeduct();
             GoCustomerHomePage();
             JOptionPane.showMessageDialog(null, "Order Sent");

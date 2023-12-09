@@ -26,7 +26,6 @@ public class Runner_Profile extends javax.swing.JFrame {
         User_Name.setText(currentUser.getName());
         jTextBalance.setText(currentUser.getStringBalance());
         jTextRating.setText(currentUser.getStringRating());
-//        jTextEarn.setText(currentUser.getStringRating());
         jTextBalance.setEditable(false);
         jTextRating.setEditable(false);
         jTextEarn.setEditable(false);

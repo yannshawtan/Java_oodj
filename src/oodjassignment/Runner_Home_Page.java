@@ -128,7 +128,7 @@ public class Runner_Home_Page extends javax.swing.JFrame {
             }
         });
 
-        jButtonNotification.setText("Noticication");
+        jButtonNotification.setText("Notification");
         jButtonNotification.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNotificationActionPerformed(evt);
