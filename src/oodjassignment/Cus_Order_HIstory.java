@@ -60,7 +60,6 @@ public class Cus_Order_History extends javax.swing.JFrame {
         OrderId = new javax.swing.JTextField();
         Vendor = new javax.swing.JButton();
         Runner = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,13 +120,6 @@ public class Cus_Order_History extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("check for feedback");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,21 +131,20 @@ public class Cus_Order_History extends javax.swing.JFrame {
                 .addComponent(View)
                 .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
-                .addGap(307, 307, 307)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(342, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Runner)
-                    .addComponent(Vendor)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(307, 307, 307)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Runner)
+                            .addComponent(Vendor))))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,9 +160,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
                         .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(25, 25, 25)
+                        .addGap(66, 66, 66)
                         .addComponent(Vendor)
                         .addGap(34, 34, 34)
                         .addComponent(Runner)))
@@ -195,9 +184,14 @@ public class Cus_Order_History extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
+        try{
         SelectedId = OrderId.getText();
-        GoCusReceipt(SelectedId);
-        System.out.println(SelectedId);
+        if (SelectedId==null){throw new IllegalArgumentException("Please Select a receipt!");}
+            GoCusReceipt(SelectedId);
+            System.out.println(SelectedId);
+        }catch (IllegalArgumentException e){
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
     }//GEN-LAST:event_ViewActionPerformed
     
     private void GoCusReceipt(String SelectedId){
@@ -248,7 +242,6 @@ public class Cus_Order_History extends javax.swing.JFrame {
         String RFeedback = order.getFeedbackForRunner();
         Status status = order.getStatus();
         Options options = order.getOptions();
-        System.out.println(VFeedback);
 
         if (options == Options.DineIn && status == Status.Completed && VFeedback == null) {
             Vendor.setVisible(true);
@@ -287,14 +280,9 @@ public class Cus_Order_History extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_OrderhistoryTMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void VendorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VendorActionPerformed
         SelectedId = OrderId.getText();
         GovendorFeedback(SelectedId);
-        System.out.println(SelectedId);
     }//GEN-LAST:event_VendorActionPerformed
 
     private void RunnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunnerActionPerformed
@@ -346,7 +334,6 @@ public class Cus_Order_History extends javax.swing.JFrame {
     private javax.swing.JButton Vendor;
     private javax.swing.JButton View;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
