@@ -30,6 +30,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
     
     Customer currentUser;
     Identifier.Role role = Identifier.Role.Order;
+    String SelectedId;
     Main_Database<Order> MD = new Main_Database<>(role);
     public Cus_Order_History(Customer currentUser) {
         initComponents();
@@ -107,8 +108,18 @@ public class Cus_Order_History extends javax.swing.JFrame {
         });
 
         Vendor.setText("Vendor rating");
+        Vendor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VendorActionPerformed(evt);
+            }
+        });
 
         Runner.setText("Runner Rating");
+        Runner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RunnerActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("check for feedback");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -184,7 +195,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
-        String SelectedId = OrderId.getText();
+        SelectedId = OrderId.getText();
         GoCusReceipt(SelectedId);
         System.out.println(SelectedId);
     }//GEN-LAST:event_ViewActionPerformed
@@ -207,6 +218,15 @@ public class Cus_Order_History extends javax.swing.JFrame {
         this.dispose();
     }
     
+    private void GorunnerFeedback(String SelectedId){
+        Cus_Runnerfb rf = new Cus_Runnerfb(SelectedId, currentUser);
+        rf.setVisible(true);
+        rf.pack();
+        rf.setLocationRelativeTo(null);
+        rf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     private void DisplayHistory() {
         DefaultTableModel model = (DefaultTableModel) OrderhistoryT.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
@@ -220,12 +240,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
                 model.addRow(new Object[] {data.get(i).getId(), data.get(i).getTotalAmount(), data.get(i).getOptions(), data.get(i).getStatus(), data.get(i).getCreated_Dt(),data.get(i).getCreated_Time()});
             }
         }
-        OrderhistoryT.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            OrderhistoryTMouseClicked(e);
-        }
-     });
+        
     }
 
     private void processFeedbackVisibility(Order order) {
@@ -275,6 +290,17 @@ public class Cus_Order_History extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void VendorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VendorActionPerformed
+        SelectedId = OrderId.getText();
+        GovendorFeedback(SelectedId);
+        System.out.println(SelectedId);
+    }//GEN-LAST:event_VendorActionPerformed
+
+    private void RunnerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RunnerActionPerformed
+        SelectedId = OrderId.getText();
+        GorunnerFeedback(SelectedId);
+    }//GEN-LAST:event_RunnerActionPerformed
     
     
     

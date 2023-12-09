@@ -1,6 +1,7 @@
 package oodjassignment.Roles;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +13,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     private int RatingForVendor,RatingForRunner;
     private Status Status;
     private Options Options;
-    
+    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
 
     
     public enum Status{
@@ -155,11 +156,15 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     }
 
     public Double getTotalAmount() {
+        String formattedAmount = decimalFormat.format(TotalAmount);
+        double TotalAmount = Double.parseDouble(formattedAmount);
         return TotalAmount;
     }
 
     public void setTotalAmount(Double TotalAmount) {
-        this.TotalAmount = TotalAmount;
+        String formattedAmount = decimalFormat.format(TotalAmount);
+        double parsedAmount = Double.parseDouble(formattedAmount);
+        this.TotalAmount += parsedAmount;
     }
     
     public String getVendorID() {

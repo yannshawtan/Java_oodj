@@ -46,7 +46,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     public Cus_Order_Page(String selectedId, Customer currentUser) {
         this.VendorID = selectedId;
         this.currentUser = currentUser;
-        CustomerID = currentUser.getId();
+        this.CustomerID = currentUser.getId();
         initComponents();
         Block.setVisible(false);
         BlockT.setVisible(false);
@@ -72,23 +72,23 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
         if (quantityObj instanceof Integer) {
             quantity = (Integer) quantityObj;
-        } else if (quantityObj instanceof String) {
+        } 
+        else if (quantityObj instanceof String) {
             quantity = Integer.parseInt((String) quantityObj);
-        } else {
-        }
+        } 
 
         if (priceObj instanceof Double) {
             price = (Double) priceObj;
-        } else if (priceObj instanceof String) {
+        } 
+        else if (priceObj instanceof String) {
             price = Double.parseDouble((String) priceObj);
-        } else {
         }
 
         TotalAmount += price * quantity;
         
         if (Optionsbox.getSelectedItem().toString().equals("Delivery")) {
             // Add 5% to TotalAmount for delivery
-            TotalAmount += 0.05 * TotalAmount;
+            this.TotalAmount *= 1.05;
         }
     }
 
@@ -96,11 +96,20 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     Total_display.setText(String.format("%.2f", TotalAmount));
     }
     
+    public void GoCustomerHomePage(){
+        Customer_Home_Page chp = new Customer_Home_Page((Customer) currentUser);
+        chp.setVisible(true);
+        chp.pack();
+        chp.setLocationRelativeTo(null);
+        chp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
+    
     public void addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID) {
         Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
         MD.addData(role, food);
     }
-
+    
     
     private void AddLocation(){
         String Blocks, Floors, Rooms;
@@ -166,18 +175,22 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     }
 
     private void moneydeduct() {
-        calculateTotal();
-        Identifier.Role role = Identifier.Role.Customer;
-        Main_Database<Customer> MD = new Main_Database<>(role);
+        Identifier.Role roles = Identifier.Role.Customer;
+        Main_Database<Customer> MD = new Main_Database<>(roles);
         ArrayList<Customer>data = MD.ReadData();
-        Double Cbalance = currentUser.getBalance();
-        Double Amount = Cbalance - TotalAmount;
+        TotalAmount *= -1;
+        System.out.println("1");
         for (int i = 0; i<data.size();i++){
+            System.out.println("2");
             if (data.get(i).getId().equals(CustomerID)){
-                data.get(i).updateBalance(Amount);
+                System.out.println("3");
+                System.out.println(TotalAmount);
+                currentUser.updateBalance(TotalAmount);
+                data.get(i).updateBalance(TotalAmount);
                 data.set(i, data.get(i));
-                }
-            
+                MD.updateData(roles, data);
+                break;
+            }
         }
         
     }
@@ -253,8 +266,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             }
         });
 
-        Total_display.setText("label1");
-
         Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "TakeAway", "Delivery" }));
         Optionsbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,7 +288,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             }
         });
 
-        Floor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        Floor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09" }));
 
         Room.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07" }));
 
@@ -288,7 +299,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 659, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,28 +320,34 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                             .addComponent(Optionsbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Block, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Floor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(17, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Confirm))
-                .addGap(115, 115, 115))
+                            .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(768, 768, 768)
+                        .addComponent(Confirm))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(18, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Total_Price, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,13 +364,9 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(RoomT)
                             .addComponent(Room, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(155, 155, 155)
-                        .addComponent(Total_display, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(Confirm))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Confirm)
+                        .addGap(14, 14, 14))))
         );
 
         Total_Price.getAccessibleContext().setAccessibleName("Total_Label");
@@ -386,7 +398,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             
             addOrder(CustomerID, FoodName, options, TotalAmount, Location, status, VendorID);
             moneydeduct();
-            
+            GoCustomerHomePage();
+            JOptionPane.showMessageDialog(null, "Login Success");
         }catch (IllegalArgumentException e){
                 JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -395,21 +408,22 @@ public class Cus_Order_Page extends javax.swing.JFrame {
 
     private void OptionsboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OptionsboxActionPerformed
         
-    if(Optionsbox.getSelectedItem().equals("DineIn"))
+    if(Optionsbox.getSelectedItem().equals("Delivery"))
        {
-           Block.setVisible(false);
-           BlockT.setVisible(false);
-           Floor.setVisible(false);
-           FloorT.setVisible(false);
-           Room.setVisible(false);
-           RoomT.setVisible(false);
-        } else {
+           calculateTotal();
            Block.setVisible(true);
            BlockT.setVisible(true);
            Floor.setVisible(true);
            FloorT.setVisible(true);
            Room.setVisible(true);
            RoomT.setVisible(true);
+        } else {
+           Block.setVisible(false);
+           BlockT.setVisible(false);
+           Floor.setVisible(false);
+           FloorT.setVisible(false);
+           Room.setVisible(false);
+           RoomT.setVisible(false);
        }
     }//GEN-LAST:event_OptionsboxActionPerformed
 
