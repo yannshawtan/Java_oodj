@@ -44,6 +44,72 @@ public class Notification_Database<T> extends Main_Database{
         addData(Role.Notification, n);
     }
     
+    public void completedByVendor(Vendor sender, String custId, String orderId) {
+        String vendorId = sender.getId();
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(orderId)) {
+                order.setStatus(Order.Status.ReadyForCollection);
+                data.set(i, order);
+                db.updateData(Role.Order, data);
+                switch (order.getOptions()) {
+                    case DineIn -> {
+                        String message = orderId + ": Food is Ready for Collection";
+                        Notification n = new Notification(vendorId, custId, message);
+                        addData(Role.Notification, n);
+                        break;
+                    }
+                    case TakeAway -> {
+                        String message = orderId + ": Food is Ready for Collection";
+                        Notification n = new Notification(vendorId, custId, message);
+                        addData(Role.Notification, n);
+                        break;
+                    }
+                    case Delivery -> {
+                        String message = orderId + ": Food is Ready for Collection by Runner";
+                        Notification n = new Notification(vendorId, custId, message);
+                        addData(Role.Notification, n);
+                        break;
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+    }
+    
+    public void collectedByCustomer(Vendor sender, String custId, String orderId) {
+        String vendorId = sender.getId();
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(orderId)) {
+                order.setStatus(Order.Status.ReadyForCollection);
+                data.set(i, order);
+                db.updateData(Role.Order, data);
+                switch (order.getOptions()) {
+                    case DineIn -> {
+                        String message = orderId + ": Thanks for collecting your food";
+                        Notification n = new Notification(vendorId, custId, message);
+                        addData(Role.Notification, n);
+                        break;
+                    }
+                    case TakeAway -> {
+                        String message = orderId + ": Thanks for collecting your food";
+                        Notification n = new Notification(vendorId, custId, message);
+                        addData(Role.Notification, n);
+                        break;
+                    }
+                    default -> {
+                    }
+                }
+            }
+        }
+    }
+    
     public void pickUpByRunner(String sender, String receiver1, String receiver2, String orderId) {
         String message = orderId + ": Food is out for delivery!";
         Notification n1 = new Notification(sender, receiver1, message);

@@ -12,12 +12,13 @@ public class Vendor_Database<T> extends Main_Database{
         super(role);
     }
     
-    public void acceptOrder(String VendorId, String OrderId){
+    public void updateOrder(String VendorId, String OrderId){
         Main_Database<Order> db = new Main_Database<>(Role.Order);
         ArrayList<Order> data = db.ReadData();
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(OrderId)) {
+                System.out.println(OrderId + order.getStatus());
                 switch (order.getStatus()) {
                     case PendingVendor -> {
                         if (order.getOptions() == Order.Options.DineIn || order.getOptions() == Order.Options.TakeAway) {
@@ -33,17 +34,41 @@ public class Vendor_Database<T> extends Main_Database{
                             db.updateData(Role.Order, data);
                             break;
                         }
+                        break;
                     }
                     case InKitchen -> {
                         order.setStatus(Status.ReadyForCollection);
                         data.set(i, order);
                         db.updateData(Role.Order, data);
-                        //                Notification_Database<Vendor> nb = new Notification_Database(Role.Vendor);
-                        //                nb.CreateNotification(VendorId, order.getVendorID(), AcceptDeliery);
-                        //                nb.CreateNotification(VendorId, order.getCustomerID(), AcceptDeliery);
                         break;
                     }
+//                    case ReadyForCollection -> {
+//                        System.out.println("1");
+//                        order.setStatus(Status.Completed);
+//                        data.set(i, order);
+//                        db.updateData(Role.Order, data);
+//                        break;
+//                    }
                     default -> {
+                    }
+                }
+            }
+        }
+    }
+    
+    public void collectedOrder(String VendorId, String OrderId){
+        Main_Database<Order> db = new Main_Database<>(Role.Order);
+        ArrayList<Order> data = db.ReadData();
+        for (int i = 0; i<data.size(); i++) {
+            Order order = (Order) data.get(i);
+            if (order.getId().equals(OrderId)) {
+                switch (order.getStatus()) {
+                    case ReadyForCollection -> {
+                        System.out.println(order);
+                        order.setStatus(Status.Completed);
+                        data.set(i, order);
+                        db.updateData(Role.Order, data);
+                        break;
                     }
                 }
             }
@@ -59,11 +84,9 @@ public class Vendor_Database<T> extends Main_Database{
                 switch (order.getStatus()) {
                     case PendingVendor -> {
                         order.setStatus(Status.Decline);
-                            data.set(i, order);
-                            db.updateData(Role.Order, data);
-                            break;
-                    }
-                    default -> {
+                        data.set(i, order);
+                        db.updateData(Role.Order, data);
+                        break;
                     }
                 }
             }

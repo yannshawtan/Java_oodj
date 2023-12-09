@@ -33,6 +33,15 @@ public class Vendor_Manage_Order extends javax.swing.JFrame {
         IO.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
+    
+    public void GoToCurrentOrder() {
+        Vendor_Current_Order CO = new Vendor_Current_Order(currentUser);
+        CO.setVisible(true);
+        CO.pack();
+        CO.setLocationRelativeTo(null);
+        CO.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -159,6 +168,7 @@ public class Vendor_Manage_Order extends javax.swing.JFrame {
 
     private void btnCurrentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCurrentActionPerformed
         // TODO add your handling code here:
+        GoToCurrentOrder();
     }//GEN-LAST:event_btnCurrentActionPerformed
 
     private void btnPastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastActionPerformed
