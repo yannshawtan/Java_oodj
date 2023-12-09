@@ -9,18 +9,18 @@ import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
 import oodjassignment.Roles.Order.*;
 
-public class Vendor_Incoming_Order extends javax.swing.JFrame {
+public class Vendor_Current_Order extends javax.swing.JFrame {
     
     Vendor currentUser;
     Identifier.Role role = Identifier.Role.Order;
     Main_Database<Order> MD = new Main_Database<>(role);
     String vendorId;
 
-    public Vendor_Incoming_Order() {
+    public Vendor_Current_Order() {
         initComponents();
     }
         
-    public Vendor_Incoming_Order(Vendor currentUser) {
+    public Vendor_Current_Order(Vendor currentUser) {
         initComponents();
         this.currentUser = currentUser;
         vendorId = currentUser.getId();
@@ -75,7 +75,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         labelCustomer.setText("please select a row");
         labelOrderTime.setText("please select a row");
         labelOrderTotal.setText(String.valueOf("please select a row"));
-        labelOption.setText("please select a row");
+        labelStatus.setText("please select a row");
         DefaultTableModel model = (DefaultTableModel) foodTB.getModel();
         model.setRowCount(0);
     }
@@ -123,7 +123,8 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         for (int i = 0; i < data.size(); i++) {
             String checkVendorId = data.get(i).getVendorID();
             String checkStatus = statusEnumToString(data.get(i).getStatus());
-            if (checkVendorId.equals(vendorId) && checkStatus.equals("Pending Vendor")) {
+            String checkOption = optionEnumToString(data.get(i).getOptions());
+            if (checkVendorId.equals(vendorId) && (checkStatus.equals("Pending Runner") || checkStatus.equals("In Kitchen") || ((checkStatus.equals("Ready For Collection")) && !checkOption.equals("Delivery")))) {
                 model.addRow(new Object[] {data.get(i).getId(), data.get(i).getCustomerID(), concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time())});
             }
         }
@@ -148,15 +149,15 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         labelOrderTotal = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        labelOption = new javax.swing.JLabel();
+        labelStatus = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         labelName2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         orderTB = new javax.swing.JTable();
-        btnAccept = new javax.swing.JButton();
+        btnReady = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        btnDecline = new javax.swing.JButton();
+        btnCompleted = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -227,11 +228,11 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Option:");
+        jLabel11.setText("Status:");
 
-        labelOption.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        labelOption.setForeground(new java.awt.Color(0, 0, 0));
-        labelOption.setText("please select a row");
+        labelStatus.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        labelStatus.setForeground(new java.awt.Color(0, 0, 0));
+        labelStatus.setText("please select a row");
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
         jPanel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -277,7 +278,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(labelOrderTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(labelOption, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -313,7 +314,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                     .addComponent(labelOrderTotal))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelOption)
+                    .addComponent(labelStatus)
                     .addComponent(jLabel11))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -323,7 +324,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         labelName2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         labelName2.setForeground(new java.awt.Color(255, 255, 255));
         labelName2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelName2.setText("Incoming Order");
+        labelName2.setText("Current Order");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -372,10 +373,10 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             orderTB.getColumnModel().getColumn(2).setMinWidth(200);
         }
 
-        btnAccept.setText("Accept");
-        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+        btnReady.setText("Ready for Collection");
+        btnReady.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAcceptActionPerformed(evt);
+                btnReadyActionPerformed(evt);
             }
         });
 
@@ -386,10 +387,10 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             }
         });
 
-        btnDecline.setText("Decline");
-        btnDecline.addActionListener(new java.awt.event.ActionListener() {
+        btnCompleted.setText("Collected by Customer");
+        btnCompleted.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeclineActionPerformed(evt);
+                btnCompletedActionPerformed(evt);
             }
         });
 
@@ -404,10 +405,10 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(btnBack)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAccept, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnReady, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnDecline, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
+                        .addComponent(btnCompleted)
+                        .addGap(18, 18, 18))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -420,8 +421,8 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
-                    .addComponent(btnAccept)
-                    .addComponent(btnDecline))
+                    .addComponent(btnReady)
+                    .addComponent(btnCompleted))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -435,49 +436,10 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         Return();
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnDeclineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeclineActionPerformed
-        // TODO add your handling code here:
-        
-        /*
-        Upon Decline:
-        1. set status to "Declined"
-        2. send notification to customer
-        3. refund customer full order amount
-        */
-        
-        if (orderTB.getSelectedRowCount() > 1) {
-            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
-        }
-        
-        if (orderTB.getSelectedRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Please select a row");
-        }
-        
-        if (orderTB.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Table is empty");
-        }
-        
-        if (orderTB.getSelectedRowCount() == 1) {
-            int selectedRow = orderTB.getSelectedRow();
-            String orderId = orderTB.getValueAt(selectedRow, 0).toString();
-            String custId = orderTB.getValueAt(selectedRow, 1).toString();
-            Vendor_Database<Vendor> vd = new Vendor_Database<>(Identifier.Role.Vendor);
-            Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
-            Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
-            vd.declineOrder(vendorId, orderId); // change status from PendingVendor to Declined
-            vd.refundMoney(custId, orderId); // refund money to customer
-            nd.declinedByVendor(currentUser, custId, orderId);
-            DisplayOrder();
-            clearOrderDetails();
-            JOptionPane.showMessageDialog(null, "Order has been Declined!");
-        }
-        
-    }//GEN-LAST:event_btnDeclineActionPerformed
-
     private void orderTBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTBMouseClicked
         // TODO add your handling code here:
         try {
-            String orderId, custId, custName = "", orderTime = "", option = "";
+            String orderId, custId, custName = "", orderTime = "", status = "", option = "";
             double orderTotal = 0;
             ArrayList<String> food = new ArrayList<String>();
             HashMap<String, Integer> foodMap;
@@ -491,16 +453,36 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                     custId = data.get(i).getCustomerID();
                     custName = findCustomerName(custId);
                     orderTime = concatDateTime(data.get(i).getCreated_Dt(), data.get(i).getCreated_Time());
-                    option = optionEnumToString(data.get(i).getOptions());
+                    status = statusEnumToString(data.get(i).getStatus());
                     orderTotal = data.get(i).getTotalAmount();
                     food = data.get(i).getFoodName();
+                    option = optionEnumToString(data.get(i).getOptions());
                 }
             }
             labelOrderId.setText(orderId);
             labelCustomer.setText(custName);
             labelOrderTime.setText(orderTime);
             labelOrderTotal.setText(String.valueOf(orderTotal));
-            labelOption.setText(option);
+            labelStatus.setText(status);
+            
+            if (status.equals("Pending Runner")) {
+                btnReady.setEnabled(false);
+                btnCompleted.setEnabled(false);
+            }
+            if (status.equals("In Kitchen")) {
+                btnReady.setEnabled(true);
+                btnCompleted.setEnabled(false);
+            }
+            if (status.equals("Ready For Collection")) {
+                if (option.equals("Delivery")) {
+                    btnReady.setEnabled(false);
+                    btnCompleted.setEnabled(false);
+                } else {
+                    btnReady.setEnabled(false);
+                    btnCompleted.setEnabled(true);
+                }
+                
+            }
             
             foodMap = getUniqueFood(food);
             DisplayFood(foodMap);
@@ -510,7 +492,7 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_orderTBMouseClicked
 
-    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
+    private void btnReadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReadyActionPerformed
         // TODO add your handling code here
         if (orderTB.getSelectedRowCount() > 1) {
             JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
@@ -529,17 +511,43 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
             String orderId = orderTB.getValueAt(selectedRow, 0).toString();
             String custId = orderTB.getValueAt(selectedRow, 1).toString();
             Vendor_Database<Vendor> vd = new Vendor_Database<>(Identifier.Role.Vendor);
-            Transaction_Database<Transaction> td = new Transaction_Database<>(Identifier.Role.Transaction);
             Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
+            
             vd.updateOrder(vendorId, orderId); // change status
-            vd.getMoney(currentUser, orderId); // receive money
-            td.vendorReceiveTXN(currentUser, custId, orderId); // save in TXN table
-            nd.acceptedByVendor(currentUser, custId, orderId);
+            nd.completedByVendor(currentUser, custId, orderId);
             DisplayOrder();
             clearOrderDetails();
-            JOptionPane.showMessageDialog(null, "Order has been Accepted!");
+            JOptionPane.showMessageDialog(null, "Order Ready for Collection!");
         }
-    }//GEN-LAST:event_btnAcceptActionPerformed
+    }//GEN-LAST:event_btnReadyActionPerformed
+
+    private void btnCompletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompletedActionPerformed
+        // TODO add your handling code here:
+        if (orderTB.getSelectedRowCount() > 1) {
+            JOptionPane.showMessageDialog(null, "You must only select ONE row at a time");
+        }
+        
+        if (orderTB.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Please select a row");
+        }
+        
+        if (orderTB.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Table is empty");
+        }
+        
+        if (orderTB.getSelectedRowCount() == 1) {
+            int selectedRow = orderTB.getSelectedRow();
+            String orderId = orderTB.getValueAt(selectedRow, 0).toString();
+            String custId = orderTB.getValueAt(selectedRow, 1).toString();
+            Vendor_Database<Vendor> vd = new Vendor_Database<>(Identifier.Role.Vendor);
+            Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
+            vd.collectedOrder(vendorId, orderId); // change status
+            nd.collectedByCustomer(currentUser, custId, orderId);
+            DisplayOrder();
+            clearOrderDetails();
+            JOptionPane.showMessageDialog(null, "Order Marked as Completed!");
+        }
+    }//GEN-LAST:event_btnCompletedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -558,28 +566,35 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Vendor_Incoming_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vendor_Current_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Vendor_Incoming_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vendor_Current_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Vendor_Incoming_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vendor_Current_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Vendor_Incoming_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Vendor_Current_Order.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Vendor_Incoming_Order().setVisible(true);
+                new Vendor_Current_Order().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAccept;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDecline;
+    private javax.swing.JButton btnCompleted;
+    private javax.swing.JButton btnReady;
     private javax.swing.JTable foodTB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
@@ -596,10 +611,10 @@ public class Vendor_Incoming_Order extends javax.swing.JFrame {
     private javax.swing.JLabel labelCustomer;
     private javax.swing.JLabel labelName1;
     private javax.swing.JLabel labelName2;
-    private javax.swing.JLabel labelOption;
     private javax.swing.JLabel labelOrderId;
     private javax.swing.JLabel labelOrderTime;
     private javax.swing.JLabel labelOrderTotal;
+    private javax.swing.JLabel labelStatus;
     private javax.swing.JTable orderTB;
     // End of variables declaration//GEN-END:variables
 

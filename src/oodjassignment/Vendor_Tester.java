@@ -67,22 +67,22 @@ public class Vendor_Tester {
         //*/
         
         // This will read the data as well as how u how many items
-        data = MD.ReadData();
-        count = MD.getCount();
-        System.out.println(count + " item in the list");
-        for (int i = 0; i<data.size();i++){
-            System.out.println(data.get(i));
-        }
+//        data = MD.ReadData();
+//        count = MD.getCount();
+//        System.out.println(count + " item in the list");
+//        for (int i = 0; i<data.size();i++){
+//            System.out.println(data.get(i));
+//        }
         //*/
         
         // change a specific data
-        /*
+
         data = MD.ReadData();
         count = MD.getCount();
         System.out.println(count + " is the size of the list");
         for (int i = 0; i<data.size();i++){
-            if (data.get(i).getName().equals("Zorus")){
-                data.get(i).setName("TheZorus");
+            if (data.get(i).getId().equals("O9")){
+                data.get(i).setStatus(Order.Status.Completed);
                 data.set(i, data.get(i));
             }
             System.out.println(data.get(i));
