@@ -34,7 +34,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
     Main_Database<Order> MD = new Main_Database<>(role);
     public Cus_Order_History(Customer currentUser) {
         initComponents();
-        System.out.println(currentUser);
+       
         this.currentUser = currentUser;
         Vendor.setVisible(false);
         Runner.setVisible(false);
@@ -184,14 +184,15 @@ public class Cus_Order_History extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
-        try{
-        SelectedId = OrderId.getText();
-        if (SelectedId==null){throw new IllegalArgumentException("Please Select a receipt!");}
-            GoCusReceipt(SelectedId);
-            System.out.println(SelectedId);
-        }catch (IllegalArgumentException e){
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                }
+    try {
+    SelectedId = OrderId.getText();
+    if (SelectedId == null || SelectedId.trim().isEmpty()) {
+        throw new IllegalArgumentException("Please Select a receipt!");
+    }
+    GoCusReceipt(SelectedId);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_ViewActionPerformed
     
     private void GoCusReceipt(String SelectedId){
@@ -241,14 +242,20 @@ public class Cus_Order_History extends javax.swing.JFrame {
         String VFeedback = order.getFeedbackForVendor();
         String RFeedback = order.getFeedbackForRunner();
         Status status = order.getStatus();
+        System.out.println(status);
         Options options = order.getOptions();
+        System.out.println(options);
 
         if (options == Options.DineIn && status == Status.Completed && VFeedback == null) {
             Vendor.setVisible(true);
+        }else{
+            Vendor.setVisible(false);
         }
 
         if (options == Options.Delivery && status == Status.Completed && RFeedback == null) {
             Runner.setVisible(true);
+        }else{
+            Runner.setVisible(false);
         }
     }
     
