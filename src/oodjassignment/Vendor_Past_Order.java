@@ -43,6 +43,7 @@ public class Vendor_Past_Order extends javax.swing.JFrame {
         if (option == Order.Options.Delivery) {
             newAmount *= 100.0/105.0;
         }
+        newAmount = Math.round(newAmount * 100.0) / 100.0;
         return newAmount;
     }
     
