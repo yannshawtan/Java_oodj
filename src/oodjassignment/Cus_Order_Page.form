@@ -200,6 +200,9 @@
       </Events>
     </Component>
     <Component class="java.awt.Label" name="Total_display">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="0.00"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="Optionsbox">
       <Properties>
