@@ -38,6 +38,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
         this.currentUser = currentUser;
         Vendor.setVisible(false);
         Runner.setVisible(false);
+        Cancel.setVisible(false);
         DisplayHistory();
         OrderId.setEditable(false);
     }
@@ -60,6 +61,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
         OrderId = new javax.swing.JTextField();
         Vendor = new javax.swing.JButton();
         Runner = new javax.swing.JButton();
+        Cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +122,13 @@ public class Cus_Order_History extends javax.swing.JFrame {
             }
         });
 
+        Cancel.setText("Cancel Order");
+        Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,11 +148,12 @@ public class Cus_Order_History extends javax.swing.JFrame {
                         .addGap(85, 85, 85)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2)
                             .addComponent(OrderId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Runner)
-                            .addComponent(Vendor))))
+                            .addComponent(Runner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Vendor)
+                            .addComponent(Cancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -163,7 +173,9 @@ public class Cus_Order_History extends javax.swing.JFrame {
                         .addGap(66, 66, 66)
                         .addComponent(Vendor)
                         .addGap(34, 34, 34)
-                        .addComponent(Runner)))
+                        .addComponent(Runner)
+                        .addGap(29, 29, 29)
+                        .addComponent(Cancel)))
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -247,6 +259,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
         System.out.println(options);
         Vendor.setVisible(false);
         Runner.setVisible(false);
+        Cancel.setVisible(false);
 
         if (status.equals(Status.Completed)) {
         if (options.equals(Options.DineIn) && VFeedback == null) {
@@ -258,8 +271,11 @@ public class Cus_Order_History extends javax.swing.JFrame {
             if (VFeedback == null) {
                 Vendor.setVisible(true);
             }
-        }
+        }    
     }
+        if (status.equals(Status.PendingVendor)) {
+            Cancel.setVisible(true);
+        }
         
     }
     
@@ -300,6 +316,22 @@ public class Cus_Order_History extends javax.swing.JFrame {
         SelectedId = OrderId.getText();
         GorunnerFeedback(SelectedId);
     }//GEN-LAST:event_RunnerActionPerformed
+
+    private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
+        SelectedId = OrderId.getText();
+        System.out.println(SelectedId);
+        ArrayList<Order> data = MD.ReadData();
+            for (int i = 0; i < data.size(); i++) {
+            String checkOrderId = data.get(i).getId();
+            if (checkOrderId.equals(SelectedId)) {
+                data.get(i).setStatus(Status.Cancelled);
+                data.set(i, data.get(i));
+            }
+        }
+        MD.updateData(role, data);
+        DisplayHistory();
+        Cancel.setVisible(false);
+    }//GEN-LAST:event_CancelActionPerformed
     
     
     
@@ -339,6 +371,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cancel;
     private javax.swing.JTextField OrderId;
     private javax.swing.JTable OrderhistoryT;
     private javax.swing.JButton Runner;

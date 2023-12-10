@@ -23,7 +23,8 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         ReadyForCollection,
         OutForDelivery,
         Completed,
-        Decline
+        Decline,
+        Cancelled
     }
     
     public enum Options{
