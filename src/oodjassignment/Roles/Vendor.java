@@ -68,7 +68,8 @@ public class Vendor extends Identifier implements Serializable, Date_Provider{
     }
     
     public String getStringBalance(){
-        return String.valueOf(Balance);
+        String formattedBalance = String.format("%.2f", Balance);
+        return formattedBalance;
     }
     
     public String getCreated_Date(){
