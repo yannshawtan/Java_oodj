@@ -41,7 +41,7 @@ public class Admin_Home_Page extends javax.swing.JFrame {
     }
     
     public void GoForgetPassword(){
-        Forget_Password_Page fp = new Forget_Password_Page(currentUser);
+        Admin_Forget_Password_Page fp = new Admin_Forget_Password_Page(currentUser);
         fp.setVisible(true);
         fp.pack();
         fp.setLocationRelativeTo(null);
