@@ -33,8 +33,8 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     }
     
     private ArrayList<String> FoodName;
-    private Double TotalAmount;
-    public Order(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID){
+    private double TotalAmount;
+    public Order(String CustomerID, ArrayList<String> FoodName, Options Options, double TotalAmount, String Location, Status Status, String VendorID){
         super("O"); 
         this.Status = Status;
         this.CustomerID = CustomerID;
@@ -155,13 +155,13 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.FoodName = FoodName;
     }
 
-    public Double getTotalAmount() {
+    public double getTotalAmount() {
         String formattedAmount = decimalFormat.format(TotalAmount);
         double TotalAmount = Double.parseDouble(formattedAmount);
         return TotalAmount;
     }
 
-    public void setTotalAmount(Double TotalAmount) {
+    public void setTotalAmount(double TotalAmount) {
         String formattedAmount = decimalFormat.format(TotalAmount);
         double parsedAmount = Double.parseDouble(formattedAmount);
         this.TotalAmount = parsedAmount;
