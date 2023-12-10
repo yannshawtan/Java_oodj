@@ -42,7 +42,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
         this.Options = Options;
         this.Location = Location;
         this.VendorID = VendorID;
-        this.TotalAmount = TotalAmount;
+        setTotalAmount(TotalAmount);
         this.Created_Dt = getCurrentDate();
         this.Created_Time = getCurrentTime();
     }
@@ -164,7 +164,7 @@ public class Order extends Identifier implements Serializable, Date_Provider{
     public void setTotalAmount(Double TotalAmount) {
         String formattedAmount = decimalFormat.format(TotalAmount);
         double parsedAmount = Double.parseDouble(formattedAmount);
-        this.TotalAmount += parsedAmount;
+        this.TotalAmount = parsedAmount;
     }
     
     public String getVendorID() {

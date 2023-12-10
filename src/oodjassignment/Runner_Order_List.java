@@ -5,6 +5,7 @@
 package oodjassignment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +35,10 @@ public class Runner_Order_List extends javax.swing.JFrame {
         jTextVendor.setEditable(false);
         jTextCustomer.setEditable(false);
         jTextLocation.setEditable(false);
-        jTextFood.setEditable(false);
+        DefaultTableModel fmodel = (DefaultTableModel)jTableFood.getModel();
+        TableRowSorter<DefaultTableModel> fsorter = new TableRowSorter<>(fmodel);
+        jTableFood.setRowSorter(fsorter);
+        fmodel.setRowCount(0);
         jButtonAccept.setEnabled(false);
         ListOfOrder();
     }
@@ -69,14 +73,10 @@ public class Runner_Order_List extends javax.swing.JFrame {
         ArrayList<Vendor> dataVendor = dbVendor.ReadData();
         Main_Database<Customer> dbCustomer = new Main_Database<>(Identifier.Role.Customer);
         ArrayList<Customer> dataCustomer = dbCustomer.ReadData();
-        Main_Database<Delivery> dbDelivery = new Main_Database<>(Identifier.Role.Delivery);
-        ArrayList<Delivery> dataDelivery = dbDelivery.ReadData();
-        // Print out all the order with Option being delivery and the OrderID does not exist in Delivery table
-        // For completing, is the same concept but print out all based on Order ID with same runner ID in delivery Table that is OTW state
-        // Send notification when complete order
         for (int i=0;i<data.size();i++){
             OrderId = data.get(i).getId();
             if (data.get(i).getOptions().equals(Delivery) && data.get(i).getRunnerId() == null){
+                System.out.println(data.get(i).getStatus() + data.get(i).getId());
                 if((data.get(i).getStatus().equals(PendingRunner))){
                     VendorId = data.get(i).getVendorID();
                     CustomerId = data.get(i).getCustomerID();
@@ -98,6 +98,41 @@ public class Runner_Order_List extends javax.swing.JFrame {
         }
     }
     
+    public HashMap<String, Integer> getUniqueFood(ArrayList<String> foods) {
+        HashMap<String, Integer> foodMap = new HashMap<>();
+        for (String food : foods) {
+            if (foodMap.containsKey(food)) {
+                foodMap.put(food, foodMap.get(food) + 1);
+            } else {
+                foodMap.put(food, 1);
+            }
+        }
+        return foodMap;
+    }
+    
+    public final void DisplayFood(HashMap<String, Integer> foodMap) {
+        DefaultTableModel model = (DefaultTableModel) jTableFood.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTableFood.setRowSorter(sorter);
+        model.setRowCount(0);
+        for (HashMap.Entry<String, Integer> entry : foodMap.entrySet()) {
+            String name = entry.getKey();
+            int amount = entry.getValue();
+            model.addRow(new Object[]{name, amount});
+        }
+    }
+    
+    public void clean(){
+        DefaultTableModel fmodel = (DefaultTableModel)jTableFood.getModel();
+        TableRowSorter<DefaultTableModel> fsorter = new TableRowSorter<>(fmodel);
+        jTableFood.setRowSorter(fsorter);
+        fmodel.setRowCount(0);
+        jLabelOrder.setText("Order ID: ");
+        jTextVendor.setText("");
+        jTextCustomer.setText("");
+        jTextLocation.setText("");
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -115,7 +150,8 @@ public class Runner_Order_List extends javax.swing.JFrame {
         jTextVendor = new javax.swing.JTextField();
         jTextCustomer = new javax.swing.JTextField();
         jTextLocation = new javax.swing.JTextField();
-        jTextFood = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableFood = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -174,6 +210,27 @@ public class Runner_Order_List extends javax.swing.JFrame {
             }
         });
 
+        jTableFood.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Food", "Quantity"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableFood);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -182,34 +239,34 @@ public class Runner_Order_List extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelCustomer)
-                            .addComponent(jLabelVendor))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                            .addComponent(jTextVendor)))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButtonLogOut)
                         .addGap(201, 201, 201)
-                        .addComponent(User_Name)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelLocation)
-                    .addComponent(jLabelOrder)
-                    .addComponent(jLabelFood)
+                        .addComponent(User_Name))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonAccept)
-                        .addGap(12, 12, 12)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFood, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
-                    .addComponent(jTextLocation))
-                .addGap(21, 21, 21))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelOrder)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButtonAccept)
+                                .addGap(12, 12, 12)))
+                        .addGap(214, 214, 214))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelCustomer)
+                            .addComponent(jLabelVendor)
+                            .addComponent(jLabelLocation))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextCustomer, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                            .addComponent(jTextVendor)
+                            .addComponent(jTextLocation, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabelFood)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,21 +283,23 @@ public class Runner_Order_List extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabelOrder)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelVendor)
-                    .addComponent(jLabelLocation)
-                    .addComponent(jTextVendor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFood, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
-                        .addComponent(jButtonAccept))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelFood)
-                        .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelCustomer)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelVendor)
+                            .addComponent(jTextVendor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelFood))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelCustomer))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelLocation)
+                            .addComponent(jTextLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addComponent(jButtonAccept)
                 .addGap(21, 21, 21))
         );
 
@@ -253,17 +312,20 @@ public class Runner_Order_List extends javax.swing.JFrame {
 
     private void jTableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOrderMouseClicked
         try {
+            HashMap<String, Integer> foodMap;
+            ArrayList<String> food = new ArrayList<String>();
             int selectedRow = jTableOrder.getSelectedRow();
             this.selectedOrderId = jTableOrder.getValueAt(selectedRow, 0).toString();
             this.selectedVendor = jTableOrder.getValueAt(selectedRow, 1).toString();
             this.selectedCustomer = jTableOrder.getValueAt(selectedRow, 2).toString();
-            this.selectedLocation = jTableOrder.getValueAt(selectedRow, 3).toString();
-            this.selectedFood = jTableOrder.getValueAt(selectedRow, 4).toString();
+            food = (ArrayList<String>) jTableOrder.getValueAt(selectedRow, 3);
+            this.selectedLocation = jTableOrder.getValueAt(selectedRow, 4).toString();
             jLabelOrder.setText("Order ID: " + selectedOrderId);
             jTextVendor.setText(selectedVendor);
             jTextCustomer.setText(selectedCustomer);
             jTextLocation.setText(selectedLocation);
-            jTextFood.setText(selectedFood);
+            foodMap = getUniqueFood(food);
+            DisplayFood(foodMap);
             jButtonAccept.setEnabled(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -275,6 +337,7 @@ public class Runner_Order_List extends javax.swing.JFrame {
         rd.UpdateOrder(currentUser.getId(), selectedOrderId);
         ListOfOrder();
         jButtonAccept.setEnabled(false);
+        clean();
         JOptionPane.showMessageDialog(null, "Successfully accepted the order!");
     }//GEN-LAST:event_jButtonAcceptActionPerformed
 
@@ -324,9 +387,10 @@ public class Runner_Order_List extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelOrder;
     private javax.swing.JLabel jLabelVendor;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableFood;
     private javax.swing.JTable jTableOrder;
     private javax.swing.JTextField jTextCustomer;
-    private javax.swing.JTextField jTextFood;
     private javax.swing.JTextField jTextLocation;
     private javax.swing.JTextField jTextVendor;
     // End of variables declaration//GEN-END:variables
