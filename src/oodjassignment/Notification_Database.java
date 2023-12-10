@@ -71,9 +71,12 @@ public class Notification_Database<T> extends Main_Database{
                         break;
                     }
                     case Delivery -> {
-                        String message = orderId + ": Food is Ready for Collection by Runner";
-                        Notification n = new Notification(vendorId, custId, message);
-                        addData(Role.Notification, n);
+                        String custMessage = orderId + ": Food is Ready for Collection by Runner";
+                        String runMessage = orderId + ": Food is Ready for Pickup";
+                        Notification n1 = new Notification(vendorId, custId, custMessage);
+                        Notification n2 = new Notification(vendorId, order.getRunnerId(), runMessage);
+                        addData(Role.Notification, n1);
+                        addData(Role.Notification, n2);
                         break;
                     }
                     default -> {
