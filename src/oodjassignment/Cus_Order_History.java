@@ -245,18 +245,22 @@ public class Cus_Order_History extends javax.swing.JFrame {
         System.out.println(status);
         Options options = order.getOptions();
         System.out.println(options);
+        Vendor.setVisible(false);
+        Runner.setVisible(false);
 
-        if (options == Options.DineIn && status == Status.Completed && VFeedback == null) {
+        if (status.equals(Status.Completed)) {
+        if (options.equals(Options.DineIn) && VFeedback == null) {
             Vendor.setVisible(true);
-        }else{
-            Vendor.setVisible(false);
+        } else if (options.equals(Options.Delivery)) {
+            if (RFeedback == null) {
+                Runner.setVisible(true);
+            }
+            if (VFeedback == null) {
+                Vendor.setVisible(true);
+            }
         }
-
-        if (options == Options.Delivery && status == Status.Completed && RFeedback == null) {
-            Runner.setVisible(true);
-        }else{
-            Runner.setVisible(false);
-        }
+    }
+        
     }
     
     private void OrderIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrderIdActionPerformed
