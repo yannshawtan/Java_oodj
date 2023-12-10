@@ -22,7 +22,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
      * Creates new form Cus_Reorder
      */
     Customer currentUser;
-    private Double TotalAmount = 0.0;
+    private double TotalAmount = 0.0;
     private String selectedOrderID;
     private String Location,VendorID,currentUserID;
     private ArrayList<String> FoodName;
@@ -52,7 +52,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, Double TotalAmount, String Location, Order.Status Status, String VendorID) {
+    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Order.Options Options, double TotalAmount, String Location, Order.Status Status, String VendorID) {
         Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
         MD.addData(role, food);
         return food;
@@ -255,7 +255,7 @@ public class Cus_Reorder extends javax.swing.JFrame {
         totalcal();
         String selectedOptionString = (String) Optionsbox.getSelectedItem();
         Order.Options options = Order.Options.valueOf(selectedOptionString);
-        Double Cbalance = currentUser.getBalance();
+        double Cbalance = currentUser.getBalance();
         Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
         Order.Status status = Order.Status.PendingVendor;
         try{

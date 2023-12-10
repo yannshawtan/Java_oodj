@@ -109,7 +109,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         this.dispose();
     }
     
-    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, Double TotalAmount, String Location, Status Status, String VendorID) {
+    public Order addOrder(String CustomerID, ArrayList<String> FoodName, Options Options, double TotalAmount, String Location, Status Status, String VendorID) {
         Order food = new Order(CustomerID, FoodName, Options, TotalAmount, Location, Status, VendorID);
         MD.addData(role, food);
         return food;
@@ -393,7 +393,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         Notification_Database<Notification> nd = new Notification_Database<>(Identifier.Role.Notification);
         String selectedOptionString = (String) Optionsbox.getSelectedItem();
         Options options = Order.Options.valueOf(selectedOptionString);
-        Double Cbalance = currentUser.getBalance();
+        double Cbalance = currentUser.getBalance();
         Status status = Status.PendingVendor;
         try{
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
