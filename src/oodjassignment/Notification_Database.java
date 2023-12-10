@@ -29,7 +29,7 @@ public class Notification_Database<T> extends Main_Database{
     }
     
     public void SendOrderToVendor(String Sender, String Receiver,String orderId, String CusName){
-        String message = orderId + CusName +": has sent an Order ";
+        String message = orderId + ":" + CusName +" has sent an Order ";
         Notification n = new Notification(Sender, Receiver, message);
         addData(Role.Notification, n);
     }

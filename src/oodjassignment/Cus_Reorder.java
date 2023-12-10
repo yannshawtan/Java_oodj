@@ -36,11 +36,11 @@ public class Cus_Reorder extends javax.swing.JFrame {
         this.VendorID = VendorID;
         this.currentUserID = currentUser.getId();
         Block.setVisible(false);
-           BlockT.setVisible(false);
-           Floor.setVisible(false);
-           FloorT.setVisible(false);
-           Room.setVisible(false);
-           RoomT.setVisible(false);
+        BlockT.setVisible(false);
+        Floor.setVisible(false);
+        FloorT.setVisible(false);
+        Room.setVisible(false);
+        RoomT.setVisible(false);
     }
     
     public void GoCustomerHomePage(){
@@ -63,9 +63,9 @@ public class Cus_Reorder extends javax.swing.JFrame {
         Blocks = (String) Block.getSelectedItem();
         Floors = (String) Floor.getSelectedItem();
         Rooms = (String) Room.getSelectedItem();
-    if (Optionsbox.getSelectedItem().equals("Delivery")){
-        Location = Blocks+ "-" + Floors + "-" + Rooms; 
-    }
+        if (Optionsbox.getSelectedItem().equals("Delivery")){
+            Location = Blocks+ "-" + Floors + "-" + Rooms; 
+        }
     }
     
     private void totalcal(){
@@ -79,10 +79,16 @@ public class Cus_Reorder extends javax.swing.JFrame {
                 option = data.get(i).getOptions();
             }
         }
-        if (Optionsbox.getSelectedItem().toString().equals("Delivery") && option.equals(Options.DineIn)) {
+        if (Optionsbox.getSelectedItem().toString().equals("Delivery") && ( option.equals(Options.DineIn) || option.equals(Options.TakeAway))) {
             // Add 5% to TotalAmount for delivery
             TotalAmount *= 1.05 ;
-        }else {
+            BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+            TotalAmount = roundedAmount.doubleValue();
+        }else if(Optionsbox.getSelectedItem().toString().equals("DineIn")||Optionsbox.getSelectedItem().toString().equals("TakeAway")&& ( option.equals(Options.Delivery))){
+            TotalAmount = TotalAmount * 100 / 105;
+            BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+            TotalAmount = roundedAmount.doubleValue();
+        }else{
             TotalAmount =TotalAmount;
         }
     }

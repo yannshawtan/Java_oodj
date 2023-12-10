@@ -91,6 +91,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         if (Optionsbox.getSelectedItem().toString().equals("Delivery")) {
             // Add 5% to TotalAmount for delivery
             this.TotalAmount *= 1.05;
+            BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+            TotalAmount = roundedAmount.doubleValue();
         }
     }
 
@@ -265,6 +267,8 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             }
         });
 
+        Total_display.setText("0.00");
+
         Optionsbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DineIn", "TakeAway", "Delivery" }));
         Optionsbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -396,6 +400,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
             
             Order newOrder = addOrder(CustomerID, FoodName, options, TotalAmount, Location, status, VendorID);
+            
             nd.SendOrderToVendor(currentUser.getId(), VendorID, newOrder.getId(),currentUser.getName());
             moneydeduct();
             GoCustomerHomePage();
@@ -418,6 +423,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
            Room.setVisible(true);
            RoomT.setVisible(true);
         } else {
+            calculateTotal();
            Block.setVisible(false);
            BlockT.setVisible(false);
            Floor.setVisible(false);
