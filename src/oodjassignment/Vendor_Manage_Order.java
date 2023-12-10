@@ -42,6 +42,15 @@ public class Vendor_Manage_Order extends javax.swing.JFrame {
         CO.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.dispose();
     }
+    
+    public void GoToPastOrder() {
+        Vendor_Past_Order PO = new Vendor_Past_Order(currentUser);
+        PO.setVisible(true);
+        PO.pack();
+        PO.setLocationRelativeTo(null);
+        PO.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.dispose();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,6 +182,7 @@ public class Vendor_Manage_Order extends javax.swing.JFrame {
 
     private void btnPastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPastActionPerformed
         // TODO add your handling code here:
+        GoToPastOrder();
     }//GEN-LAST:event_btnPastActionPerformed
 
     /**

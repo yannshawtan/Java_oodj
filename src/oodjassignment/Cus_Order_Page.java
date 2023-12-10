@@ -5,6 +5,8 @@
 package oodjassignment;
 
 import java.awt.Component;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -136,9 +138,7 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         int FoodQuantity = 0;
         for (int i = 0; i < count; i++) {
             String menuVendorID = data.get(i).getVendorId();
-            System.out.println(menuVendorID);
             if (VendorID.equals(menuVendorID)) {
-                System.out.println(data.get(i).getFoodName());
                 model.addRow(new Object[] {data.get(i).getFoodName(), FoodQuantity, data.get(i).getFoodType(), data.get(i).getFoodPrice()});
             }
         }
@@ -164,7 +164,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     private ArrayList<String> populateFoodList() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         ArrayList<String> FoodName = new ArrayList<>();
-        
         for (int i = 0; i < model.getRowCount(); i++) {
             String foodNames = model.getValueAt(i, 0).toString();
             int foodQuantity = Integer.parseInt(model.getValueAt(i, 1).toString());
@@ -172,21 +171,20 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                 FoodName.add(foodNames);
             }
         }
-        System.out.println(FoodName);
         return FoodName;
     }
 
     private void moneydeduct() {
         Identifier.Role roles = Identifier.Role.Customer;
         Main_Database<Customer> MD = new Main_Database<>(roles);
-        ArrayList<Customer>data = MD.ReadData();
+        ArrayList<Customer> data = MD.ReadData();
+
         TotalAmount *= -1;
-        System.out.println("1");
-        for (int i = 0; i<data.size();i++){
-            System.out.println("2");
-            if (data.get(i).getId().equals(CustomerID)){
-                System.out.println("3");
-                System.out.println(TotalAmount);
+        BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+        TotalAmount = roundedAmount.doubleValue();
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId().equals(CustomerID)) {
                 currentUser.updateBalance(TotalAmount);
                 data.get(i).updateBalance(TotalAmount);
                 data.set(i, data.get(i));
@@ -194,7 +192,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                 break;
             }
         }
-        
     }
 
     /**
@@ -394,7 +391,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
         Options options = Order.Options.valueOf(selectedOptionString);
         Double Cbalance = currentUser.getBalance();
         Status status = Status.PendingVendor;
-        System.out.println(options);
         try{
             if (TotalAmount == 0.00) {throw new IllegalArgumentException("Please add a food");}
             if (Cbalance < TotalAmount) {throw new IllegalArgumentException("Insufficient credits please topup at admin");}
