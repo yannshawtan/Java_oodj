@@ -139,9 +139,7 @@ public class Cus_Runnerfb extends javax.swing.JFrame {
         ArrayList<Runner> data = MD.ReadData();
         Object ratingValue = Ratingst.getSelectedItem();
         int rating = Integer.parseInt(ratingValue.toString());
-        System.out.println(rating);
         for (int i = 0; i<data.size();i++){
-            System.out.println("1");
             data.get(i).newTotalRating(rating);
         }
         MD.updateData(role, data);
@@ -152,7 +150,6 @@ public class Cus_Runnerfb extends javax.swing.JFrame {
         ArrayList<Order> data = MD.ReadData();
         data = MD.ReadData();
         count = MD.getCount();
-        System.out.println(count + " is the size of the list");
         try{
             String Runnerfeedback = RFeedback.getText();
             Object ratingValue = Ratingst.getSelectedItem();
@@ -166,7 +163,6 @@ public class Cus_Runnerfb extends javax.swing.JFrame {
                 
                 data.set(i, data.get(i));
             }
-            System.out.println(data.get(i));
         }
         RunnerOverallRating();
         MD.updateData(role, data);

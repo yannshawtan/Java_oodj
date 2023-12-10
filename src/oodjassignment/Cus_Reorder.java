@@ -4,6 +4,8 @@
  */
 package oodjassignment;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -100,6 +102,8 @@ public class Cus_Reorder extends javax.swing.JFrame {
         Main_Database<Customer> MD = new Main_Database<>(roles);
         ArrayList<Customer>data = MD.ReadData();
         TotalAmount *= -1;
+        BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+        TotalAmount = roundedAmount.doubleValue();
         for (int i = 0; i<data.size();i++){
             if (data.get(i).getId().equals(currentUserID)){
                 currentUser.updateBalance(TotalAmount);

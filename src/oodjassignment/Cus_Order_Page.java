@@ -5,6 +5,8 @@
 package oodjassignment;
 
 import java.awt.Component;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -175,10 +177,14 @@ public class Cus_Order_Page extends javax.swing.JFrame {
     private void moneydeduct() {
         Identifier.Role roles = Identifier.Role.Customer;
         Main_Database<Customer> MD = new Main_Database<>(roles);
-        ArrayList<Customer>data = MD.ReadData();
+        ArrayList<Customer> data = MD.ReadData();
+
         TotalAmount *= -1;
-        for (int i = 0; i<data.size();i++){
-            if (data.get(i).getId().equals(CustomerID)){
+        BigDecimal roundedAmount = new BigDecimal(TotalAmount).setScale(2, RoundingMode.HALF_UP);
+        TotalAmount = roundedAmount.doubleValue();
+
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId().equals(CustomerID)) {
                 currentUser.updateBalance(TotalAmount);
                 data.get(i).updateBalance(TotalAmount);
                 data.set(i, data.get(i));
@@ -186,7 +192,6 @@ public class Cus_Order_Page extends javax.swing.JFrame {
                 break;
             }
         }
-        
     }
 
     /**
