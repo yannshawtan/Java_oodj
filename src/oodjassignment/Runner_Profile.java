@@ -4,6 +4,7 @@
  */
 package oodjassignment;
 
+import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import oodjassignment.Roles.*;
 
@@ -15,6 +16,7 @@ public class Runner_Profile extends javax.swing.JFrame {
 
     Runner currentUser;
     double value;
+    private DecimalFormat decimalFormat = new DecimalFormat("#0.00");
     
     public Runner_Profile() {
         initComponents();
@@ -54,7 +56,9 @@ public class Runner_Profile extends javax.swing.JFrame {
         String Interval = jInterval.getSelectedItem().toString();
         Runner_Database<Runner> rd = new Runner_Database<>(Identifier.Role.Runner);
         value = rd.getTotalAmount(currentUser.getId(), Interval);
-        jTextEarn.setText(String.valueOf(value));
+        String formattedAmount = decimalFormat.format(value);
+        double parsedAmount = Double.parseDouble(formattedAmount);
+        jTextEarn.setText(String.valueOf(parsedAmount));
     }
     
     @SuppressWarnings("unchecked")
@@ -106,6 +110,12 @@ public class Runner_Profile extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Earn:");
+
+        jTextEarn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextEarnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -176,6 +186,10 @@ public class Runner_Profile extends javax.swing.JFrame {
     private void jIntervalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIntervalActionPerformed
         Earn();
     }//GEN-LAST:event_jIntervalActionPerformed
+
+    private void jTextEarnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextEarnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextEarnActionPerformed
 
     
     public static void main(String args[]) {
