@@ -95,6 +95,8 @@ public class Notification_Page extends javax.swing.JFrame {
         ArrayList<Customer> cdata = cb.ReadData();
         Main_Database<Vendor> vb = new Main_Database<>(Role.Vendor);
         ArrayList<Vendor> vdata = vb.ReadData();
+        Main_Database<Admin> ab = new Main_Database<>(Role.Admin);
+        ArrayList<Admin> adata = ab.ReadData();
         for (int i=0;i<data.size();i++){
             this.ReceivedId = data.get(i).getReceiverId();
             this.SenderId = data.get(i).getSenderId();
@@ -117,6 +119,13 @@ public class Notification_Page extends javax.swing.JFrame {
                     for (Customer dc : cdata) {
                         if(dc.getId().equals(SenderId)){
                             this.Sender = dc.getName();
+                            break;
+                        }
+                    }   break;
+                case 'A':
+                    for (Admin ac : adata) {
+                        if(ac.getId().equals(SenderId)){
+                            this.Sender = ac.getName();
                             break;
                         }
                     }   break;
