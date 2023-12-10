@@ -47,19 +47,6 @@ public class Vendor_Past_Order extends javax.swing.JFrame {
         return newAmount;
     }
     
-    
-    public void calcRevenue() {
-        double totalRevenue = 0.00;
-        DefaultTableModel model = (DefaultTableModel) historyTB.getModel();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        historyTB.setRowSorter(sorter);
-        for (int i = 0; i<sorter.getViewRowCount(); i++) {
-            double revenue = (Double) model.getValueAt(i, 3);
-            totalRevenue += revenue;
-        }
-        revenueTF.setText(String.format("%.2f", totalRevenue));
-    }
-    
     public void DisplayOrder(String date) {
         DefaultTableModel model = (DefaultTableModel) historyTB.getModel();
         model.setRowCount(0);
@@ -80,7 +67,7 @@ public class Vendor_Past_Order extends javax.swing.JFrame {
                 double revenue = (double) model.getValueAt(viewRowIndex, 3);
                 totalRevenue += revenue;
             }
-            revenueTF.setText(String.valueOf(totalRevenue));    
+            revenueTF.setText(String.format("%.2f", totalRevenue));
         } else {
             historyTB.setRowSorter(null);
             double totalRevenue = 0.0;
@@ -89,7 +76,7 @@ public class Vendor_Past_Order extends javax.swing.JFrame {
                 double revenue = (double) model.getValueAt(viewRowIndex, 3);
                 totalRevenue += revenue;
             }
-            revenueTF.setText(String.valueOf(totalRevenue));
+            revenueTF.setText(String.format("%.2f", totalRevenue));
         }
     }
 
