@@ -27,7 +27,7 @@ public class Vendor_Tester3 {
 //        Identifier.Role role = Identifier.Role.Menu;
 //        Main_Database<Admin> MD = new Main_Database<>(role);
 //        Main_Database<Runner> MD = new Main_Database<>(role);
-        Main_Database<Order> MD = new Main_Database<>(role);
+       Main_Database<Order> MD = new Main_Database<>(role);
 //        Account_Database<Notification> MD = new Account_Database<>(role);
 //        Account_Database<Customer> MD = new Account_Database<>(role);
         
@@ -40,7 +40,7 @@ public class Vendor_Tester3 {
 //        Admin a4 = new Admin("ZorusNew", "Zorus", "Zorus@gmail.com");
 //        Vendor v2 = new Vendor("McDonald's", "mcdonald", "mcd@tech.uni");
         Order o1 = new Order("C1", foodName , Delivery, 10.50, "B-05-06", Completed, "V1");
-        o1.setRunnerId("R1");
+//        o1.setRunnerId("R1");
 //        Menu f1 = new Menu("Chili Pan Mee", 8.90, "Food", "V1"); 
 //        Notification n1 = new Notification("A1", "C1", TopUp); 
         // Add data
@@ -57,14 +57,14 @@ public class Vendor_Tester3 {
 //        MD.addData(role, a4);
 //        MD.addData(role, v2);
 //        MD.addData(role, f1);
-        MD.addData(role, o1);
+//        MD.addData(role, o1);
         //*/
         
         // Remove data, remember to check the location number as because u delete the item will affect its total number
         // For example, u delete item 4, from an list of only 4 item, next time u try that again it will cause error as now the list is only 3 item
-        /*
-        MD.removeData(role, 1);
-        //*/
+       
+        MD.removeData(role, 12);
+        
         
         // This will read the data as well as how u how many items
         data = MD.ReadData();
