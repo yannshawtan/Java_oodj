@@ -33,7 +33,6 @@ public class Runner_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(OrderId)) {
-                System.out.println(order.getStatus());
                 switch (order.getStatus()) {
                     case PendingRunner -> {
                         order.setStatus(Status.InKitchen);
