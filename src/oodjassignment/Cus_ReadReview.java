@@ -4,22 +4,32 @@
  */
 package oodjassignment;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier.Role;
 
 /**
  *
  * @author user
  */
 public class Cus_ReadReview extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Cus_ReadReview
-     */
-    
+    String customerName, VendorId;
     Customer currentUser;
+
+    private Cus_ReadReview() {
+        initComponents();
+    }
+    
     public Cus_ReadReview(Customer currentUser) {
         initComponents();
+        this.currentUser = currentUser;
+        ListOfVendor();
+        ListOfPreview();
     }
     
     private void goCusHomePage(){
@@ -31,6 +41,51 @@ public class Cus_ReadReview extends javax.swing.JFrame {
         this.dispose();
     }
     
+    public void ListOfVendor(){
+        jComboBoxVendor.removeAllItems();
+        Main_Database<Vendor> db = new Main_Database<>(Role.Vendor);
+        ArrayList<Vendor> data = db.ReadData();
+        boolean state = true;
+        for (Vendor dv : data) {
+            jComboBoxVendor.addItem(dv.getName());
+            if (state){
+                jComboBoxVendor.setSelectedItem(dv.getName());
+                state = false;
+            }
+        }
+    }
+    
+    public void ListOfPreview(){
+        DefaultTableModel model = (DefaultTableModel)jTableReviews.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTableReviews.setRowSorter(sorter);
+        model.setRowCount(0);
+        String VendorChoice = jComboBoxVendor.getSelectedItem().toString();
+        Main_Database<Customer> db = new Main_Database<>(Role.Customer);
+        ArrayList<Customer> data = db.ReadData();
+        Main_Database<Order> dbOrder = new Main_Database<>(Role.Order);
+        ArrayList<Order> dataOrder = dbOrder.ReadData();
+        Main_Database<Vendor> dbVendor = new Main_Database<>(Role.Vendor);
+        ArrayList<Vendor> dataVendor = dbVendor.ReadData();
+        for (int i=0;i<dataOrder.size();i++){
+            String CustomerId = dataOrder.get(i).getCustomerID();
+            for (Customer dc : data) {
+                if(dc.getId().equals(CustomerId)){
+                    customerName = dc.getName().toLowerCase();
+                    break;
+                }
+            }
+            for (Vendor dv : dataVendor) {
+                if (dv.getName().equals(VendorChoice)){
+                    VendorId = dv.getId();
+                    break;
+                }
+            }
+            if(VendorId.equals(dataOrder.get(i).getVendorID()) && dataOrder.get(i).getFeedbackForVendor() != null){
+                model.addRow(new Object[] {customerName, dataOrder.get(i).getFeedbackForVendor()});
+            }
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,13 +97,12 @@ public class Cus_ReadReview extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableReviews = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jComboBoxVendor = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,11 +119,9 @@ public class Cus_ReadReview extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jScrollPane2.setViewportView(jList1);
+        jLabel1.setText("Vendors:");
 
-        jLabel1.setText("Vendors");
-
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableReviews.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -79,8 +131,16 @@ public class Cus_ReadReview extends javax.swing.JFrame {
             new String [] {
                 "Customers", "Feedbacks"
             }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTableReviews);
 
         jButton1.setText("Back");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +151,12 @@ public class Cus_ReadReview extends javax.swing.JFrame {
 
         jLabel2.setText("Reviews");
 
+        jComboBoxVendor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxVendorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -98,32 +164,33 @@ public class Cus_ReadReview extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)))))
-                .addContainerGap(138, Short.MAX_VALUE))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxVendor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jButton1)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxVendor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -132,6 +199,10 @@ public class Cus_ReadReview extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         goCusHomePage();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBoxVendorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendorActionPerformed
+        ListOfPreview();
+    }//GEN-LAST:event_jComboBoxVendorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,13 +241,12 @@ public class Cus_ReadReview extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxVendor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableReviews;
     // End of variables declaration//GEN-END:variables
 }

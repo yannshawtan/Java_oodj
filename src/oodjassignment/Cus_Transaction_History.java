@@ -4,24 +4,29 @@
  */
 package oodjassignment;
 
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import oodjassignment.Roles.*;
+import oodjassignment.Roles.Identifier.Role;
 
 /**
  *
  * @author user
  */
 public class Cus_Transaction_History extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Cus_Order_cancel
-     */
     
     Customer currentUser;
     
-    public Cus_Transaction_History(Customer currentUser) {
-        
+    public Cus_Transaction_History() {
         initComponents();
+    }
+    
+    public Cus_Transaction_History(Customer currentUser) {
+        this.currentUser = currentUser;
+        initComponents();
+        listOfTransaction();
     }
 
     /**
@@ -36,7 +41,7 @@ public class Cus_Transaction_History extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTransactionTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,7 +54,7 @@ public class Cus_Transaction_History extends javax.swing.JFrame {
 
         jLabel1.setText("Transaction History");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTransactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -59,8 +64,16 @@ public class Cus_Transaction_History extends javax.swing.JFrame {
             new String [] {
                 "Transaction ID", "Type", "Amount", "Date"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTransactionTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,6 +119,22 @@ public class Cus_Transaction_History extends javax.swing.JFrame {
         goCusHomePage();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public void listOfTransaction(){
+        DefaultTableModel model = (DefaultTableModel)jTransactionTable.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        jTransactionTable.setRowSorter(sorter);
+        model.setRowCount(0);
+        Main_Database<Transaction> db = new Main_Database<>(Role.Transaction);
+        ArrayList<Transaction> data = db.ReadData();
+        for (int i=0;i<data.size();i++){
+            String receiver = data.get(i).getReceiverId();
+            String sender = data.get(i).getSenderId();
+            if(currentUser.getId().equals(receiver) || currentUser.getId().equals(sender)){
+                model.addRow(new Object[] {data.get(i).getId(), data.get(i).getType(), data.get(i).getAmount(), data.get(i).getCreatedDt()});
+            }
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -146,6 +175,6 @@ public class Cus_Transaction_History extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTransactionTable;
     // End of variables declaration//GEN-END:variables
 }

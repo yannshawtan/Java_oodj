@@ -273,6 +273,8 @@ public class Notification_Page extends javax.swing.JFrame {
         Main_Database<Notification> db = new Main_Database<>(Identifier.Role.Notification);
         ArrayList<Notification> data = db.ReadData();
         for (int i=0;i<data.size();i++){
+            this.ReceivedId = data.get(i).getReceiverId();
+            this.SenderId = data.get(i).getSenderId();
             Notification notification = (Notification) data.get(i);
             if (currentUser instanceof Runner runner){
                 if (ReceivedId.equals(runner.getId())){
