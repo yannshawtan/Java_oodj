@@ -75,7 +75,15 @@ public class Cus_Order_History extends javax.swing.JFrame {
             new String [] {
                 "OrderID", "TotalPrice", "Options", "Status", "Created Date", "Created Time"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         OrderhistoryT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 OrderhistoryTMouseClicked(evt);
