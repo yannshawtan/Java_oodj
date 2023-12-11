@@ -262,9 +262,7 @@ public class Cus_Order_History extends javax.swing.JFrame {
         String VFeedback = order.getFeedbackForVendor();
         String RFeedback = order.getFeedbackForRunner();
         Status status = order.getStatus();
-        System.out.println(status);
         Options options = order.getOptions();
-        System.out.println(options);
         Vendor.setVisible(false);
         Runner.setVisible(false);
         Cancel.setVisible(false);
@@ -327,7 +325,6 @@ public class Cus_Order_History extends javax.swing.JFrame {
 
     private void CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelActionPerformed
         SelectedId = OrderId.getText();
-        System.out.println(SelectedId);
         ArrayList<Order> data = MD.ReadData();
             for (int i = 0; i < data.size(); i++) {
             String checkOrderId = data.get(i).getId();
