@@ -18,7 +18,6 @@ public class Vendor_Database<T> extends Main_Database{
         for (int i = 0; i<data.size(); i++) {
             Order order = (Order) data.get(i);
             if (order.getId().equals(OrderId)) {
-                System.out.println(OrderId + order.getStatus());
                 switch (order.getStatus()) {
                     case PendingVendor -> {
                         if (order.getOptions() == Order.Options.DineIn || order.getOptions() == Order.Options.TakeAway) {
@@ -42,13 +41,6 @@ public class Vendor_Database<T> extends Main_Database{
                         db.updateData(Role.Order, data);
                         break;
                     }
-//                    case ReadyForCollection -> {
-//                        System.out.println("1");
-//                        order.setStatus(Status.Completed);
-//                        data.set(i, order);
-//                        db.updateData(Role.Order, data);
-//                        break;
-//                    }
                     default -> {
                     }
                 }

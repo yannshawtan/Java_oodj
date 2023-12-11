@@ -76,7 +76,6 @@ public class Runner_Order_List extends javax.swing.JFrame {
         for (int i=0;i<data.size();i++){
             OrderId = data.get(i).getId();
             if (data.get(i).getOptions().equals(Delivery) && data.get(i).getRunnerId() == null){
-                System.out.println(data.get(i).getStatus() + data.get(i).getId());
                 if((data.get(i).getStatus().equals(PendingRunner))){
                     VendorId = data.get(i).getVendorID();
                     CustomerId = data.get(i).getCustomerID();
