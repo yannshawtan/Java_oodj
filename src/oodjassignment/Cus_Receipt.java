@@ -36,7 +36,6 @@ public class Cus_Receipt extends javax.swing.JFrame {
     
     private void DisplayReceipt() {
         ArrayList<Order> data = MD.ReadData();
-        System.out.println("SelectedId");
         for (int i = 0; i < data.size(); i++) {
             String checkOrderId = data.get(i).getId();
             
