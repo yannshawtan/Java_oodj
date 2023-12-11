@@ -131,7 +131,6 @@ public class Notification_Database<T> extends Main_Database{
     
     public void transaction(String sender, String receiverId, String transactionId, String action, double amount) {
         String message = transactionId;
-        System.out.println(sender);
         switch (action){
             case "Withdraw" -> {
                 message = transactionId + ": " + amount + " has been deducted from your wallet!";
